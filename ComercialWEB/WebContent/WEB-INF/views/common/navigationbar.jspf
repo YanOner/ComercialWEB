@@ -1,0 +1,41 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<nav class=".navbar-default">
+  <div class="container-fluid">
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#"><spring:message code="navbar.msj.select"/></a></li>
+      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><spring:message code="navbar.opc.mod.lab"/><span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#"><spring:message code="navbar.sub.opc.mod.lab.uc.first"/></a></li>
+          <li><a href="/TP2_Villa/actualizarTipoExamen"><spring:message code="navbar.sub.opc.mod.lab.uc.second"/></a></li>
+          <li><a href="/TP2_Villa/consultarTipoExamen"> <spring:message code="navbar.sub.opc.mod.lab.uc.third"/></a></li>
+          <li><a href="/TP2_Villa/actualizarPrecioExamen"> Actualizar precios de exámenes</a></li>
+          <li><a href="/TP2_Villa/consultarColegiaturas"> Consultar colegiatura de veterinario</a></li>
+          <li><a href="/TP2_Villa/actualizarSolicitudAnalisis">Solicitud de examen médico</a></li>
+        </ul>
+      </li>
+      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><spring:message code="navbar.opc.mod.pac"/><span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="/TP2_Villa/CLI/inicio">Gestionar Cliente</a></li>
+          <li><a href="/TP2_Villa/MA/inicio">Gestionar Mascota</a></li>
+          <li><a href="/TP2_Villa/ESPE/inicio">Gestionar Especies</a></li>
+          <li><a href="/TP2_Villa/RAZA/inicio">Gestionar Raza</a></li>
+          <li><a href="/TP2_Villa/SCM/inicio">Gestionar Monitoreo y Control de Mascotas</a></li>
+        </ul>
+      </li>
+      
+      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><spring:message code="navbar.opc.mod.at"/><span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="/TP2_Villa/HC/listar"><spring:message code="navbar.sub.opc.mod.at.uc.first"/></a></li>
+          <li><a href="/TP2_Villa/AM/inicio"><spring:message code="navbar.sub.opc.mod.at.uc.second"/></a></li>
+          <li><a href="/TP2_Villa/DIAG/inicio"><spring:message code="navbar.sub.opc.mod.at.uc.third"/></a></li>
+          <li><a href="/TP2_Villa/RM/inicio">Gestionar Receta Médica</a></li>
+          <li><a href="/TP2_Villa/PM/inicio">Gestionar Procedimiento</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>
+  
