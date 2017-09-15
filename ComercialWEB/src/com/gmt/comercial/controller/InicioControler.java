@@ -46,7 +46,7 @@ public class InicioControler {
 		InputStream is;
 		try {
 //			is = new FileInputStream(new File(real+nombre));
-			is = new FileInputStream("E:/Android/Imagenes/"+nombre);
+			is = new FileInputStream("D:/Android/Imagenes/"+nombre);
 			byte[] media = IOUtils.toByteArray(is);
 //			byte[] media = IOUtils.toByteArray(is);
 			headers.setContentLength(media.length);
@@ -75,4 +75,84 @@ public class InicioControler {
 		}
 		return lista;
 	}
+	//Combo de Precios
+	@RequestMapping(value = "/verPrecios", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<String> verPrecios(){
+		System.out.println("verPrecios "+new Date());
+		List<String> lista = new ArrayList<>();
+		lista.add("Precios");
+		lista.add("De S/. 25 a 50");
+		lista.add("De S/. 50 a 100");
+		lista.add("De S/. 100 a 150");
+		lista.add("De S/. 150 a 200");
+		lista.add("De S/. 200 a más");
+		return lista;
+	}
+	
+	//Combo de Talla
+	@RequestMapping(value = "/verTallas", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<String> verTallas(){
+		System.out.println("verTallas "+new Date());
+		List<String> lista = new ArrayList<>();
+		lista.add("Tallas");
+		lista.add("35");
+		lista.add("36");
+		lista.add("37");
+		lista.add("38");
+		lista.add("39");
+		return lista;
+	}
+	
+	//Combo Tipo de Calzado
+	@RequestMapping(value = "/verTipoCalzado", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<String> verTipoCalzado(){
+		System.out.println("verTipoCalzado "+new Date());
+		List<String> lista = new ArrayList<>();
+		lista.add("Tipo de Calzado");
+		lista.add("Botas");
+		lista.add("Botines");
+		lista.add("Sandalias");
+		return lista;
+	}
+	
+	//Combo Tipo de Taco
+	@RequestMapping(value = "/verTipoTacoCalzado", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<String> verTipverTipoTacoCalzadooCalzado(){
+		System.out.println("verTipoTacoCalzado "+new Date());
+		List<String> lista = new ArrayList<>();
+		lista.add("Tipo de Taco");
+		lista.add("Chino");
+		lista.add("Plataforma");
+		lista.add("Cuadrado");
+		lista.add("Fino");
+		return lista;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
