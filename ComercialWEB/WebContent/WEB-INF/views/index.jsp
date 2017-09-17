@@ -1,17 +1,20 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="common/header.jspf"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%--content--%>
+<html>
+<head>
+	<title>Página de Inicio</title>
+</head>
+<body>
 
-<div class="container">
-    <div class="row" >
-        <div class="span6 offset3">
-            <h2 class="alert-heading"><spring:message code="index.msj.vet"/></h2>
-            <p></p>
-            <br/>
-        </div>
-    </div>
-</div>
+<ul>
+	<li><a href="./verCatalogo?precio=De%26a%26200%26a%26ms">verCatalogo</a></li>
+	<li><a href="./verImagen?nombre=calzado_amarillo.png">verImagen</a></li>
+	<li><a href="./verPrecios">verPrecios</a></li>
+	<li><a href="./verTallas">verTallas</a></li>
+	<li><a href="./verTipoCalzado">verTipoCalzado</a></li>
+	<li><a href="./verTipoTacoCalzado">verTipoTacoCalzado</a></li>
+</ul>
 
-<%--end content--%>
-<%@ include file="common/footer.jspf"%>
+</body>
+</html>

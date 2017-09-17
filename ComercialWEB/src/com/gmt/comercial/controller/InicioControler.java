@@ -10,6 +10,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.log4j.Logger;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,32 +24,25 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class InicioControler {
 
+	Logger log = Logger.getLogger(this.getClass());
+	
 	@RequestMapping("/hola")
 	@ResponseBody
 	public String inicio(){
 		return "Hola GMT 2017";
 	}
 	
-	@RequestMapping(value = "/imagen", method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
+	@RequestMapping(value = "/verImagen", method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
 	public ResponseEntity<byte[]> imagen(HttpServletRequest request, @RequestParam String nombre) throws IOException {
-		System.out.println("imagen: "+nombre+new Date());
-//		try {
-//			FileInputStream in = new FileInputStream("E:/Android/Imagenes/calzado_amarillo.png");
-//		    return IOUtils.toByteArray(in);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	    return null;
+		log.info("imagen: "+nombre+new Date());
 	    HttpHeaders headers = new HttpHeaders();
 	    headers.setContentType(MediaType.IMAGE_PNG);
-//	    String real = request.getServletContext().getRealPath("");
 	    ResponseEntity<byte[]> responseEntity = null;
 		InputStream is;
 		try {
-//			is = new FileInputStream(new File(real+nombre));
-			is = new FileInputStream("D:/Android/Imagenes/"+nombre);
+//			is = new FileInputStream("D:/Android/Imagenes/"+nombre);
+			is = new FileInputStream("E:/Android/Imagenes/"+nombre);
 			byte[] media = IOUtils.toByteArray(is);
-//			byte[] media = IOUtils.toByteArray(is);
 			headers.setContentLength(media.length);
 			responseEntity = new ResponseEntity<>(media, headers, HttpStatus.OK);
 		} catch (Exception e) {
@@ -60,8 +54,9 @@ public class InicioControler {
 	
 	@RequestMapping(value = "/verCatalogo", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public List<ProductoBean> verCatalogo(){
-		System.out.println("verCatalogo "+new Date());
+	public List<ProductoBean> verCatalogo(@RequestParam String precio){
+		log.info("verCatalogo "+new Date());
+		log.info("precio: "+precio);
 		String[] demo = {"calzado_amarillo.png","calzado_rojo.png","calzado_verde.png","calzado_amarillo.png","calzado_rojo.png","calzado_verde.png","calzado_verde.png"};
 		List<ProductoBean> lista = new ArrayList<>();
 		for (int i = 1; i <= 20; i++) {
@@ -79,7 +74,7 @@ public class InicioControler {
 	@RequestMapping(value = "/verPrecios", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public List<String> verPrecios(){
-		System.out.println("verPrecios "+new Date());
+		log.info("verPrecios "+new Date());
 		List<String> lista = new ArrayList<>();
 		lista.add("Precios");
 		lista.add("De S/. 25 a 50");
@@ -94,7 +89,7 @@ public class InicioControler {
 	@RequestMapping(value = "/verTallas", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public List<String> verTallas(){
-		System.out.println("verTallas "+new Date());
+		log.info("verTallas "+new Date());
 		List<String> lista = new ArrayList<>();
 		lista.add("Tallas");
 		lista.add("35");
@@ -109,7 +104,7 @@ public class InicioControler {
 	@RequestMapping(value = "/verTipoCalzado", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public List<String> verTipoCalzado(){
-		System.out.println("verTipoCalzado "+new Date());
+		log.info("verTipoCalzado "+new Date());
 		List<String> lista = new ArrayList<>();
 		lista.add("Tipo de Calzado");
 		lista.add("Botas");
@@ -122,7 +117,7 @@ public class InicioControler {
 	@RequestMapping(value = "/verTipoTacoCalzado", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public List<String> verTipverTipoTacoCalzadooCalzado(){
-		System.out.println("verTipoTacoCalzado "+new Date());
+		log.info("verTipoTacoCalzado "+new Date());
 		List<String> lista = new ArrayList<>();
 		lista.add("Tipo de Taco");
 		lista.add("Chino");
