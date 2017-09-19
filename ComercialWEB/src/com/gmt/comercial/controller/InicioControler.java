@@ -40,8 +40,8 @@ public class InicioControler {
 	    ResponseEntity<byte[]> responseEntity = null;
 		InputStream is;
 		try {
-//			is = new FileInputStream("D:/Android/Imagenes/"+nombre);
-			is = new FileInputStream("E:/Android/Imagenes/"+nombre);
+			is = new FileInputStream("D:/Android/Imagenes/"+nombre);
+//			is = new FileInputStream("E:/Android/Imagenes/"+nombre);
 			byte[] media = IOUtils.toByteArray(is);
 			headers.setContentLength(media.length);
 			responseEntity = new ResponseEntity<>(media, headers, HttpStatus.OK);
@@ -116,7 +116,7 @@ public class InicioControler {
 	//Combo Tipo de Taco
 	@RequestMapping(value = "/verTipoTacoCalzado", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public List<String> verTipverTipoTacoCalzadooCalzado(){
+	public List<String> verTipoTacoCalzado(){
 		log.info("verTipoTacoCalzado "+new Date());
 		List<String> lista = new ArrayList<>();
 		lista.add("Tipo de Taco");
@@ -126,6 +126,30 @@ public class InicioControler {
 		lista.add("Fino");
 		return lista;
 	}
+	
+	//verDetallePedido
+	@RequestMapping(value = "/verDetalleCalzado", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ProductoBean verDetalleCalzado(@RequestParam String codigo){
+		log.info("verDetallePedido: " + new Date());
+		log.info("codigo: " + codigo);
+		
+		ProductoBean p = new ProductoBean();
+		p.setNombre("Calzado 01");
+		p.setCodigo("001");
+		p.setPrecio("S/. 50");
+		p.setNombreImagen("Zapato");
+		p.setMaterialCalzado("Cuero");
+		p.setListaTallas("36,37,38");
+		p.setMaterialTaco("Madera");
+		p.setMaterialForro("Cuero");
+		p.setMaterialPlanta("Caucho");
+		p.setMaterialPlantilla("Plastico");
+		
+		
+		return p;
+	}
+	
 }
 
 
