@@ -1,4 +1,4 @@
-package com.gmt.comercial.controller;
+package com.gmt.comercial.bean;
 
 import java.io.Serializable;
 

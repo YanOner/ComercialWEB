@@ -10,7 +10,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,15 +23,29 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.gmt.comercial.bean.ProductoBean;
+import com.gmt.comercial.bean.Usuario;
+import com.gmt.comercial.service.ComunService;
+
 @Controller
 public class InicioControler {
 
-	Logger log = Logger.getLogger(this.getClass());
+	private static final Log log = LogFactory.getLog(InicioControler.class);
+	
+	@Autowired
+	ComunService comunService;
 	
 	@RequestMapping("/hola")
 	@ResponseBody
 	public String inicio(){
+		System.out.println(comunService.prueba());
 		return "Hola GMT 2017";
+	}
+	
+	@RequestMapping("/usuarios")
+	@ResponseBody
+	public List<Usuario> usuarios(){
+		return comunService.usuarios();
 	}
 	
 	@RequestMapping(value = "/verImagen", method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)

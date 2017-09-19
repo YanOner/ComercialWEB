@@ -12,7 +12,7 @@
   <bean id="dataSource"
     class="org.springframework.jdbc.datasource.DriverManagerDataSource">
     <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-    <property name="url" value="jdbc:mysql://localhost:3306/bd_petcenter" />
+    <property name="url" value="jdbc:mysql://localhost:3306/ginobigionidb" />
     <property name="username" value="root" />
     <property name="password" value="root" />
   </bean>
@@ -26,9 +26,9 @@
 
   <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
     <property name="dataSource" ref="dataSource" />
-    <property name="typeAliasesPackage" value="com.petcenter.dto" />
-    <property name="mapperLocations" value="classpath*:com/petcenter/dao/mappers/*.xml" />
-    <property name="typeHandlersPackage" value="com.petcenter.util" />
+    <property name="typeAliasesPackage" value="com.gmt.comercial.bean" />
+    <property name="mapperLocations" value="classpath*:com/gmt/comercial/sql/*.xml" />
+    <property name="typeHandlersPackage" value="com.gmt.comercial.util" />
   </bean>
 
   <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
@@ -36,7 +36,7 @@
   </bean>
 
   <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-    <property name="basePackage" value="com.petcenter.dao.spec" />
+    <property name="basePackage" value="com.gmt.comercial.dao" />
   </bean>
 
 	<bean id="messageSource"
