@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gmt.comercial.dao.MovilidadMapper">
+  <resultMap id="BaseResultMap" type="com.gmt.comercial.model.Movilidad">
+    <constructor>
+      <idArg column="IdMovilidad" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="Placa" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="Marca" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="Modelo" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="CapacidadAlto" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="CapacidadLargo" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="CapacidadAncho" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    IdMovilidad, Placa, Marca, Modelo, CapacidadAlto, CapacidadLargo, CapacidadAncho
+  </sql>
+  <select id="selectByExample" parameterType="com.gmt.comercial.model.MovilidadExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from movilidad
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from movilidad
+    where IdMovilidad = #{idMovilidad,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from movilidad
+    where IdMovilidad = #{idMovilidad,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.gmt.comercial.model.Movilidad">
+    insert into movilidad (IdMovilidad, Placa, Marca, 
+      Modelo, CapacidadAlto, CapacidadLargo, 
+      CapacidadAncho)
+    values (#{idMovilidad,jdbcType=INTEGER}, #{placa,jdbcType=VARCHAR}, #{marca,jdbcType=VARCHAR}, 
+      #{modelo,jdbcType=VARCHAR}, #{capacidadAlto,jdbcType=DECIMAL}, #{capacidadLargo,jdbcType=DECIMAL}, 
+      #{capacidadAncho,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gmt.comercial.model.Movilidad">
+    insert into movilidad
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="idMovilidad != null">
+        IdMovilidad,
+      </if>
+      <if test="placa != null">
+        Placa,
+      </if>
+      <if test="marca != null">
+        Marca,
+      </if>
+      <if test="modelo != null">
+        Modelo,
+      </if>
+      <if test="capacidadAlto != null">
+        CapacidadAlto,
+      </if>
+      <if test="capacidadLargo != null">
+        CapacidadLargo,
+      </if>
+      <if test="capacidadAncho != null">
+        CapacidadAncho,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="idMovilidad != null">
+        #{idMovilidad,jdbcType=INTEGER},
+      </if>
+      <if test="placa != null">
+        #{placa,jdbcType=VARCHAR},
+      </if>
+      <if test="marca != null">
+        #{marca,jdbcType=VARCHAR},
+      </if>
+      <if test="modelo != null">
+        #{modelo,jdbcType=VARCHAR},
+      </if>
+      <if test="capacidadAlto != null">
+        #{capacidadAlto,jdbcType=DECIMAL},
+      </if>
+      <if test="capacidadLargo != null">
+        #{capacidadLargo,jdbcType=DECIMAL},
+      </if>
+      <if test="capacidadAncho != null">
+        #{capacidadAncho,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gmt.comercial.model.Movilidad">
+    update movilidad
+    <set>
+      <if test="placa != null">
+        Placa = #{placa,jdbcType=VARCHAR},
+      </if>
+      <if test="marca != null">
+        Marca = #{marca,jdbcType=VARCHAR},
+      </if>
+      <if test="modelo != null">
+        Modelo = #{modelo,jdbcType=VARCHAR},
+      </if>
+      <if test="capacidadAlto != null">
+        CapacidadAlto = #{capacidadAlto,jdbcType=DECIMAL},
+      </if>
+      <if test="capacidadLargo != null">
+        CapacidadLargo = #{capacidadLargo,jdbcType=DECIMAL},
+      </if>
+      <if test="capacidadAncho != null">
+        CapacidadAncho = #{capacidadAncho,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where IdMovilidad = #{idMovilidad,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gmt.comercial.model.Movilidad">
+    update movilidad
+    set Placa = #{placa,jdbcType=VARCHAR},
+      Marca = #{marca,jdbcType=VARCHAR},
+      Modelo = #{modelo,jdbcType=VARCHAR},
+      CapacidadAlto = #{capacidadAlto,jdbcType=DECIMAL},
+      CapacidadLargo = #{capacidadLargo,jdbcType=DECIMAL},
+      CapacidadAncho = #{capacidadAncho,jdbcType=DECIMAL}
+    where IdMovilidad = #{idMovilidad,jdbcType=INTEGER}
+  </update>
+  <select id="selectByExampleWithRowbounds" parameterType="com.gmt.comercial.model.MovilidadExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from movilidad
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

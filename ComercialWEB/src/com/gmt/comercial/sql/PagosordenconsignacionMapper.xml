@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gmt.comercial.dao.PagosordenconsignacionMapper">
+  <resultMap id="BaseResultMap" type="com.gmt.comercial.model.Pagosordenconsignacion">
+    <constructor>
+      <idArg column="IdOrdenConsignacion" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <idArg column="FechaProgramada" javaType="java.util.Date" jdbcType="DATE" />
+      <idArg column="Correlativo" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="MontoAbonado" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="FechaPago" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="NroBoletaPago" javaType="java.lang.String" jdbcType="CHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    IdOrdenConsignacion, FechaProgramada, Correlativo, MontoAbonado, FechaPago, NroBoletaPago
+  </sql>
+  <select id="selectByExample" parameterType="com.gmt.comercial.model.PagosordenconsignacionExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from pagosordenconsignacion
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="map" resultMap="BaseResultMap">
+    select 'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from pagosordenconsignacion
+    where IdOrdenConsignacion = #{idOrdenConsignacion,jdbcType=INTEGER}
+      and FechaProgramada = #{fechaProgramada,jdbcType=DATE}
+      and Correlativo = #{correlativo,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="map">
+    delete from pagosordenconsignacion
+    where IdOrdenConsignacion = #{idOrdenConsignacion,jdbcType=INTEGER}
+      and FechaProgramada = #{fechaProgramada,jdbcType=DATE}
+      and Correlativo = #{correlativo,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.gmt.comercial.model.Pagosordenconsignacion">
+    insert into pagosordenconsignacion (IdOrdenConsignacion, FechaProgramada, 
+      Correlativo, MontoAbonado, FechaPago, 
+      NroBoletaPago)
+    values (#{idOrdenConsignacion,jdbcType=INTEGER}, #{fechaProgramada,jdbcType=DATE}, 
+      #{correlativo,jdbcType=INTEGER}, #{montoAbonado,jdbcType=DECIMAL}, #{fechaPago,jdbcType=DATE}, 
+      #{nroBoletaPago,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gmt.comercial.model.Pagosordenconsignacion">
+    insert into pagosordenconsignacion
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="idOrdenConsignacion != null">
+        IdOrdenConsignacion,
+      </if>
+      <if test="fechaProgramada != null">
+        FechaProgramada,
+      </if>
+      <if test="correlativo != null">
+        Correlativo,
+      </if>
+      <if test="montoAbonado != null">
+        MontoAbonado,
+      </if>
+      <if test="fechaPago != null">
+        FechaPago,
+      </if>
+      <if test="nroBoletaPago != null">
+        NroBoletaPago,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="idOrdenConsignacion != null">
+        #{idOrdenConsignacion,jdbcType=INTEGER},
+      </if>
+      <if test="fechaProgramada != null">
+        #{fechaProgramada,jdbcType=DATE},
+      </if>
+      <if test="correlativo != null">
+        #{correlativo,jdbcType=INTEGER},
+      </if>
+      <if test="montoAbonado != null">
+        #{montoAbonado,jdbcType=DECIMAL},
+      </if>
+      <if test="fechaPago != null">
+        #{fechaPago,jdbcType=DATE},
+      </if>
+      <if test="nroBoletaPago != null">
+        #{nroBoletaPago,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gmt.comercial.model.Pagosordenconsignacion">
+    update pagosordenconsignacion
+    <set>
+      <if test="montoAbonado != null">
+        MontoAbonado = #{montoAbonado,jdbcType=DECIMAL},
+      </if>
+      <if test="fechaPago != null">
+        FechaPago = #{fechaPago,jdbcType=DATE},
+      </if>
+      <if test="nroBoletaPago != null">
+        NroBoletaPago = #{nroBoletaPago,jdbcType=CHAR},
+      </if>
+    </set>
+    where IdOrdenConsignacion = #{idOrdenConsignacion,jdbcType=INTEGER}
+      and FechaProgramada = #{fechaProgramada,jdbcType=DATE}
+      and Correlativo = #{correlativo,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gmt.comercial.model.Pagosordenconsignacion">
+    update pagosordenconsignacion
+    set MontoAbonado = #{montoAbonado,jdbcType=DECIMAL},
+      FechaPago = #{fechaPago,jdbcType=DATE},
+      NroBoletaPago = #{nroBoletaPago,jdbcType=CHAR}
+    where IdOrdenConsignacion = #{idOrdenConsignacion,jdbcType=INTEGER}
+      and FechaProgramada = #{fechaProgramada,jdbcType=DATE}
+      and Correlativo = #{correlativo,jdbcType=INTEGER}
+  </update>
+  <select id="selectByExampleWithRowbounds" parameterType="com.gmt.comercial.model.PagosordenconsignacionExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from pagosordenconsignacion
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

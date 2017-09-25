@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gmt.comercial.dao.MaterialMapper">
+  <resultMap id="BaseResultMap" type="com.gmt.comercial.model.Material">
+    <constructor>
+      <idArg column="IdMaterial" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="Descripcion" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="Estado" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    IdMaterial, Descripcion, Estado
+  </sql>
+  <select id="selectByExample" parameterType="com.gmt.comercial.model.MaterialExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from material
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from material
+    where IdMaterial = #{idMaterial,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from material
+    where IdMaterial = #{idMaterial,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.gmt.comercial.model.Material">
+    insert into material (IdMaterial, Descripcion, Estado
+      )
+    values (#{idMaterial,jdbcType=INTEGER}, #{descripcion,jdbcType=VARCHAR}, #{estado,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.gmt.comercial.model.Material">
+    insert into material
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="idMaterial != null">
+        IdMaterial,
+      </if>
+      <if test="descripcion != null">
+        Descripcion,
+      </if>
+      <if test="estado != null">
+        Estado,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="idMaterial != null">
+        #{idMaterial,jdbcType=INTEGER},
+      </if>
+      <if test="descripcion != null">
+        #{descripcion,jdbcType=VARCHAR},
+      </if>
+      <if test="estado != null">
+        #{estado,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gmt.comercial.model.Material">
+    update material
+    <set>
+      <if test="descripcion != null">
+        Descripcion = #{descripcion,jdbcType=VARCHAR},
+      </if>
+      <if test="estado != null">
+        Estado = #{estado,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where IdMaterial = #{idMaterial,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gmt.comercial.model.Material">
+    update material
+    set Descripcion = #{descripcion,jdbcType=VARCHAR},
+      Estado = #{estado,jdbcType=VARCHAR}
+    where IdMaterial = #{idMaterial,jdbcType=INTEGER}
+  </update>
+  <select id="selectByExampleWithRowbounds" parameterType="com.gmt.comercial.model.MaterialExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from material
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

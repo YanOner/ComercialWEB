@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gmt.comercial.dao.DisponibilidadmovilidadMapper">
+  <resultMap id="BaseResultMap" type="com.gmt.comercial.model.Disponibilidadmovilidad">
+    <constructor>
+      <idArg column="IdMovilidad" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <idArg column="IdOrdenDespacho" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="FechaMovilidad" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="AltoDisponible" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="AnchoDisponible" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="LargoDisponible" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    IdMovilidad, IdOrdenDespacho, FechaMovilidad, AltoDisponible, AnchoDisponible, LargoDisponible
+  </sql>
+  <select id="selectByExample" parameterType="com.gmt.comercial.model.DisponibilidadmovilidadExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from disponibilidadmovilidad
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="map" resultMap="BaseResultMap">
+    select 'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from disponibilidadmovilidad
+    where IdMovilidad = #{idMovilidad,jdbcType=INTEGER}
+      and IdOrdenDespacho = #{idOrdenDespacho,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="map">
+    delete from disponibilidadmovilidad
+    where IdMovilidad = #{idMovilidad,jdbcType=INTEGER}
+      and IdOrdenDespacho = #{idOrdenDespacho,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.gmt.comercial.model.Disponibilidadmovilidad">
+    insert into disponibilidadmovilidad (IdMovilidad, IdOrdenDespacho, FechaMovilidad, 
+      AltoDisponible, AnchoDisponible, LargoDisponible
+      )
+    values (#{idMovilidad,jdbcType=INTEGER}, #{idOrdenDespacho,jdbcType=INTEGER}, #{fechaMovilidad,jdbcType=DATE}, 
+      #{altoDisponible,jdbcType=DECIMAL}, #{anchoDisponible,jdbcType=DECIMAL}, #{largoDisponible,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.gmt.comercial.model.Disponibilidadmovilidad">
+    insert into disponibilidadmovilidad
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="idMovilidad != null">
+        IdMovilidad,
+      </if>
+      <if test="idOrdenDespacho != null">
+        IdOrdenDespacho,
+      </if>
+      <if test="fechaMovilidad != null">
+        FechaMovilidad,
+      </if>
+      <if test="altoDisponible != null">
+        AltoDisponible,
+      </if>
+      <if test="anchoDisponible != null">
+        AnchoDisponible,
+      </if>
+      <if test="largoDisponible != null">
+        LargoDisponible,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="idMovilidad != null">
+        #{idMovilidad,jdbcType=INTEGER},
+      </if>
+      <if test="idOrdenDespacho != null">
+        #{idOrdenDespacho,jdbcType=INTEGER},
+      </if>
+      <if test="fechaMovilidad != null">
+        #{fechaMovilidad,jdbcType=DATE},
+      </if>
+      <if test="altoDisponible != null">
+        #{altoDisponible,jdbcType=DECIMAL},
+      </if>
+      <if test="anchoDisponible != null">
+        #{anchoDisponible,jdbcType=DECIMAL},
+      </if>
+      <if test="largoDisponible != null">
+        #{largoDisponible,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gmt.comercial.model.Disponibilidadmovilidad">
+    update disponibilidadmovilidad
+    <set>
+      <if test="fechaMovilidad != null">
+        FechaMovilidad = #{fechaMovilidad,jdbcType=DATE},
+      </if>
+      <if test="altoDisponible != null">
+        AltoDisponible = #{altoDisponible,jdbcType=DECIMAL},
+      </if>
+      <if test="anchoDisponible != null">
+        AnchoDisponible = #{anchoDisponible,jdbcType=DECIMAL},
+      </if>
+      <if test="largoDisponible != null">
+        LargoDisponible = #{largoDisponible,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where IdMovilidad = #{idMovilidad,jdbcType=INTEGER}
+      and IdOrdenDespacho = #{idOrdenDespacho,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gmt.comercial.model.Disponibilidadmovilidad">
+    update disponibilidadmovilidad
+    set FechaMovilidad = #{fechaMovilidad,jdbcType=DATE},
+      AltoDisponible = #{altoDisponible,jdbcType=DECIMAL},
+      AnchoDisponible = #{anchoDisponible,jdbcType=DECIMAL},
+      LargoDisponible = #{largoDisponible,jdbcType=DECIMAL}
+    where IdMovilidad = #{idMovilidad,jdbcType=INTEGER}
+      and IdOrdenDespacho = #{idOrdenDespacho,jdbcType=INTEGER}
+  </update>
+  <select id="selectByExampleWithRowbounds" parameterType="com.gmt.comercial.model.DisponibilidadmovilidadExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from disponibilidadmovilidad
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gmt.comercial.dao.UsuarioMapper">
+  <resultMap id="BaseResultMap" type="com.gmt.comercial.model.Usuario">
+    <constructor>
+      <idArg column="CodUsuario" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="IdCliente" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="Password" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="FechaCreacion" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="CorreoElectronico" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="Estado" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="IdTipoUsuario" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    CodUsuario, IdCliente, Password, FechaCreacion, CorreoElectronico, Estado, IdTipoUsuario
+  </sql>
+  <select id="selectByExample" parameterType="com.gmt.comercial.model.UsuarioExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from usuario
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from usuario
+    where CodUsuario = #{codUsuario,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from usuario
+    where CodUsuario = #{codUsuario,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.gmt.comercial.model.Usuario">
+    insert into usuario (CodUsuario, IdCliente, Password, 
+      FechaCreacion, CorreoElectronico, Estado, 
+      IdTipoUsuario)
+    values (#{codUsuario,jdbcType=CHAR}, #{idCliente,jdbcType=INTEGER}, #{password,jdbcType=VARCHAR}, 
+      #{fechaCreacion,jdbcType=DATE}, #{correoElectronico,jdbcType=VARCHAR}, #{estado,jdbcType=CHAR}, 
+      #{idTipoUsuario,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gmt.comercial.model.Usuario">
+    insert into usuario
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="codUsuario != null">
+        CodUsuario,
+      </if>
+      <if test="idCliente != null">
+        IdCliente,
+      </if>
+      <if test="password != null">
+        Password,
+      </if>
+      <if test="fechaCreacion != null">
+        FechaCreacion,
+      </if>
+      <if test="correoElectronico != null">
+        CorreoElectronico,
+      </if>
+      <if test="estado != null">
+        Estado,
+      </if>
+      <if test="idTipoUsuario != null">
+        IdTipoUsuario,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="codUsuario != null">
+        #{codUsuario,jdbcType=CHAR},
+      </if>
+      <if test="idCliente != null">
+        #{idCliente,jdbcType=INTEGER},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="fechaCreacion != null">
+        #{fechaCreacion,jdbcType=DATE},
+      </if>
+      <if test="correoElectronico != null">
+        #{correoElectronico,jdbcType=VARCHAR},
+      </if>
+      <if test="estado != null">
+        #{estado,jdbcType=CHAR},
+      </if>
+      <if test="idTipoUsuario != null">
+        #{idTipoUsuario,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gmt.comercial.model.Usuario">
+    update usuario
+    <set>
+      <if test="idCliente != null">
+        IdCliente = #{idCliente,jdbcType=INTEGER},
+      </if>
+      <if test="password != null">
+        Password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="fechaCreacion != null">
+        FechaCreacion = #{fechaCreacion,jdbcType=DATE},
+      </if>
+      <if test="correoElectronico != null">
+        CorreoElectronico = #{correoElectronico,jdbcType=VARCHAR},
+      </if>
+      <if test="estado != null">
+        Estado = #{estado,jdbcType=CHAR},
+      </if>
+      <if test="idTipoUsuario != null">
+        IdTipoUsuario = #{idTipoUsuario,jdbcType=INTEGER},
+      </if>
+    </set>
+    where CodUsuario = #{codUsuario,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gmt.comercial.model.Usuario">
+    update usuario
+    set IdCliente = #{idCliente,jdbcType=INTEGER},
+      Password = #{password,jdbcType=VARCHAR},
+      FechaCreacion = #{fechaCreacion,jdbcType=DATE},
+      CorreoElectronico = #{correoElectronico,jdbcType=VARCHAR},
+      Estado = #{estado,jdbcType=CHAR},
+      IdTipoUsuario = #{idTipoUsuario,jdbcType=INTEGER}
+    where CodUsuario = #{codUsuario,jdbcType=CHAR}
+  </update>
+  <select id="selectByExampleWithRowbounds" parameterType="com.gmt.comercial.model.UsuarioExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from usuario
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

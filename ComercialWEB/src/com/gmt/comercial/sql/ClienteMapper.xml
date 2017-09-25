@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gmt.comercial.dao.ClienteMapper">
+  <resultMap id="BaseResultMap" type="com.gmt.comercial.model.Cliente">
+    <constructor>
+      <idArg column="IdCliente" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="Nombres" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="ApellidoPaterno" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="ApellidoMaterno" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="FechaNacimiento" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="Estado" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="NroDocumentoIdentidad" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="RUC" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="Celular" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="FechaCreacion" javaType="java.util.Date" jdbcType="DATE" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    IdCliente, Nombres, ApellidoPaterno, ApellidoMaterno, FechaNacimiento, Estado, NroDocumentoIdentidad, 
+    RUC, Celular, FechaCreacion
+  </sql>
+  <select id="selectByExample" parameterType="com.gmt.comercial.model.ClienteExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from cliente
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from cliente
+    where IdCliente = #{idCliente,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cliente
+    where IdCliente = #{idCliente,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.gmt.comercial.model.Cliente">
+    insert into cliente (IdCliente, Nombres, ApellidoPaterno, 
+      ApellidoMaterno, FechaNacimiento, Estado, 
+      NroDocumentoIdentidad, RUC, Celular, 
+      FechaCreacion)
+    values (#{idCliente,jdbcType=INTEGER}, #{nombres,jdbcType=VARCHAR}, #{apellidoPaterno,jdbcType=VARCHAR}, 
+      #{apellidoMaterno,jdbcType=VARCHAR}, #{fechaNacimiento,jdbcType=DATE}, #{estado,jdbcType=CHAR}, 
+      #{nroDocumentoIdentidad,jdbcType=VARCHAR}, #{RUC,jdbcType=VARCHAR}, #{celular,jdbcType=VARCHAR}, 
+      #{fechaCreacion,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gmt.comercial.model.Cliente">
+    insert into cliente
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="idCliente != null">
+        IdCliente,
+      </if>
+      <if test="nombres != null">
+        Nombres,
+      </if>
+      <if test="apellidoPaterno != null">
+        ApellidoPaterno,
+      </if>
+      <if test="apellidoMaterno != null">
+        ApellidoMaterno,
+      </if>
+      <if test="fechaNacimiento != null">
+        FechaNacimiento,
+      </if>
+      <if test="estado != null">
+        Estado,
+      </if>
+      <if test="nroDocumentoIdentidad != null">
+        NroDocumentoIdentidad,
+      </if>
+      <if test="RUC != null">
+        RUC,
+      </if>
+      <if test="celular != null">
+        Celular,
+      </if>
+      <if test="fechaCreacion != null">
+        FechaCreacion,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="idCliente != null">
+        #{idCliente,jdbcType=INTEGER},
+      </if>
+      <if test="nombres != null">
+        #{nombres,jdbcType=VARCHAR},
+      </if>
+      <if test="apellidoPaterno != null">
+        #{apellidoPaterno,jdbcType=VARCHAR},
+      </if>
+      <if test="apellidoMaterno != null">
+        #{apellidoMaterno,jdbcType=VARCHAR},
+      </if>
+      <if test="fechaNacimiento != null">
+        #{fechaNacimiento,jdbcType=DATE},
+      </if>
+      <if test="estado != null">
+        #{estado,jdbcType=CHAR},
+      </if>
+      <if test="nroDocumentoIdentidad != null">
+        #{nroDocumentoIdentidad,jdbcType=VARCHAR},
+      </if>
+      <if test="RUC != null">
+        #{RUC,jdbcType=VARCHAR},
+      </if>
+      <if test="celular != null">
+        #{celular,jdbcType=VARCHAR},
+      </if>
+      <if test="fechaCreacion != null">
+        #{fechaCreacion,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gmt.comercial.model.Cliente">
+    update cliente
+    <set>
+      <if test="nombres != null">
+        Nombres = #{nombres,jdbcType=VARCHAR},
+      </if>
+      <if test="apellidoPaterno != null">
+        ApellidoPaterno = #{apellidoPaterno,jdbcType=VARCHAR},
+      </if>
+      <if test="apellidoMaterno != null">
+        ApellidoMaterno = #{apellidoMaterno,jdbcType=VARCHAR},
+      </if>
+      <if test="fechaNacimiento != null">
+        FechaNacimiento = #{fechaNacimiento,jdbcType=DATE},
+      </if>
+      <if test="estado != null">
+        Estado = #{estado,jdbcType=CHAR},
+      </if>
+      <if test="nroDocumentoIdentidad != null">
+        NroDocumentoIdentidad = #{nroDocumentoIdentidad,jdbcType=VARCHAR},
+      </if>
+      <if test="RUC != null">
+        RUC = #{RUC,jdbcType=VARCHAR},
+      </if>
+      <if test="celular != null">
+        Celular = #{celular,jdbcType=VARCHAR},
+      </if>
+      <if test="fechaCreacion != null">
+        FechaCreacion = #{fechaCreacion,jdbcType=DATE},
+      </if>
+    </set>
+    where IdCliente = #{idCliente,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gmt.comercial.model.Cliente">
+    update cliente
+    set Nombres = #{nombres,jdbcType=VARCHAR},
+      ApellidoPaterno = #{apellidoPaterno,jdbcType=VARCHAR},
+      ApellidoMaterno = #{apellidoMaterno,jdbcType=VARCHAR},
+      FechaNacimiento = #{fechaNacimiento,jdbcType=DATE},
+      Estado = #{estado,jdbcType=CHAR},
+      NroDocumentoIdentidad = #{nroDocumentoIdentidad,jdbcType=VARCHAR},
+      RUC = #{RUC,jdbcType=VARCHAR},
+      Celular = #{celular,jdbcType=VARCHAR},
+      FechaCreacion = #{fechaCreacion,jdbcType=DATE}
+    where IdCliente = #{idCliente,jdbcType=INTEGER}
+  </update>
+  <select id="selectByExampleWithRowbounds" parameterType="com.gmt.comercial.model.ClienteExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from cliente
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

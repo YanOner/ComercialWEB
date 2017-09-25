@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -24,29 +23,27 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gmt.comercial.bean.ProductoBean;
-import com.gmt.comercial.bean.Usuario;
-import com.gmt.comercial.service.ComunService;
 
 @Controller
 public class InicioControler {
 
 	private static final Log log = LogFactory.getLog(InicioControler.class);
 	
-	@Autowired
-	ComunService comunService;
+//	@Autowired
+//	ComunService comunService;
 	
 	@RequestMapping("/hola")
 	@ResponseBody
 	public String inicio(){
-		System.out.println(comunService.prueba());
+//		System.out.println(comunService.prueba());
 		return "Hola GMT 2017";
 	}
 	
-	@RequestMapping("/usuarios")
-	@ResponseBody
-	public List<Usuario> usuarios(){
-		return comunService.usuarios();
-	}
+//	@RequestMapping("/usuarios")
+//	@ResponseBody
+//	public List<Usuario> usuarios(){
+//		return comunService.usuarios();
+//	}
 	
 	@RequestMapping(value = "/verImagen", method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
 	public ResponseEntity<byte[]> imagen(HttpServletRequest request, @RequestParam String nombre) throws IOException {
@@ -56,8 +53,8 @@ public class InicioControler {
 	    ResponseEntity<byte[]> responseEntity = null;
 		InputStream is;
 		try {
-			is = new FileInputStream("D:/Android/Imagenes/"+nombre);
-//			is = new FileInputStream("E:/Android/Imagenes/"+nombre);
+//			is = new FileInputStream("D:/Android/Imagenes/"+nombre);
+			is = new FileInputStream("E:/Android/Imagenes/"+nombre);
 			byte[] media = IOUtils.toByteArray(is);
 			headers.setContentLength(media.length);
 			responseEntity = new ResponseEntity<>(media, headers, HttpStatus.OK);
@@ -75,7 +72,7 @@ public class InicioControler {
 		log.info("precio: "+precio);
 		String[] demo = {"calzado_amarillo.png","calzado_rojo.png","calzado_verde.png","calzado_amarillo.png","calzado_rojo.png","calzado_verde.png","calzado_verde.png"};
 		List<ProductoBean> lista = new ArrayList<>();
-		for (int i = 1; i <= 20; i++) {
+		for (int i = 1; i <= 5; i++) {
 			ProductoBean p = new ProductoBean();
 			p.setNombre("Calzado "+i);
 			p.setCodigo("COD "+i);
@@ -102,19 +99,19 @@ public class InicioControler {
 	}
 	
 	//Combo de Talla
-	@RequestMapping(value = "/verTallas", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public List<String> verTallas(){
-		log.info("verTallas "+new Date());
-		List<String> lista = new ArrayList<>();
-		lista.add("Tallas");
-		lista.add("35");
-		lista.add("36");
-		lista.add("37");
-		lista.add("38");
-		lista.add("39");
-		return lista;
-	}
+//	@RequestMapping(value = "/verTallas", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+//	@ResponseBody
+//	public List<String> verTallas(){
+//		log.info("verTallas "+new Date());
+//		List<String> lista = new ArrayList<>();
+//		lista.add("Tallas");
+//		lista.add("35");
+//		lista.add("36");
+//		lista.add("37");
+//		lista.add("38");
+//		lista.add("39");
+//		return lista;
+//	}
 	
 	//Combo Tipo de Calzado
 	@RequestMapping(value = "/verTipoCalzado", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -144,27 +141,27 @@ public class InicioControler {
 	}
 	
 	//verDetallePedido
-	@RequestMapping(value = "/verDetalleCalzado", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public ProductoBean verDetalleCalzado(@RequestParam String codigo){
-		log.info("verDetallePedido: " + new Date());
-		log.info("codigo: " + codigo);
-		
-		ProductoBean p = new ProductoBean();
-		p.setNombre("Calzado 01");
-		p.setCodigo("001");
-		p.setPrecio("S/. 50");
-		p.setNombreImagen("Zapato");
-		p.setMaterialCalzado("Cuero");
-		p.setListaTallas("36,37,38");
-		p.setMaterialTaco("Madera");
-		p.setMaterialForro("Cuero");
-		p.setMaterialPlanta("Caucho");
-		p.setMaterialPlantilla("Plastico");
-		
-		
-		return p;
-	}
+//	@RequestMapping(value = "/verDetalleCalzado", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+//	@ResponseBody
+//	public ProductoBean verDetalleCalzado(@RequestParam String codigo){
+//		log.info("verDetallePedido: " + new Date());
+//		log.info("codigo: " + codigo);
+//		
+//		ProductoBean p = new ProductoBean();
+//		p.setNombre("Calzado 01");
+//		p.setCodigo("001");
+//		p.setPrecio("S/. 50");
+//		p.setNombreImagen("Zapato");
+//		p.setMaterialCalzado("Cuero");
+//		p.setListaTallas("36,37,38");
+//		p.setMaterialTaco("Madera");
+//		p.setMaterialForro("Cuero");
+//		p.setMaterialPlanta("Caucho");
+//		p.setMaterialPlantilla("Plastico");
+//		
+//		
+//		return p;
+//	}
 	
 }
 

@@ -1,4 +1,4 @@
-package com.gmt.comercial.dao;
+package com.gmt.comercial.service;
 
 import java.util.List;
 import java.util.Map;

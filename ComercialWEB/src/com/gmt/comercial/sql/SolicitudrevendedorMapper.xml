@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gmt.comercial.dao.SolicitudrevendedorMapper">
+  <resultMap id="BaseResultMap" type="com.gmt.comercial.model.Solicitudrevendedor">
+    <constructor>
+      <idArg column="IdSolicitud" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <idArg column="IdCliente" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <idArg column="CodUsuario" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="FechaSolicitud" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="Comentario" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="MontoCompraPromedio" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="UsuarioGeneroSolicitud" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="FechaRespuesta" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="UsuarioRespuesta" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="Estado" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="LineaCredito" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="LineaCreditoAnterior" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    IdSolicitud, IdCliente, CodUsuario, FechaSolicitud, Comentario, MontoCompraPromedio, 
+    UsuarioGeneroSolicitud, FechaRespuesta, UsuarioRespuesta, Estado, LineaCredito, LineaCreditoAnterior
+  </sql>
+  <select id="selectByExample" parameterType="com.gmt.comercial.model.SolicitudrevendedorExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from solicitudrevendedor
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="map" resultMap="BaseResultMap">
+    select 'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from solicitudrevendedor
+    where IdSolicitud = #{idSolicitud,jdbcType=INTEGER}
+      and IdCliente = #{idCliente,jdbcType=INTEGER}
+      and CodUsuario = #{codUsuario,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="map">
+    delete from solicitudrevendedor
+    where IdSolicitud = #{idSolicitud,jdbcType=INTEGER}
+      and IdCliente = #{idCliente,jdbcType=INTEGER}
+      and CodUsuario = #{codUsuario,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.gmt.comercial.model.Solicitudrevendedor">
+    insert into solicitudrevendedor (IdSolicitud, IdCliente, CodUsuario, 
+      FechaSolicitud, Comentario, MontoCompraPromedio, 
+      UsuarioGeneroSolicitud, FechaRespuesta, UsuarioRespuesta, 
+      Estado, LineaCredito, LineaCreditoAnterior
+      )
+    values (#{idSolicitud,jdbcType=INTEGER}, #{idCliente,jdbcType=INTEGER}, #{codUsuario,jdbcType=CHAR}, 
+      #{fechaSolicitud,jdbcType=DATE}, #{comentario,jdbcType=VARCHAR}, #{montoCompraPromedio,jdbcType=DECIMAL}, 
+      #{usuarioGeneroSolicitud,jdbcType=CHAR}, #{fechaRespuesta,jdbcType=DATE}, #{usuarioRespuesta,jdbcType=CHAR}, 
+      #{estado,jdbcType=CHAR}, #{lineaCredito,jdbcType=DECIMAL}, #{lineaCreditoAnterior,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.gmt.comercial.model.Solicitudrevendedor">
+    insert into solicitudrevendedor
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="idSolicitud != null">
+        IdSolicitud,
+      </if>
+      <if test="idCliente != null">
+        IdCliente,
+      </if>
+      <if test="codUsuario != null">
+        CodUsuario,
+      </if>
+      <if test="fechaSolicitud != null">
+        FechaSolicitud,
+      </if>
+      <if test="comentario != null">
+        Comentario,
+      </if>
+      <if test="montoCompraPromedio != null">
+        MontoCompraPromedio,
+      </if>
+      <if test="usuarioGeneroSolicitud != null">
+        UsuarioGeneroSolicitud,
+      </if>
+      <if test="fechaRespuesta != null">
+        FechaRespuesta,
+      </if>
+      <if test="usuarioRespuesta != null">
+        UsuarioRespuesta,
+      </if>
+      <if test="estado != null">
+        Estado,
+      </if>
+      <if test="lineaCredito != null">
+        LineaCredito,
+      </if>
+      <if test="lineaCreditoAnterior != null">
+        LineaCreditoAnterior,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="idSolicitud != null">
+        #{idSolicitud,jdbcType=INTEGER},
+      </if>
+      <if test="idCliente != null">
+        #{idCliente,jdbcType=INTEGER},
+      </if>
+      <if test="codUsuario != null">
+        #{codUsuario,jdbcType=CHAR},
+      </if>
+      <if test="fechaSolicitud != null">
+        #{fechaSolicitud,jdbcType=DATE},
+      </if>
+      <if test="comentario != null">
+        #{comentario,jdbcType=VARCHAR},
+      </if>
+      <if test="montoCompraPromedio != null">
+        #{montoCompraPromedio,jdbcType=DECIMAL},
+      </if>
+      <if test="usuarioGeneroSolicitud != null">
+        #{usuarioGeneroSolicitud,jdbcType=CHAR},
+      </if>
+      <if test="fechaRespuesta != null">
+        #{fechaRespuesta,jdbcType=DATE},
+      </if>
+      <if test="usuarioRespuesta != null">
+        #{usuarioRespuesta,jdbcType=CHAR},
+      </if>
+      <if test="estado != null">
+        #{estado,jdbcType=CHAR},
+      </if>
+      <if test="lineaCredito != null">
+        #{lineaCredito,jdbcType=DECIMAL},
+      </if>
+      <if test="lineaCreditoAnterior != null">
+        #{lineaCreditoAnterior,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gmt.comercial.model.Solicitudrevendedor">
+    update solicitudrevendedor
+    <set>
+      <if test="fechaSolicitud != null">
+        FechaSolicitud = #{fechaSolicitud,jdbcType=DATE},
+      </if>
+      <if test="comentario != null">
+        Comentario = #{comentario,jdbcType=VARCHAR},
+      </if>
+      <if test="montoCompraPromedio != null">
+        MontoCompraPromedio = #{montoCompraPromedio,jdbcType=DECIMAL},
+      </if>
+      <if test="usuarioGeneroSolicitud != null">
+        UsuarioGeneroSolicitud = #{usuarioGeneroSolicitud,jdbcType=CHAR},
+      </if>
+      <if test="fechaRespuesta != null">
+        FechaRespuesta = #{fechaRespuesta,jdbcType=DATE},
+      </if>
+      <if test="usuarioRespuesta != null">
+        UsuarioRespuesta = #{usuarioRespuesta,jdbcType=CHAR},
+      </if>
+      <if test="estado != null">
+        Estado = #{estado,jdbcType=CHAR},
+      </if>
+      <if test="lineaCredito != null">
+        LineaCredito = #{lineaCredito,jdbcType=DECIMAL},
+      </if>
+      <if test="lineaCreditoAnterior != null">
+        LineaCreditoAnterior = #{lineaCreditoAnterior,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where IdSolicitud = #{idSolicitud,jdbcType=INTEGER}
+      and IdCliente = #{idCliente,jdbcType=INTEGER}
+      and CodUsuario = #{codUsuario,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gmt.comercial.model.Solicitudrevendedor">
+    update solicitudrevendedor
+    set FechaSolicitud = #{fechaSolicitud,jdbcType=DATE},
+      Comentario = #{comentario,jdbcType=VARCHAR},
+      MontoCompraPromedio = #{montoCompraPromedio,jdbcType=DECIMAL},
+      UsuarioGeneroSolicitud = #{usuarioGeneroSolicitud,jdbcType=CHAR},
+      FechaRespuesta = #{fechaRespuesta,jdbcType=DATE},
+      UsuarioRespuesta = #{usuarioRespuesta,jdbcType=CHAR},
+      Estado = #{estado,jdbcType=CHAR},
+      LineaCredito = #{lineaCredito,jdbcType=DECIMAL},
+      LineaCreditoAnterior = #{lineaCreditoAnterior,jdbcType=DECIMAL}
+    where IdSolicitud = #{idSolicitud,jdbcType=INTEGER}
+      and IdCliente = #{idCliente,jdbcType=INTEGER}
+      and CodUsuario = #{codUsuario,jdbcType=CHAR}
+  </update>
+  <select id="selectByExampleWithRowbounds" parameterType="com.gmt.comercial.model.SolicitudrevendedorExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from solicitudrevendedor
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gmt.comercial.dao.CupondescuentoMapper">
+  <resultMap id="BaseResultMap" type="com.gmt.comercial.model.Cupondescuento">
+    <constructor>
+      <idArg column="IdCuponDescuento" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="CodigoCupon" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="FechaValInicio" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="FechaValFin" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="PorcDescuento" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="MontoDescuento" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="Observacion" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    IdCuponDescuento, CodigoCupon, FechaValInicio, FechaValFin, PorcDescuento, MontoDescuento, 
+    Observacion
+  </sql>
+  <select id="selectByExample" parameterType="com.gmt.comercial.model.CupondescuentoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from cupondescuento
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from cupondescuento
+    where IdCuponDescuento = #{idCuponDescuento,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cupondescuento
+    where IdCuponDescuento = #{idCuponDescuento,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.gmt.comercial.model.Cupondescuento">
+    insert into cupondescuento (IdCuponDescuento, CodigoCupon, FechaValInicio, 
+      FechaValFin, PorcDescuento, MontoDescuento, 
+      Observacion)
+    values (#{idCuponDescuento,jdbcType=INTEGER}, #{codigoCupon,jdbcType=CHAR}, #{fechaValInicio,jdbcType=DATE}, 
+      #{fechaValFin,jdbcType=DATE}, #{porcDescuento,jdbcType=DECIMAL}, #{montoDescuento,jdbcType=DECIMAL}, 
+      #{observacion,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gmt.comercial.model.Cupondescuento">
+    insert into cupondescuento
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="idCuponDescuento != null">
+        IdCuponDescuento,
+      </if>
+      <if test="codigoCupon != null">
+        CodigoCupon,
+      </if>
+      <if test="fechaValInicio != null">
+        FechaValInicio,
+      </if>
+      <if test="fechaValFin != null">
+        FechaValFin,
+      </if>
+      <if test="porcDescuento != null">
+        PorcDescuento,
+      </if>
+      <if test="montoDescuento != null">
+        MontoDescuento,
+      </if>
+      <if test="observacion != null">
+        Observacion,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="idCuponDescuento != null">
+        #{idCuponDescuento,jdbcType=INTEGER},
+      </if>
+      <if test="codigoCupon != null">
+        #{codigoCupon,jdbcType=CHAR},
+      </if>
+      <if test="fechaValInicio != null">
+        #{fechaValInicio,jdbcType=DATE},
+      </if>
+      <if test="fechaValFin != null">
+        #{fechaValFin,jdbcType=DATE},
+      </if>
+      <if test="porcDescuento != null">
+        #{porcDescuento,jdbcType=DECIMAL},
+      </if>
+      <if test="montoDescuento != null">
+        #{montoDescuento,jdbcType=DECIMAL},
+      </if>
+      <if test="observacion != null">
+        #{observacion,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gmt.comercial.model.Cupondescuento">
+    update cupondescuento
+    <set>
+      <if test="codigoCupon != null">
+        CodigoCupon = #{codigoCupon,jdbcType=CHAR},
+      </if>
+      <if test="fechaValInicio != null">
+        FechaValInicio = #{fechaValInicio,jdbcType=DATE},
+      </if>
+      <if test="fechaValFin != null">
+        FechaValFin = #{fechaValFin,jdbcType=DATE},
+      </if>
+      <if test="porcDescuento != null">
+        PorcDescuento = #{porcDescuento,jdbcType=DECIMAL},
+      </if>
+      <if test="montoDescuento != null">
+        MontoDescuento = #{montoDescuento,jdbcType=DECIMAL},
+      </if>
+      <if test="observacion != null">
+        Observacion = #{observacion,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where IdCuponDescuento = #{idCuponDescuento,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gmt.comercial.model.Cupondescuento">
+    update cupondescuento
+    set CodigoCupon = #{codigoCupon,jdbcType=CHAR},
+      FechaValInicio = #{fechaValInicio,jdbcType=DATE},
+      FechaValFin = #{fechaValFin,jdbcType=DATE},
+      PorcDescuento = #{porcDescuento,jdbcType=DECIMAL},
+      MontoDescuento = #{montoDescuento,jdbcType=DECIMAL},
+      Observacion = #{observacion,jdbcType=VARCHAR}
+    where IdCuponDescuento = #{idCuponDescuento,jdbcType=INTEGER}
+  </update>
+  <select id="selectByExampleWithRowbounds" parameterType="com.gmt.comercial.model.CupondescuentoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from cupondescuento
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

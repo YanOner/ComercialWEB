@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gmt.comercial.dao.ProductoMapper">
+  <resultMap id="BaseResultMap" type="com.gmt.comercial.model.Producto">
+    <constructor>
+      <idArg column="IdProducto" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="SKU" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="Descripcion" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="IdTipoProducto" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="Genero" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="PrecioUnitario" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="PrecioVendedor" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="Estilo" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="Estado" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="StockVenta" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="StockObservado" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="StockCritico" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="FechaUltimaCarga" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="FechaProximaCarga" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="UsuarioGenero" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="FechaGeneracion" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="UsuarioModifico" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="FechaModificacion" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="AltoPaquete" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="AnchoPaquete" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="LargoPaquete" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="Observacion" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="IdTemporada" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="IdUMD" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="Peso" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    IdProducto, SKU, Descripcion, IdTipoProducto, Genero, PrecioUnitario, PrecioVendedor, 
+    Estilo, Estado, StockVenta, StockObservado, StockCritico, FechaUltimaCarga, FechaProximaCarga, 
+    UsuarioGenero, FechaGeneracion, UsuarioModifico, FechaModificacion, AltoPaquete, 
+    AnchoPaquete, LargoPaquete, Observacion, IdTemporada, IdUMD, Peso
+  </sql>
+  <select id="buscarCatalogo" parameterType="map" resultType="Producto" statementType="CALLABLE">
+    { call SP_FiltrosVenta (
+    		#{descProducto, mode=IN, jdbcType=VARCHAR},
+			#{descTipoProd, mode=IN, jdbcType=VARCHAR},
+			#{descTalla, 	mode=IN, jdbcType=INTEGER}, 
+			#{descColor, 	mode=IN, jdbcType=VARCHAR},
+			#{descTemporada, mode=IN, jdbcType=VARCHAR},
+			#{precioIni, 	mode=IN, jdbcType=DECIMAL},
+			#{precioFin, 	mode=IN, jdbcType=DECIMAL}
+    	) } 
+  </select>
+  <select id="detalleProducto" parameterType="map" resultType="Producto" statementType="CALLABLE">
+    { call SP_DetalleProducto (
+			#{idProducto, 	mode=IN, jdbcType=INTEGER}, 
+			#{idColor,	 	mode=IN, jdbcType=INTEGER},
+			#{flag, 		mode=IN, jdbcType=CHAR}
+    	) } 
+  </select>
+  <select id="selectByExample" parameterType="com.gmt.comercial.model.ProductoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from producto
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from producto
+    where IdProducto = #{idProducto,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from producto
+    where IdProducto = #{idProducto,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.gmt.comercial.model.Producto">
+    insert into producto (IdProducto, SKU, Descripcion, 
+      IdTipoProducto, Genero, PrecioUnitario, 
+      PrecioVendedor, Estilo, Estado, 
+      StockVenta, StockObservado, StockCritico, 
+      FechaUltimaCarga, FechaProximaCarga, UsuarioGenero, 
+      FechaGeneracion, UsuarioModifico, FechaModificacion, 
+      AltoPaquete, AnchoPaquete, LargoPaquete, 
+      Observacion, IdTemporada, IdUMD, 
+      Peso)
+    values (#{idProducto,jdbcType=INTEGER}, #{SKU,jdbcType=VARCHAR}, #{descripcion,jdbcType=VARCHAR}, 
+      #{idTipoProducto,jdbcType=INTEGER}, #{genero,jdbcType=CHAR}, #{precioUnitario,jdbcType=DECIMAL}, 
+      #{precioVendedor,jdbcType=DECIMAL}, #{estilo,jdbcType=VARCHAR}, #{estado,jdbcType=CHAR}, 
+      #{stockVenta,jdbcType=INTEGER}, #{stockObservado,jdbcType=INTEGER}, #{stockCritico,jdbcType=INTEGER}, 
+      #{fechaUltimaCarga,jdbcType=DATE}, #{fechaProximaCarga,jdbcType=DATE}, #{usuarioGenero,jdbcType=CHAR}, 
+      #{fechaGeneracion,jdbcType=DATE}, #{usuarioModifico,jdbcType=CHAR}, #{fechaModificacion,jdbcType=DATE}, 
+      #{altoPaquete,jdbcType=DECIMAL}, #{anchoPaquete,jdbcType=DECIMAL}, #{largoPaquete,jdbcType=DECIMAL}, 
+      #{observacion,jdbcType=VARCHAR}, #{idTemporada,jdbcType=INTEGER}, #{idUMD,jdbcType=INTEGER}, 
+      #{peso,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gmt.comercial.model.Producto">
+    insert into producto
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="idProducto != null">
+        IdProducto,
+      </if>
+      <if test="SKU != null">
+        SKU,
+      </if>
+      <if test="descripcion != null">
+        Descripcion,
+      </if>
+      <if test="idTipoProducto != null">
+        IdTipoProducto,
+      </if>
+      <if test="genero != null">
+        Genero,
+      </if>
+      <if test="precioUnitario != null">
+        PrecioUnitario,
+      </if>
+      <if test="precioVendedor != null">
+        PrecioVendedor,
+      </if>
+      <if test="estilo != null">
+        Estilo,
+      </if>
+      <if test="estado != null">
+        Estado,
+      </if>
+      <if test="stockVenta != null">
+        StockVenta,
+      </if>
+      <if test="stockObservado != null">
+        StockObservado,
+      </if>
+      <if test="stockCritico != null">
+        StockCritico,
+      </if>
+      <if test="fechaUltimaCarga != null">
+        FechaUltimaCarga,
+      </if>
+      <if test="fechaProximaCarga != null">
+        FechaProximaCarga,
+      </if>
+      <if test="usuarioGenero != null">
+        UsuarioGenero,
+      </if>
+      <if test="fechaGeneracion != null">
+        FechaGeneracion,
+      </if>
+      <if test="usuarioModifico != null">
+        UsuarioModifico,
+      </if>
+      <if test="fechaModificacion != null">
+        FechaModificacion,
+      </if>
+      <if test="altoPaquete != null">
+        AltoPaquete,
+      </if>
+      <if test="anchoPaquete != null">
+        AnchoPaquete,
+      </if>
+      <if test="largoPaquete != null">
+        LargoPaquete,
+      </if>
+      <if test="observacion != null">
+        Observacion,
+      </if>
+      <if test="idTemporada != null">
+        IdTemporada,
+      </if>
+      <if test="idUMD != null">
+        IdUMD,
+      </if>
+      <if test="peso != null">
+        Peso,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="idProducto != null">
+        #{idProducto,jdbcType=INTEGER},
+      </if>
+      <if test="SKU != null">
+        #{SKU,jdbcType=VARCHAR},
+      </if>
+      <if test="descripcion != null">
+        #{descripcion,jdbcType=VARCHAR},
+      </if>
+      <if test="idTipoProducto != null">
+        #{idTipoProducto,jdbcType=INTEGER},
+      </if>
+      <if test="genero != null">
+        #{genero,jdbcType=CHAR},
+      </if>
+      <if test="precioUnitario != null">
+        #{precioUnitario,jdbcType=DECIMAL},
+      </if>
+      <if test="precioVendedor != null">
+        #{precioVendedor,jdbcType=DECIMAL},
+      </if>
+      <if test="estilo != null">
+        #{estilo,jdbcType=VARCHAR},
+      </if>
+      <if test="estado != null">
+        #{estado,jdbcType=CHAR},
+      </if>
+      <if test="stockVenta != null">
+        #{stockVenta,jdbcType=INTEGER},
+      </if>
+      <if test="stockObservado != null">
+        #{stockObservado,jdbcType=INTEGER},
+      </if>
+      <if test="stockCritico != null">
+        #{stockCritico,jdbcType=INTEGER},
+      </if>
+      <if test="fechaUltimaCarga != null">
+        #{fechaUltimaCarga,jdbcType=DATE},
+      </if>
+      <if test="fechaProximaCarga != null">
+        #{fechaProximaCarga,jdbcType=DATE},
+      </if>
+      <if test="usuarioGenero != null">
+        #{usuarioGenero,jdbcType=CHAR},
+      </if>
+      <if test="fechaGeneracion != null">
+        #{fechaGeneracion,jdbcType=DATE},
+      </if>
+      <if test="usuarioModifico != null">
+        #{usuarioModifico,jdbcType=CHAR},
+      </if>
+      <if test="fechaModificacion != null">
+        #{fechaModificacion,jdbcType=DATE},
+      </if>
+      <if test="altoPaquete != null">
+        #{altoPaquete,jdbcType=DECIMAL},
+      </if>
+      <if test="anchoPaquete != null">
+        #{anchoPaquete,jdbcType=DECIMAL},
+      </if>
+      <if test="largoPaquete != null">
+        #{largoPaquete,jdbcType=DECIMAL},
+      </if>
+      <if test="observacion != null">
+        #{observacion,jdbcType=VARCHAR},
+      </if>
+      <if test="idTemporada != null">
+        #{idTemporada,jdbcType=INTEGER},
+      </if>
+      <if test="idUMD != null">
+        #{idUMD,jdbcType=INTEGER},
+      </if>
+      <if test="peso != null">
+        #{peso,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gmt.comercial.model.Producto">
+    update producto
+    <set>
+      <if test="SKU != null">
+        SKU = #{SKU,jdbcType=VARCHAR},
+      </if>
+      <if test="descripcion != null">
+        Descripcion = #{descripcion,jdbcType=VARCHAR},
+      </if>
+      <if test="idTipoProducto != null">
+        IdTipoProducto = #{idTipoProducto,jdbcType=INTEGER},
+      </if>
+      <if test="genero != null">
+        Genero = #{genero,jdbcType=CHAR},
+      </if>
+      <if test="precioUnitario != null">
+        PrecioUnitario = #{precioUnitario,jdbcType=DECIMAL},
+      </if>
+      <if test="precioVendedor != null">
+        PrecioVendedor = #{precioVendedor,jdbcType=DECIMAL},
+      </if>
+      <if test="estilo != null">
+        Estilo = #{estilo,jdbcType=VARCHAR},
+      </if>
+      <if test="estado != null">
+        Estado = #{estado,jdbcType=CHAR},
+      </if>
+      <if test="stockVenta != null">
+        StockVenta = #{stockVenta,jdbcType=INTEGER},
+      </if>
+      <if test="stockObservado != null">
+        StockObservado = #{stockObservado,jdbcType=INTEGER},
+      </if>
+      <if test="stockCritico != null">
+        StockCritico = #{stockCritico,jdbcType=INTEGER},
+      </if>
+      <if test="fechaUltimaCarga != null">
+        FechaUltimaCarga = #{fechaUltimaCarga,jdbcType=DATE},
+      </if>
+      <if test="fechaProximaCarga != null">
+        FechaProximaCarga = #{fechaProximaCarga,jdbcType=DATE},
+      </if>
+      <if test="usuarioGenero != null">
+        UsuarioGenero = #{usuarioGenero,jdbcType=CHAR},
+      </if>
+      <if test="fechaGeneracion != null">
+        FechaGeneracion = #{fechaGeneracion,jdbcType=DATE},
+      </if>
+      <if test="usuarioModifico != null">
+        UsuarioModifico = #{usuarioModifico,jdbcType=CHAR},
+      </if>
+      <if test="fechaModificacion != null">
+        FechaModificacion = #{fechaModificacion,jdbcType=DATE},
+      </if>
+      <if test="altoPaquete != null">
+        AltoPaquete = #{altoPaquete,jdbcType=DECIMAL},
+      </if>
+      <if test="anchoPaquete != null">
+        AnchoPaquete = #{anchoPaquete,jdbcType=DECIMAL},
+      </if>
+      <if test="largoPaquete != null">
+        LargoPaquete = #{largoPaquete,jdbcType=DECIMAL},
+      </if>
+      <if test="observacion != null">
+        Observacion = #{observacion,jdbcType=VARCHAR},
+      </if>
+      <if test="idTemporada != null">
+        IdTemporada = #{idTemporada,jdbcType=INTEGER},
+      </if>
+      <if test="idUMD != null">
+        IdUMD = #{idUMD,jdbcType=INTEGER},
+      </if>
+      <if test="peso != null">
+        Peso = #{peso,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where IdProducto = #{idProducto,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gmt.comercial.model.Producto">
+    update producto
+    set SKU = #{SKU,jdbcType=VARCHAR},
+      Descripcion = #{descripcion,jdbcType=VARCHAR},
+      IdTipoProducto = #{idTipoProducto,jdbcType=INTEGER},
+      Genero = #{genero,jdbcType=CHAR},
+      PrecioUnitario = #{precioUnitario,jdbcType=DECIMAL},
+      PrecioVendedor = #{precioVendedor,jdbcType=DECIMAL},
+      Estilo = #{estilo,jdbcType=VARCHAR},
+      Estado = #{estado,jdbcType=CHAR},
+      StockVenta = #{stockVenta,jdbcType=INTEGER},
+      StockObservado = #{stockObservado,jdbcType=INTEGER},
+      StockCritico = #{stockCritico,jdbcType=INTEGER},
+      FechaUltimaCarga = #{fechaUltimaCarga,jdbcType=DATE},
+      FechaProximaCarga = #{fechaProximaCarga,jdbcType=DATE},
+      UsuarioGenero = #{usuarioGenero,jdbcType=CHAR},
+      FechaGeneracion = #{fechaGeneracion,jdbcType=DATE},
+      UsuarioModifico = #{usuarioModifico,jdbcType=CHAR},
+      FechaModificacion = #{fechaModificacion,jdbcType=DATE},
+      AltoPaquete = #{altoPaquete,jdbcType=DECIMAL},
+      AnchoPaquete = #{anchoPaquete,jdbcType=DECIMAL},
+      LargoPaquete = #{largoPaquete,jdbcType=DECIMAL},
+      Observacion = #{observacion,jdbcType=VARCHAR},
+      IdTemporada = #{idTemporada,jdbcType=INTEGER},
+      IdUMD = #{idUMD,jdbcType=INTEGER},
+      Peso = #{peso,jdbcType=DECIMAL}
+    where IdProducto = #{idProducto,jdbcType=INTEGER}
+  </update>
+  <select id="selectByExampleWithRowbounds" parameterType="com.gmt.comercial.model.ProductoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from producto
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

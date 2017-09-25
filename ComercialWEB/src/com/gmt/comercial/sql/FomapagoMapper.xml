@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gmt.comercial.dao.FomapagoMapper">
+  <resultMap id="BaseResultMap" type="com.gmt.comercial.model.Fomapago">
+    <constructor>
+      <idArg column="IdFomaPago" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="Descripcion" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="Estado" javaType="java.lang.String" jdbcType="CHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    IdFomaPago, Descripcion, Estado
+  </sql>
+  <select id="selectByExample" parameterType="com.gmt.comercial.model.FomapagoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from fomapago
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from fomapago
+    where IdFomaPago = #{idFomaPago,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from fomapago
+    where IdFomaPago = #{idFomaPago,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.gmt.comercial.model.Fomapago">
+    insert into fomapago (IdFomaPago, Descripcion, Estado
+      )
+    values (#{idFomaPago,jdbcType=INTEGER}, #{descripcion,jdbcType=VARCHAR}, #{estado,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.gmt.comercial.model.Fomapago">
+    insert into fomapago
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="idFomaPago != null">
+        IdFomaPago,
+      </if>
+      <if test="descripcion != null">
+        Descripcion,
+      </if>
+      <if test="estado != null">
+        Estado,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="idFomaPago != null">
+        #{idFomaPago,jdbcType=INTEGER},
+      </if>
+      <if test="descripcion != null">
+        #{descripcion,jdbcType=VARCHAR},
+      </if>
+      <if test="estado != null">
+        #{estado,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gmt.comercial.model.Fomapago">
+    update fomapago
+    <set>
+      <if test="descripcion != null">
+        Descripcion = #{descripcion,jdbcType=VARCHAR},
+      </if>
+      <if test="estado != null">
+        Estado = #{estado,jdbcType=CHAR},
+      </if>
+    </set>
+    where IdFomaPago = #{idFomaPago,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gmt.comercial.model.Fomapago">
+    update fomapago
+    set Descripcion = #{descripcion,jdbcType=VARCHAR},
+      Estado = #{estado,jdbcType=CHAR}
+    where IdFomaPago = #{idFomaPago,jdbcType=INTEGER}
+  </update>
+  <select id="selectByExampleWithRowbounds" parameterType="com.gmt.comercial.model.FomapagoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from fomapago
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

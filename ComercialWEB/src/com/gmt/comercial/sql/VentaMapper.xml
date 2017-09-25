@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gmt.comercial.dao.VentaMapper">
+  <resultMap id="BaseResultMap" type="com.gmt.comercial.model.Venta">
+    <constructor>
+      <idArg column="IdVenta" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="IdCliente" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="FechaVenta" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="SubTotal" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="IGV" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="Descuento" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="Total" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="MontoEntrega" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="TotalVenta" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="NroCuotas" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="TipoRecojo" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="UsuarioModifico" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="FechaModifico" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="UsuarioAnulo" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="FechaAnulo" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="NumOperaBancaria" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="FechaOperaBancaria" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="CodTrxTarjeta" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="FechTrxTarjeta" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="Estado" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="CodUbigeoCosto" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="IdFomaPago" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="IdCuponDescuento" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    IdVenta, IdCliente, FechaVenta, SubTotal, IGV, Descuento, Total, MontoEntrega, TotalVenta, 
+    NroCuotas, TipoRecojo, UsuarioModifico, FechaModifico, UsuarioAnulo, FechaAnulo, 
+    NumOperaBancaria, FechaOperaBancaria, CodTrxTarjeta, FechTrxTarjeta, Estado, CodUbigeoCosto, 
+    IdFomaPago, IdCuponDescuento
+  </sql>
+  <select id="selectByExample" parameterType="com.gmt.comercial.model.VentaExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from venta
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from venta
+    where IdVenta = #{idVenta,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from venta
+    where IdVenta = #{idVenta,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.gmt.comercial.model.Venta">
+    insert into venta (IdVenta, IdCliente, FechaVenta, 
+      SubTotal, IGV, Descuento, 
+      Total, MontoEntrega, TotalVenta, 
+      NroCuotas, TipoRecojo, UsuarioModifico, 
+      FechaModifico, UsuarioAnulo, FechaAnulo, 
+      NumOperaBancaria, FechaOperaBancaria, CodTrxTarjeta, 
+      FechTrxTarjeta, Estado, CodUbigeoCosto, 
+      IdFomaPago, IdCuponDescuento)
+    values (#{idVenta,jdbcType=INTEGER}, #{idCliente,jdbcType=INTEGER}, #{fechaVenta,jdbcType=DATE}, 
+      #{subTotal,jdbcType=DECIMAL}, #{IGV,jdbcType=DECIMAL}, #{descuento,jdbcType=DECIMAL}, 
+      #{total,jdbcType=DECIMAL}, #{montoEntrega,jdbcType=DECIMAL}, #{totalVenta,jdbcType=DECIMAL}, 
+      #{nroCuotas,jdbcType=INTEGER}, #{tipoRecojo,jdbcType=CHAR}, #{usuarioModifico,jdbcType=CHAR}, 
+      #{fechaModifico,jdbcType=DATE}, #{usuarioAnulo,jdbcType=CHAR}, #{fechaAnulo,jdbcType=DATE}, 
+      #{numOperaBancaria,jdbcType=CHAR}, #{fechaOperaBancaria,jdbcType=DATE}, #{codTrxTarjeta,jdbcType=VARCHAR}, 
+      #{fechTrxTarjeta,jdbcType=DATE}, #{estado,jdbcType=CHAR}, #{codUbigeoCosto,jdbcType=CHAR}, 
+      #{idFomaPago,jdbcType=INTEGER}, #{idCuponDescuento,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gmt.comercial.model.Venta">
+    insert into venta
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="idVenta != null">
+        IdVenta,
+      </if>
+      <if test="idCliente != null">
+        IdCliente,
+      </if>
+      <if test="fechaVenta != null">
+        FechaVenta,
+      </if>
+      <if test="subTotal != null">
+        SubTotal,
+      </if>
+      <if test="IGV != null">
+        IGV,
+      </if>
+      <if test="descuento != null">
+        Descuento,
+      </if>
+      <if test="total != null">
+        Total,
+      </if>
+      <if test="montoEntrega != null">
+        MontoEntrega,
+      </if>
+      <if test="totalVenta != null">
+        TotalVenta,
+      </if>
+      <if test="nroCuotas != null">
+        NroCuotas,
+      </if>
+      <if test="tipoRecojo != null">
+        TipoRecojo,
+      </if>
+      <if test="usuarioModifico != null">
+        UsuarioModifico,
+      </if>
+      <if test="fechaModifico != null">
+        FechaModifico,
+      </if>
+      <if test="usuarioAnulo != null">
+        UsuarioAnulo,
+      </if>
+      <if test="fechaAnulo != null">
+        FechaAnulo,
+      </if>
+      <if test="numOperaBancaria != null">
+        NumOperaBancaria,
+      </if>
+      <if test="fechaOperaBancaria != null">
+        FechaOperaBancaria,
+      </if>
+      <if test="codTrxTarjeta != null">
+        CodTrxTarjeta,
+      </if>
+      <if test="fechTrxTarjeta != null">
+        FechTrxTarjeta,
+      </if>
+      <if test="estado != null">
+        Estado,
+      </if>
+      <if test="codUbigeoCosto != null">
+        CodUbigeoCosto,
+      </if>
+      <if test="idFomaPago != null">
+        IdFomaPago,
+      </if>
+      <if test="idCuponDescuento != null">
+        IdCuponDescuento,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="idVenta != null">
+        #{idVenta,jdbcType=INTEGER},
+      </if>
+      <if test="idCliente != null">
+        #{idCliente,jdbcType=INTEGER},
+      </if>
+      <if test="fechaVenta != null">
+        #{fechaVenta,jdbcType=DATE},
+      </if>
+      <if test="subTotal != null">
+        #{subTotal,jdbcType=DECIMAL},
+      </if>
+      <if test="IGV != null">
+        #{IGV,jdbcType=DECIMAL},
+      </if>
+      <if test="descuento != null">
+        #{descuento,jdbcType=DECIMAL},
+      </if>
+      <if test="total != null">
+        #{total,jdbcType=DECIMAL},
+      </if>
+      <if test="montoEntrega != null">
+        #{montoEntrega,jdbcType=DECIMAL},
+      </if>
+      <if test="totalVenta != null">
+        #{totalVenta,jdbcType=DECIMAL},
+      </if>
+      <if test="nroCuotas != null">
+        #{nroCuotas,jdbcType=INTEGER},
+      </if>
+      <if test="tipoRecojo != null">
+        #{tipoRecojo,jdbcType=CHAR},
+      </if>
+      <if test="usuarioModifico != null">
+        #{usuarioModifico,jdbcType=CHAR},
+      </if>
+      <if test="fechaModifico != null">
+        #{fechaModifico,jdbcType=DATE},
+      </if>
+      <if test="usuarioAnulo != null">
+        #{usuarioAnulo,jdbcType=CHAR},
+      </if>
+      <if test="fechaAnulo != null">
+        #{fechaAnulo,jdbcType=DATE},
+      </if>
+      <if test="numOperaBancaria != null">
+        #{numOperaBancaria,jdbcType=CHAR},
+      </if>
+      <if test="fechaOperaBancaria != null">
+        #{fechaOperaBancaria,jdbcType=DATE},
+      </if>
+      <if test="codTrxTarjeta != null">
+        #{codTrxTarjeta,jdbcType=VARCHAR},
+      </if>
+      <if test="fechTrxTarjeta != null">
+        #{fechTrxTarjeta,jdbcType=DATE},
+      </if>
+      <if test="estado != null">
+        #{estado,jdbcType=CHAR},
+      </if>
+      <if test="codUbigeoCosto != null">
+        #{codUbigeoCosto,jdbcType=CHAR},
+      </if>
+      <if test="idFomaPago != null">
+        #{idFomaPago,jdbcType=INTEGER},
+      </if>
+      <if test="idCuponDescuento != null">
+        #{idCuponDescuento,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gmt.comercial.model.Venta">
+    update venta
+    <set>
+      <if test="idCliente != null">
+        IdCliente = #{idCliente,jdbcType=INTEGER},
+      </if>
+      <if test="fechaVenta != null">
+        FechaVenta = #{fechaVenta,jdbcType=DATE},
+      </if>
+      <if test="subTotal != null">
+        SubTotal = #{subTotal,jdbcType=DECIMAL},
+      </if>
+      <if test="IGV != null">
+        IGV = #{IGV,jdbcType=DECIMAL},
+      </if>
+      <if test="descuento != null">
+        Descuento = #{descuento,jdbcType=DECIMAL},
+      </if>
+      <if test="total != null">
+        Total = #{total,jdbcType=DECIMAL},
+      </if>
+      <if test="montoEntrega != null">
+        MontoEntrega = #{montoEntrega,jdbcType=DECIMAL},
+      </if>
+      <if test="totalVenta != null">
+        TotalVenta = #{totalVenta,jdbcType=DECIMAL},
+      </if>
+      <if test="nroCuotas != null">
+        NroCuotas = #{nroCuotas,jdbcType=INTEGER},
+      </if>
+      <if test="tipoRecojo != null">
+        TipoRecojo = #{tipoRecojo,jdbcType=CHAR},
+      </if>
+      <if test="usuarioModifico != null">
+        UsuarioModifico = #{usuarioModifico,jdbcType=CHAR},
+      </if>
+      <if test="fechaModifico != null">
+        FechaModifico = #{fechaModifico,jdbcType=DATE},
+      </if>
+      <if test="usuarioAnulo != null">
+        UsuarioAnulo = #{usuarioAnulo,jdbcType=CHAR},
+      </if>
+      <if test="fechaAnulo != null">
+        FechaAnulo = #{fechaAnulo,jdbcType=DATE},
+      </if>
+      <if test="numOperaBancaria != null">
+        NumOperaBancaria = #{numOperaBancaria,jdbcType=CHAR},
+      </if>
+      <if test="fechaOperaBancaria != null">
+        FechaOperaBancaria = #{fechaOperaBancaria,jdbcType=DATE},
+      </if>
+      <if test="codTrxTarjeta != null">
+        CodTrxTarjeta = #{codTrxTarjeta,jdbcType=VARCHAR},
+      </if>
+      <if test="fechTrxTarjeta != null">
+        FechTrxTarjeta = #{fechTrxTarjeta,jdbcType=DATE},
+      </if>
+      <if test="estado != null">
+        Estado = #{estado,jdbcType=CHAR},
+      </if>
+      <if test="codUbigeoCosto != null">
+        CodUbigeoCosto = #{codUbigeoCosto,jdbcType=CHAR},
+      </if>
+      <if test="idFomaPago != null">
+        IdFomaPago = #{idFomaPago,jdbcType=INTEGER},
+      </if>
+      <if test="idCuponDescuento != null">
+        IdCuponDescuento = #{idCuponDescuento,jdbcType=INTEGER},
+      </if>
+    </set>
+    where IdVenta = #{idVenta,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gmt.comercial.model.Venta">
+    update venta
+    set IdCliente = #{idCliente,jdbcType=INTEGER},
+      FechaVenta = #{fechaVenta,jdbcType=DATE},
+      SubTotal = #{subTotal,jdbcType=DECIMAL},
+      IGV = #{IGV,jdbcType=DECIMAL},
+      Descuento = #{descuento,jdbcType=DECIMAL},
+      Total = #{total,jdbcType=DECIMAL},
+      MontoEntrega = #{montoEntrega,jdbcType=DECIMAL},
+      TotalVenta = #{totalVenta,jdbcType=DECIMAL},
+      NroCuotas = #{nroCuotas,jdbcType=INTEGER},
+      TipoRecojo = #{tipoRecojo,jdbcType=CHAR},
+      UsuarioModifico = #{usuarioModifico,jdbcType=CHAR},
+      FechaModifico = #{fechaModifico,jdbcType=DATE},
+      UsuarioAnulo = #{usuarioAnulo,jdbcType=CHAR},
+      FechaAnulo = #{fechaAnulo,jdbcType=DATE},
+      NumOperaBancaria = #{numOperaBancaria,jdbcType=CHAR},
+      FechaOperaBancaria = #{fechaOperaBancaria,jdbcType=DATE},
+      CodTrxTarjeta = #{codTrxTarjeta,jdbcType=VARCHAR},
+      FechTrxTarjeta = #{fechTrxTarjeta,jdbcType=DATE},
+      Estado = #{estado,jdbcType=CHAR},
+      CodUbigeoCosto = #{codUbigeoCosto,jdbcType=CHAR},
+      IdFomaPago = #{idFomaPago,jdbcType=INTEGER},
+      IdCuponDescuento = #{idCuponDescuento,jdbcType=INTEGER}
+    where IdVenta = #{idVenta,jdbcType=INTEGER}
+  </update>
+  <select id="selectByExampleWithRowbounds" parameterType="com.gmt.comercial.model.VentaExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from venta
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

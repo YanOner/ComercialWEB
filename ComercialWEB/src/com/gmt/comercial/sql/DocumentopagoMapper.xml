@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gmt.comercial.dao.DocumentopagoMapper">
+  <resultMap id="BaseResultMap" type="com.gmt.comercial.model.Documentopago">
+    <constructor>
+      <idArg column="NroSerie" javaType="java.lang.String" jdbcType="CHAR" />
+      <idArg column="CodDocumento" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="NroRuc" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="TipoDocumento" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="FechaPago" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="UsuarioGenero" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="FehaGeneracion" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="UsuarioModifico" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="FechaModificacion" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="Venta_idVenta" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    NroSerie, CodDocumento, NroRuc, TipoDocumento, FechaPago, UsuarioGenero, FehaGeneracion, 
+    UsuarioModifico, FechaModificacion, Venta_idVenta
+  </sql>
+  <select id="selectByExample" parameterType="com.gmt.comercial.model.DocumentopagoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from documentopago
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="map" resultMap="BaseResultMap">
+    select 'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from documentopago
+    where NroSerie = #{nroSerie,jdbcType=CHAR}
+      and CodDocumento = #{codDocumento,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="map">
+    delete from documentopago
+    where NroSerie = #{nroSerie,jdbcType=CHAR}
+      and CodDocumento = #{codDocumento,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.gmt.comercial.model.Documentopago">
+    insert into documentopago (NroSerie, CodDocumento, NroRuc, 
+      TipoDocumento, FechaPago, UsuarioGenero, 
+      FehaGeneracion, UsuarioModifico, FechaModificacion, 
+      Venta_idVenta)
+    values (#{nroSerie,jdbcType=CHAR}, #{codDocumento,jdbcType=CHAR}, #{nroRuc,jdbcType=CHAR}, 
+      #{tipoDocumento,jdbcType=CHAR}, #{fechaPago,jdbcType=DATE}, #{usuarioGenero,jdbcType=CHAR}, 
+      #{fehaGeneracion,jdbcType=DATE}, #{usuarioModifico,jdbcType=CHAR}, #{fechaModificacion,jdbcType=DATE}, 
+      #{venta_idVenta,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gmt.comercial.model.Documentopago">
+    insert into documentopago
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="nroSerie != null">
+        NroSerie,
+      </if>
+      <if test="codDocumento != null">
+        CodDocumento,
+      </if>
+      <if test="nroRuc != null">
+        NroRuc,
+      </if>
+      <if test="tipoDocumento != null">
+        TipoDocumento,
+      </if>
+      <if test="fechaPago != null">
+        FechaPago,
+      </if>
+      <if test="usuarioGenero != null">
+        UsuarioGenero,
+      </if>
+      <if test="fehaGeneracion != null">
+        FehaGeneracion,
+      </if>
+      <if test="usuarioModifico != null">
+        UsuarioModifico,
+      </if>
+      <if test="fechaModificacion != null">
+        FechaModificacion,
+      </if>
+      <if test="venta_idVenta != null">
+        Venta_idVenta,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="nroSerie != null">
+        #{nroSerie,jdbcType=CHAR},
+      </if>
+      <if test="codDocumento != null">
+        #{codDocumento,jdbcType=CHAR},
+      </if>
+      <if test="nroRuc != null">
+        #{nroRuc,jdbcType=CHAR},
+      </if>
+      <if test="tipoDocumento != null">
+        #{tipoDocumento,jdbcType=CHAR},
+      </if>
+      <if test="fechaPago != null">
+        #{fechaPago,jdbcType=DATE},
+      </if>
+      <if test="usuarioGenero != null">
+        #{usuarioGenero,jdbcType=CHAR},
+      </if>
+      <if test="fehaGeneracion != null">
+        #{fehaGeneracion,jdbcType=DATE},
+      </if>
+      <if test="usuarioModifico != null">
+        #{usuarioModifico,jdbcType=CHAR},
+      </if>
+      <if test="fechaModificacion != null">
+        #{fechaModificacion,jdbcType=DATE},
+      </if>
+      <if test="venta_idVenta != null">
+        #{venta_idVenta,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gmt.comercial.model.Documentopago">
+    update documentopago
+    <set>
+      <if test="nroRuc != null">
+        NroRuc = #{nroRuc,jdbcType=CHAR},
+      </if>
+      <if test="tipoDocumento != null">
+        TipoDocumento = #{tipoDocumento,jdbcType=CHAR},
+      </if>
+      <if test="fechaPago != null">
+        FechaPago = #{fechaPago,jdbcType=DATE},
+      </if>
+      <if test="usuarioGenero != null">
+        UsuarioGenero = #{usuarioGenero,jdbcType=CHAR},
+      </if>
+      <if test="fehaGeneracion != null">
+        FehaGeneracion = #{fehaGeneracion,jdbcType=DATE},
+      </if>
+      <if test="usuarioModifico != null">
+        UsuarioModifico = #{usuarioModifico,jdbcType=CHAR},
+      </if>
+      <if test="fechaModificacion != null">
+        FechaModificacion = #{fechaModificacion,jdbcType=DATE},
+      </if>
+      <if test="venta_idVenta != null">
+        Venta_idVenta = #{venta_idVenta,jdbcType=INTEGER},
+      </if>
+    </set>
+    where NroSerie = #{nroSerie,jdbcType=CHAR}
+      and CodDocumento = #{codDocumento,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gmt.comercial.model.Documentopago">
+    update documentopago
+    set NroRuc = #{nroRuc,jdbcType=CHAR},
+      TipoDocumento = #{tipoDocumento,jdbcType=CHAR},
+      FechaPago = #{fechaPago,jdbcType=DATE},
+      UsuarioGenero = #{usuarioGenero,jdbcType=CHAR},
+      FehaGeneracion = #{fehaGeneracion,jdbcType=DATE},
+      UsuarioModifico = #{usuarioModifico,jdbcType=CHAR},
+      FechaModificacion = #{fechaModificacion,jdbcType=DATE},
+      Venta_idVenta = #{venta_idVenta,jdbcType=INTEGER}
+    where NroSerie = #{nroSerie,jdbcType=CHAR}
+      and CodDocumento = #{codDocumento,jdbcType=CHAR}
+  </update>
+  <select id="selectByExampleWithRowbounds" parameterType="com.gmt.comercial.model.DocumentopagoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from documentopago
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

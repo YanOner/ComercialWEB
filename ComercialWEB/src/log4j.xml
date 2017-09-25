@@ -21,10 +21,15 @@
 	    </layout>
 	</appender>
 
-	<logger name="com.gmt.comercial" level="DEBUG"/>
+<!-- 	<logger name="com.gmt.comercial.controller" level="DEBUG"/> -->
+<!-- 	<logger name="log4j.logger.com.ibatis" level="DEBUG"/> -->
+<!-- 	<logger name="log4j.logger.java.sql.Connection" level="DEBUG"/> -->
+<!-- 	<logger name="log4j.logger.java.sql.Statement" level="DEBUG"/> -->
+<!-- 	<logger name="log4j.logger.java.sql.PreparedStatement" level="DEBUG"/> -->
+<!-- 	<logger name="log4j.logger.java.sql.ResultSet" level="DEBUG"/> -->
 
 	<root>
-		<level value="INFO" />
+		<level value="DEBUG" />
 		<appender-ref ref="console" />
 <!-- 		<appender-ref ref="file" /> -->
 	</root>

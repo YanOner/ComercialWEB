@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gmt.comercial.dao.OrdendespachoMapper">
+  <resultMap id="BaseResultMap" type="com.gmt.comercial.model.Ordendespacho">
+    <constructor>
+      <idArg column="IdOrdenDespacho" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="FechaMovilidad" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="UsuarioAtendio" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="FechaAtencion" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="FechaProgramada" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="FechaEntrega" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="IdVenta" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="IidCourrier" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    IdOrdenDespacho, FechaMovilidad, UsuarioAtendio, FechaAtencion, FechaProgramada, 
+    FechaEntrega, IdVenta, IidCourrier
+  </sql>
+  <select id="selectByExample" parameterType="com.gmt.comercial.model.OrdendespachoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from ordendespacho
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from ordendespacho
+    where IdOrdenDespacho = #{idOrdenDespacho,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ordendespacho
+    where IdOrdenDespacho = #{idOrdenDespacho,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.gmt.comercial.model.Ordendespacho">
+    insert into ordendespacho (IdOrdenDespacho, FechaMovilidad, UsuarioAtendio, 
+      FechaAtencion, FechaProgramada, FechaEntrega, 
+      IdVenta, IidCourrier)
+    values (#{idOrdenDespacho,jdbcType=INTEGER}, #{fechaMovilidad,jdbcType=DATE}, #{usuarioAtendio,jdbcType=CHAR}, 
+      #{fechaAtencion,jdbcType=DATE}, #{fechaProgramada,jdbcType=DATE}, #{fechaEntrega,jdbcType=DATE}, 
+      #{idVenta,jdbcType=INTEGER}, #{iidCourrier,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gmt.comercial.model.Ordendespacho">
+    insert into ordendespacho
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="idOrdenDespacho != null">
+        IdOrdenDespacho,
+      </if>
+      <if test="fechaMovilidad != null">
+        FechaMovilidad,
+      </if>
+      <if test="usuarioAtendio != null">
+        UsuarioAtendio,
+      </if>
+      <if test="fechaAtencion != null">
+        FechaAtencion,
+      </if>
+      <if test="fechaProgramada != null">
+        FechaProgramada,
+      </if>
+      <if test="fechaEntrega != null">
+        FechaEntrega,
+      </if>
+      <if test="idVenta != null">
+        IdVenta,
+      </if>
+      <if test="iidCourrier != null">
+        IidCourrier,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="idOrdenDespacho != null">
+        #{idOrdenDespacho,jdbcType=INTEGER},
+      </if>
+      <if test="fechaMovilidad != null">
+        #{fechaMovilidad,jdbcType=DATE},
+      </if>
+      <if test="usuarioAtendio != null">
+        #{usuarioAtendio,jdbcType=CHAR},
+      </if>
+      <if test="fechaAtencion != null">
+        #{fechaAtencion,jdbcType=DATE},
+      </if>
+      <if test="fechaProgramada != null">
+        #{fechaProgramada,jdbcType=DATE},
+      </if>
+      <if test="fechaEntrega != null">
+        #{fechaEntrega,jdbcType=DATE},
+      </if>
+      <if test="idVenta != null">
+        #{idVenta,jdbcType=INTEGER},
+      </if>
+      <if test="iidCourrier != null">
+        #{iidCourrier,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gmt.comercial.model.Ordendespacho">
+    update ordendespacho
+    <set>
+      <if test="fechaMovilidad != null">
+        FechaMovilidad = #{fechaMovilidad,jdbcType=DATE},
+      </if>
+      <if test="usuarioAtendio != null">
+        UsuarioAtendio = #{usuarioAtendio,jdbcType=CHAR},
+      </if>
+      <if test="fechaAtencion != null">
+        FechaAtencion = #{fechaAtencion,jdbcType=DATE},
+      </if>
+      <if test="fechaProgramada != null">
+        FechaProgramada = #{fechaProgramada,jdbcType=DATE},
+      </if>
+      <if test="fechaEntrega != null">
+        FechaEntrega = #{fechaEntrega,jdbcType=DATE},
+      </if>
+      <if test="idVenta != null">
+        IdVenta = #{idVenta,jdbcType=INTEGER},
+      </if>
+      <if test="iidCourrier != null">
+        IidCourrier = #{iidCourrier,jdbcType=INTEGER},
+      </if>
+    </set>
+    where IdOrdenDespacho = #{idOrdenDespacho,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gmt.comercial.model.Ordendespacho">
+    update ordendespacho
+    set FechaMovilidad = #{fechaMovilidad,jdbcType=DATE},
+      UsuarioAtendio = #{usuarioAtendio,jdbcType=CHAR},
+      FechaAtencion = #{fechaAtencion,jdbcType=DATE},
+      FechaProgramada = #{fechaProgramada,jdbcType=DATE},
+      FechaEntrega = #{fechaEntrega,jdbcType=DATE},
+      IdVenta = #{idVenta,jdbcType=INTEGER},
+      IidCourrier = #{iidCourrier,jdbcType=INTEGER}
+    where IdOrdenDespacho = #{idOrdenDespacho,jdbcType=INTEGER}
+  </update>
+  <select id="selectByExampleWithRowbounds" parameterType="com.gmt.comercial.model.OrdendespachoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from ordendespacho
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

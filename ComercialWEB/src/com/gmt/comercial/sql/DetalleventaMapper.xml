@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gmt.comercial.dao.DetalleventaMapper">
+  <resultMap id="BaseResultMap" type="com.gmt.comercial.model.Detalleventa">
+    <constructor>
+      <idArg column="IdVenta" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <idArg column="IdProducto" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <idArg column="IdColorProducto" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <idArg column="NroTalla" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="Cantidad" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="PrecioUnitario" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="SubTotal" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="Total" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    IdVenta, IdProducto, IdColorProducto, NroTalla, Cantidad, PrecioUnitario, SubTotal, 
+    Total
+  </sql>
+  <select id="selectByExample" parameterType="com.gmt.comercial.model.DetalleventaExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from detalleventa
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="map" resultMap="BaseResultMap">
+    select 'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from detalleventa
+    where IdVenta = #{idVenta,jdbcType=INTEGER}
+      and IdProducto = #{idProducto,jdbcType=INTEGER}
+      and IdColorProducto = #{idColorProducto,jdbcType=INTEGER}
+      and NroTalla = #{nroTalla,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="map">
+    delete from detalleventa
+    where IdVenta = #{idVenta,jdbcType=INTEGER}
+      and IdProducto = #{idProducto,jdbcType=INTEGER}
+      and IdColorProducto = #{idColorProducto,jdbcType=INTEGER}
+      and NroTalla = #{nroTalla,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.gmt.comercial.model.Detalleventa">
+    insert into detalleventa (IdVenta, IdProducto, IdColorProducto, 
+      NroTalla, Cantidad, PrecioUnitario, 
+      SubTotal, Total)
+    values (#{idVenta,jdbcType=INTEGER}, #{idProducto,jdbcType=INTEGER}, #{idColorProducto,jdbcType=INTEGER}, 
+      #{nroTalla,jdbcType=INTEGER}, #{cantidad,jdbcType=INTEGER}, #{precioUnitario,jdbcType=DECIMAL}, 
+      #{subTotal,jdbcType=DECIMAL}, #{total,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gmt.comercial.model.Detalleventa">
+    insert into detalleventa
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="idVenta != null">
+        IdVenta,
+      </if>
+      <if test="idProducto != null">
+        IdProducto,
+      </if>
+      <if test="idColorProducto != null">
+        IdColorProducto,
+      </if>
+      <if test="nroTalla != null">
+        NroTalla,
+      </if>
+      <if test="cantidad != null">
+        Cantidad,
+      </if>
+      <if test="precioUnitario != null">
+        PrecioUnitario,
+      </if>
+      <if test="subTotal != null">
+        SubTotal,
+      </if>
+      <if test="total != null">
+        Total,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="idVenta != null">
+        #{idVenta,jdbcType=INTEGER},
+      </if>
+      <if test="idProducto != null">
+        #{idProducto,jdbcType=INTEGER},
+      </if>
+      <if test="idColorProducto != null">
+        #{idColorProducto,jdbcType=INTEGER},
+      </if>
+      <if test="nroTalla != null">
+        #{nroTalla,jdbcType=INTEGER},
+      </if>
+      <if test="cantidad != null">
+        #{cantidad,jdbcType=INTEGER},
+      </if>
+      <if test="precioUnitario != null">
+        #{precioUnitario,jdbcType=DECIMAL},
+      </if>
+      <if test="subTotal != null">
+        #{subTotal,jdbcType=DECIMAL},
+      </if>
+      <if test="total != null">
+        #{total,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gmt.comercial.model.Detalleventa">
+    update detalleventa
+    <set>
+      <if test="cantidad != null">
+        Cantidad = #{cantidad,jdbcType=INTEGER},
+      </if>
+      <if test="precioUnitario != null">
+        PrecioUnitario = #{precioUnitario,jdbcType=DECIMAL},
+      </if>
+      <if test="subTotal != null">
+        SubTotal = #{subTotal,jdbcType=DECIMAL},
+      </if>
+      <if test="total != null">
+        Total = #{total,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where IdVenta = #{idVenta,jdbcType=INTEGER}
+      and IdProducto = #{idProducto,jdbcType=INTEGER}
+      and IdColorProducto = #{idColorProducto,jdbcType=INTEGER}
+      and NroTalla = #{nroTalla,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gmt.comercial.model.Detalleventa">
+    update detalleventa
+    set Cantidad = #{cantidad,jdbcType=INTEGER},
+      PrecioUnitario = #{precioUnitario,jdbcType=DECIMAL},
+      SubTotal = #{subTotal,jdbcType=DECIMAL},
+      Total = #{total,jdbcType=DECIMAL}
+    where IdVenta = #{idVenta,jdbcType=INTEGER}
+      and IdProducto = #{idProducto,jdbcType=INTEGER}
+      and IdColorProducto = #{idColorProducto,jdbcType=INTEGER}
+      and NroTalla = #{nroTalla,jdbcType=INTEGER}
+  </update>
+  <select id="selectByExampleWithRowbounds" parameterType="com.gmt.comercial.model.DetalleventaExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from detalleventa
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

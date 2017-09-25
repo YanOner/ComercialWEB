@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gmt.comercial.dao.ProductotallacolorMapper">
+  <resultMap id="BaseResultMap" type="com.gmt.comercial.model.Productotallacolor">
+    <constructor>
+      <idArg column="IdProducto" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <idArg column="IdColorProducto" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <idArg column="NroTalla" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="StockVenta" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="StockCritico" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="StockObservado" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="Estado" javaType="java.lang.String" jdbcType="CHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    IdProducto, IdColorProducto, NroTalla, StockVenta, StockCritico, StockObservado, 
+    Estado
+  </sql>
+  <select id="selectByExample" parameterType="com.gmt.comercial.model.ProductotallacolorExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from productotallacolor
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="map" resultMap="BaseResultMap">
+    select 'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from productotallacolor
+    where IdProducto = #{idProducto,jdbcType=INTEGER}
+      and IdColorProducto = #{idColorProducto,jdbcType=INTEGER}
+      and NroTalla = #{nroTalla,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="map">
+    delete from productotallacolor
+    where IdProducto = #{idProducto,jdbcType=INTEGER}
+      and IdColorProducto = #{idColorProducto,jdbcType=INTEGER}
+      and NroTalla = #{nroTalla,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.gmt.comercial.model.Productotallacolor">
+    insert into productotallacolor (IdProducto, IdColorProducto, NroTalla, 
+      StockVenta, StockCritico, StockObservado, 
+      Estado)
+    values (#{idProducto,jdbcType=INTEGER}, #{idColorProducto,jdbcType=INTEGER}, #{nroTalla,jdbcType=INTEGER}, 
+      #{stockVenta,jdbcType=INTEGER}, #{stockCritico,jdbcType=INTEGER}, #{stockObservado,jdbcType=INTEGER}, 
+      #{estado,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gmt.comercial.model.Productotallacolor">
+    insert into productotallacolor
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="idProducto != null">
+        IdProducto,
+      </if>
+      <if test="idColorProducto != null">
+        IdColorProducto,
+      </if>
+      <if test="nroTalla != null">
+        NroTalla,
+      </if>
+      <if test="stockVenta != null">
+        StockVenta,
+      </if>
+      <if test="stockCritico != null">
+        StockCritico,
+      </if>
+      <if test="stockObservado != null">
+        StockObservado,
+      </if>
+      <if test="estado != null">
+        Estado,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="idProducto != null">
+        #{idProducto,jdbcType=INTEGER},
+      </if>
+      <if test="idColorProducto != null">
+        #{idColorProducto,jdbcType=INTEGER},
+      </if>
+      <if test="nroTalla != null">
+        #{nroTalla,jdbcType=INTEGER},
+      </if>
+      <if test="stockVenta != null">
+        #{stockVenta,jdbcType=INTEGER},
+      </if>
+      <if test="stockCritico != null">
+        #{stockCritico,jdbcType=INTEGER},
+      </if>
+      <if test="stockObservado != null">
+        #{stockObservado,jdbcType=INTEGER},
+      </if>
+      <if test="estado != null">
+        #{estado,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gmt.comercial.model.Productotallacolor">
+    update productotallacolor
+    <set>
+      <if test="stockVenta != null">
+        StockVenta = #{stockVenta,jdbcType=INTEGER},
+      </if>
+      <if test="stockCritico != null">
+        StockCritico = #{stockCritico,jdbcType=INTEGER},
+      </if>
+      <if test="stockObservado != null">
+        StockObservado = #{stockObservado,jdbcType=INTEGER},
+      </if>
+      <if test="estado != null">
+        Estado = #{estado,jdbcType=CHAR},
+      </if>
+    </set>
+    where IdProducto = #{idProducto,jdbcType=INTEGER}
+      and IdColorProducto = #{idColorProducto,jdbcType=INTEGER}
+      and NroTalla = #{nroTalla,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gmt.comercial.model.Productotallacolor">
+    update productotallacolor
+    set StockVenta = #{stockVenta,jdbcType=INTEGER},
+      StockCritico = #{stockCritico,jdbcType=INTEGER},
+      StockObservado = #{stockObservado,jdbcType=INTEGER},
+      Estado = #{estado,jdbcType=CHAR}
+    where IdProducto = #{idProducto,jdbcType=INTEGER}
+      and IdColorProducto = #{idColorProducto,jdbcType=INTEGER}
+      and NroTalla = #{nroTalla,jdbcType=INTEGER}
+  </update>
+  <select id="selectByExampleWithRowbounds" parameterType="com.gmt.comercial.model.ProductotallacolorExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from productotallacolor
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

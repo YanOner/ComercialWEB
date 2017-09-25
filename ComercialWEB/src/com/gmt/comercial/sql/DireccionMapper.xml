@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gmt.comercial.dao.DireccionMapper">
+  <resultMap id="BaseResultMap" type="com.gmt.comercial.model.Direccion">
+    <constructor>
+      <idArg column="IdDireccion" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <idArg column="IdCliente" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="Descripcion" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="Referencia" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="Telefono" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="Distrito" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="Provincia" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="Departamento" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    IdDireccion, IdCliente, Descripcion, Referencia, Telefono, Distrito, Provincia, Departamento
+  </sql>
+  <select id="selectByExample" parameterType="com.gmt.comercial.model.DireccionExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from direccion
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="map" resultMap="BaseResultMap">
+    select 'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from direccion
+    where IdDireccion = #{idDireccion,jdbcType=INTEGER}
+      and IdCliente = #{idCliente,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="map">
+    delete from direccion
+    where IdDireccion = #{idDireccion,jdbcType=INTEGER}
+      and IdCliente = #{idCliente,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.gmt.comercial.model.Direccion">
+    insert into direccion (IdDireccion, IdCliente, Descripcion, 
+      Referencia, Telefono, Distrito, 
+      Provincia, Departamento)
+    values (#{idDireccion,jdbcType=INTEGER}, #{idCliente,jdbcType=INTEGER}, #{descripcion,jdbcType=VARCHAR}, 
+      #{referencia,jdbcType=VARCHAR}, #{telefono,jdbcType=VARCHAR}, #{distrito,jdbcType=VARCHAR}, 
+      #{provincia,jdbcType=VARCHAR}, #{departamento,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gmt.comercial.model.Direccion">
+    insert into direccion
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="idDireccion != null">
+        IdDireccion,
+      </if>
+      <if test="idCliente != null">
+        IdCliente,
+      </if>
+      <if test="descripcion != null">
+        Descripcion,
+      </if>
+      <if test="referencia != null">
+        Referencia,
+      </if>
+      <if test="telefono != null">
+        Telefono,
+      </if>
+      <if test="distrito != null">
+        Distrito,
+      </if>
+      <if test="provincia != null">
+        Provincia,
+      </if>
+      <if test="departamento != null">
+        Departamento,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="idDireccion != null">
+        #{idDireccion,jdbcType=INTEGER},
+      </if>
+      <if test="idCliente != null">
+        #{idCliente,jdbcType=INTEGER},
+      </if>
+      <if test="descripcion != null">
+        #{descripcion,jdbcType=VARCHAR},
+      </if>
+      <if test="referencia != null">
+        #{referencia,jdbcType=VARCHAR},
+      </if>
+      <if test="telefono != null">
+        #{telefono,jdbcType=VARCHAR},
+      </if>
+      <if test="distrito != null">
+        #{distrito,jdbcType=VARCHAR},
+      </if>
+      <if test="provincia != null">
+        #{provincia,jdbcType=VARCHAR},
+      </if>
+      <if test="departamento != null">
+        #{departamento,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gmt.comercial.model.Direccion">
+    update direccion
+    <set>
+      <if test="descripcion != null">
+        Descripcion = #{descripcion,jdbcType=VARCHAR},
+      </if>
+      <if test="referencia != null">
+        Referencia = #{referencia,jdbcType=VARCHAR},
+      </if>
+      <if test="telefono != null">
+        Telefono = #{telefono,jdbcType=VARCHAR},
+      </if>
+      <if test="distrito != null">
+        Distrito = #{distrito,jdbcType=VARCHAR},
+      </if>
+      <if test="provincia != null">
+        Provincia = #{provincia,jdbcType=VARCHAR},
+      </if>
+      <if test="departamento != null">
+        Departamento = #{departamento,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where IdDireccion = #{idDireccion,jdbcType=INTEGER}
+      and IdCliente = #{idCliente,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gmt.comercial.model.Direccion">
+    update direccion
+    set Descripcion = #{descripcion,jdbcType=VARCHAR},
+      Referencia = #{referencia,jdbcType=VARCHAR},
+      Telefono = #{telefono,jdbcType=VARCHAR},
+      Distrito = #{distrito,jdbcType=VARCHAR},
+      Provincia = #{provincia,jdbcType=VARCHAR},
+      Departamento = #{departamento,jdbcType=VARCHAR}
+    where IdDireccion = #{idDireccion,jdbcType=INTEGER}
+      and IdCliente = #{idCliente,jdbcType=INTEGER}
+  </update>
+  <select id="selectByExampleWithRowbounds" parameterType="com.gmt.comercial.model.DireccionExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from direccion
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>
