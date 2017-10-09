@@ -4,7 +4,9 @@
   <resultMap id="BaseResultMap" type="com.gmt.comercial.model.Costoubigeo">
     <constructor>
       <idArg column="CodUbigeoCosto" javaType="java.lang.String" jdbcType="CHAR" />
-      <arg column="Descripion" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="Distrito" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="Provincia" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="Departamento" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="CostoEnvio" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
       <arg column="Estado" javaType="java.lang.String" jdbcType="CHAR" />
     </constructor>
@@ -39,7 +41,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    CodUbigeoCosto, Descripion, CostoEnvio, Estado
+    CodUbigeoCosto, Distrito, Provincia, Departamento, CostoEnvio, Estado
   </sql>
   <select id="selectByExample" parameterType="com.gmt.comercial.model.CostoubigeoExample" resultMap="BaseResultMap">
     select
@@ -62,15 +64,40 @@
     from costoubigeo
     where CodUbigeoCosto = #{codUbigeoCosto,jdbcType=CHAR}
   </select>
+  <select id="selectDepartamento" resultMap="BaseResultMap">
+    select 
+    	<include refid="Base_Column_List" />
+    from costoubigeo
+	group by departamento
+	order by departamento asc
+  </select>
+  <select id="selectProvincia" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    	<include refid="Base_Column_List" />
+    from costoubigeo
+    where SUBSTR(CodUbigeoCosto,1,2) = #{codUbigeoCosto,jdbcType=CHAR}
+	group by Provincia
+	order by Provincia asc
+  </select>
+  <select id="selectDistrito" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    	<include refid="Base_Column_List" />
+    from costoubigeo
+    where SUBSTR(CodUbigeoCosto,1,4) = #{codUbigeoCosto,jdbcType=CHAR}
+	group by Distrito
+	order by Distrito asc
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from costoubigeo
     where CodUbigeoCosto = #{codUbigeoCosto,jdbcType=CHAR}
   </delete>
   <insert id="insert" parameterType="com.gmt.comercial.model.Costoubigeo">
-    insert into costoubigeo (CodUbigeoCosto, Descripion, CostoEnvio, 
-      Estado)
-    values (#{codUbigeoCosto,jdbcType=CHAR}, #{descripion,jdbcType=VARCHAR}, #{costoEnvio,jdbcType=DECIMAL}, 
-      #{estado,jdbcType=CHAR})
+    insert into costoubigeo (CodUbigeoCosto, Distrito, Provincia, 
+      Departamento, CostoEnvio, Estado
+      )
+    values (#{codUbigeoCosto,jdbcType=CHAR}, #{distrito,jdbcType=VARCHAR}, #{provincia,jdbcType=VARCHAR}, 
+      #{departamento,jdbcType=VARCHAR}, #{costoEnvio,jdbcType=DECIMAL}, #{estado,jdbcType=CHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.gmt.comercial.model.Costoubigeo">
     insert into costoubigeo
@@ -78,8 +105,14 @@
       <if test="codUbigeoCosto != null">
         CodUbigeoCosto,
       </if>
-      <if test="descripion != null">
-        Descripion,
+      <if test="distrito != null">
+        Distrito,
+      </if>
+      <if test="provincia != null">
+        Provincia,
+      </if>
+      <if test="departamento != null">
+        Departamento,
       </if>
       <if test="costoEnvio != null">
         CostoEnvio,
@@ -92,8 +125,14 @@
       <if test="codUbigeoCosto != null">
         #{codUbigeoCosto,jdbcType=CHAR},
       </if>
-      <if test="descripion != null">
-        #{descripion,jdbcType=VARCHAR},
+      <if test="distrito != null">
+        #{distrito,jdbcType=VARCHAR},
+      </if>
+      <if test="provincia != null">
+        #{provincia,jdbcType=VARCHAR},
+      </if>
+      <if test="departamento != null">
+        #{departamento,jdbcType=VARCHAR},
       </if>
       <if test="costoEnvio != null">
         #{costoEnvio,jdbcType=DECIMAL},
@@ -106,8 +145,14 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.gmt.comercial.model.Costoubigeo">
     update costoubigeo
     <set>
-      <if test="descripion != null">
-        Descripion = #{descripion,jdbcType=VARCHAR},
+      <if test="distrito != null">
+        Distrito = #{distrito,jdbcType=VARCHAR},
+      </if>
+      <if test="provincia != null">
+        Provincia = #{provincia,jdbcType=VARCHAR},
+      </if>
+      <if test="departamento != null">
+        Departamento = #{departamento,jdbcType=VARCHAR},
       </if>
       <if test="costoEnvio != null">
         CostoEnvio = #{costoEnvio,jdbcType=DECIMAL},
@@ -120,7 +165,9 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.gmt.comercial.model.Costoubigeo">
     update costoubigeo
-    set Descripion = #{descripion,jdbcType=VARCHAR},
+    set Distrito = #{distrito,jdbcType=VARCHAR},
+      Provincia = #{provincia,jdbcType=VARCHAR},
+      Departamento = #{departamento,jdbcType=VARCHAR},
       CostoEnvio = #{costoEnvio,jdbcType=DECIMAL},
       Estado = #{estado,jdbcType=CHAR}
     where CodUbigeoCosto = #{codUbigeoCosto,jdbcType=CHAR}

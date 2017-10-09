@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gmt.comercial.dao.StoreProcedureMapper">
+
+	<resultMap id="BaseResultMapVentas" type="com.gmt.comercial.model.Venta">
+	    <constructor>
+	      <idArg column="IdVenta" javaType="java.lang.Integer" jdbcType="INTEGER" />
+	      <arg column="IdCliente" javaType="java.lang.Integer" jdbcType="INTEGER" />
+	      <arg column="FechaVenta" javaType="java.util.Date" jdbcType="DATE" />
+	      <arg column="SubTotal" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+	      <arg column="IGV" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+	      <arg column="Descuento" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+	      <arg column="Total" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+	      <arg column="MontoEntrega" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+	      <arg column="TotalVenta" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+	      <arg column="NroCuotas" javaType="java.lang.Integer" jdbcType="INTEGER" />
+	      <arg column="TipoRecojo" javaType="java.lang.String" jdbcType="CHAR" />
+	      <arg column="UsuarioModifico" javaType="java.lang.String" jdbcType="CHAR" />
+	      <arg column="FechaModifico" javaType="java.util.Date" jdbcType="DATE" />
+	      <arg column="UsuarioAnulo" javaType="java.lang.String" jdbcType="CHAR" />
+	      <arg column="FechaAnulo" javaType="java.util.Date" jdbcType="DATE" />
+	      <arg column="NumOperaBancaria" javaType="java.lang.String" jdbcType="CHAR" />
+	      <arg column="FechaOperaBancaria" javaType="java.util.Date" jdbcType="DATE" />
+	      <arg column="CodTrxTarjeta" javaType="java.lang.String" jdbcType="VARCHAR" />
+	      <arg column="FechTrxTarjeta" javaType="java.util.Date" jdbcType="DATE" />
+	      <arg column="Estado" javaType="java.lang.String" jdbcType="CHAR" />
+	      <arg column="CodUbigeoCosto" javaType="java.lang.String" jdbcType="CHAR" />
+	      <arg column="IdFomaPago" javaType="java.lang.Integer" jdbcType="INTEGER" />
+	      <arg column="IdCuponDescuento" javaType="java.lang.Integer" jdbcType="INTEGER" />
+	      <arg column="DireccionEntrega" javaType="java.lang.String" jdbcType="VARCHAR" />
+	      <arg column="IdEstadoVenta" javaType="java.lang.Integer" jdbcType="INTEGER" />
+	  </constructor>
+	</resultMap>
+	<sql id="Base_Column_List_Ventas">
+	    IdVenta, IdCliente, FechaVenta, SubTotal, IGV, Descuento, Total, MontoEntrega, TotalVenta, 
+	    NroCuotas, TipoRecojo, UsuarioModifico, FechaModifico, UsuarioAnulo, FechaAnulo, 
+	    NumOperaBancaria, FechaOperaBancaria, CodTrxTarjeta, FechTrxTarjeta, Estado, CodUbigeoCosto, 
+	    IdFomaPago, IdCuponDescuento, DireccionEntrega, IdEstadoVenta
+  	</sql>
+  	
+  	<select id="registrarCabecera" parameterType="map" statementType="CALLABLE">
+    { call SP_Pedidos (
+    		#{ParmIdVenta, 			mode=IN, jdbcType=INTEGER},                                                 
+			#{ParmIdCliente, 		mode=IN, jdbcType=INTEGER},                                                
+			#{ParmTotal, 			mode=IN, jdbcType=DECIMAL},                                          
+			#{ParmNroCuotas, 		mode=IN, jdbcType=INTEGER},                                                 
+			#{ParmTipoRecojo, 		mode=IN, jdbcType=VARCHAR},                                            
+			#{ParmNumOperaBancaria, mode=IN, jdbcType=VARCHAR},                                                 
+			#{ParmCodTrxTarjeta,	 mode=IN, jdbcType=VARCHAR},                                              
+			#{ParmCodUbigeoCosto,	 mode=IN, jdbcType=VARCHAR},                                                  
+			#{ParmIdFomaPago, 		 mode=IN, jdbcType=INTEGER},
+			#{ParmDireccionEntrega,  mode=IN, jdbcType=VARCHAR},
+			#{ParmIdBanco, 			 mode=IN, jdbcType=INTEGER},
+			#{ParmNroCuenta,		 mode=IN, jdbcType=VARCHAR},                                                
+			#{TipoMantenimiento,	 mode=IN, jdbcType=VARCHAR}
+    	) } 
+  </select>
+  
+  <select id="registrarDetalle" parameterType="map" statementType="CALLABLE">
+    { call SP_PedidosDetalle (
+    		#{ParmIdVenta, 			 mode=IN, jdbcType=INTEGER},                                                  
+			#{ParmIdProducto, 		 mode=IN, jdbcType=INTEGER},                                                 
+			#{ParmIdColorProducto, 	 mode=IN, jdbcType=INTEGER},
+			#{ParmNroTalla, 		 mode=IN, jdbcType=INTEGER},                                                 
+			#{ParmCantidad, 		 mode=IN, jdbcType=INTEGER},                                                
+			#{ParmPrecioUnitario, 	 mode=IN, jdbcType=DECIMAL} 
+    	) } 
+  </select>
+  	
+</mapper>

@@ -1,5 +1,6 @@
 package com.gmt.comercial.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -124,4 +125,22 @@ public class CatalogoControler {
 		return mapa;
 	}
 
+	@ResponseBody
+	@RequestMapping("/verDetalleCalzadoTallas")
+	public List<Producto> verDetalleCalzadoTallas(
+			Integer idProducto,
+			Integer idColor
+			){
+		try {
+			Map<String, Object> parametros = new HashMap<>();
+			parametros.put("idProducto", idProducto);
+			parametros.put("idColor", idColor);
+			parametros.put("flag", '3');
+			return productoMapper.detalleProducto(parametros);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ArrayList<Producto>();
+	}
+	
 }

@@ -22,8 +22,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.gmt.comercial.bean.ProductoBean;
-
 @Controller
 public class InicioControler {
 
@@ -65,24 +63,24 @@ public class InicioControler {
 	    return responseEntity;
 	}
 	
-	@RequestMapping(value = "/verCatalogo", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public List<ProductoBean> verCatalogo(@RequestParam String precio){
-		log.info("verCatalogo "+new Date());
-		log.info("precio: "+precio);
-		String[] demo = {"calzado_amarillo.png","calzado_rojo.png","calzado_verde.png","calzado_amarillo.png","calzado_rojo.png","calzado_verde.png","calzado_verde.png"};
-		List<ProductoBean> lista = new ArrayList<>();
-		for (int i = 1; i <= 5; i++) {
-			ProductoBean p = new ProductoBean();
-			p.setNombre("Calzado "+i);
-			p.setCodigo("COD "+i);
-			p.setPrecio("S/. "+new Double(Math.random()*555.55).toString().substring(0, 6));
-			int random = (int) (Math.random()*6);
-			p.setNombreImagen(""+demo[random]);
-			lista.add(p);
-		}
-		return lista;
-	}
+//	@RequestMapping(value = "/verCatalogo", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+//	@ResponseBody
+//	public List<ProductoBean> verCatalogo(@RequestParam String precio){
+//		log.info("verCatalogo "+new Date());
+//		log.info("precio: "+precio);
+//		String[] demo = {"calzado_amarillo.png","calzado_rojo.png","calzado_verde.png","calzado_amarillo.png","calzado_rojo.png","calzado_verde.png","calzado_verde.png"};
+//		List<ProductoBean> lista = new ArrayList<>();
+//		for (int i = 1; i <= 5; i++) {
+//			ProductoBean p = new ProductoBean();
+//			p.setNombre("Calzado "+i);
+//			p.setCodigo("COD "+i);
+//			p.setPrecio("S/. "+new Double(Math.random()*555.55).toString().substring(0, 6));
+//			int random = (int) (Math.random()*6);
+//			p.setNombreImagen(""+demo[random]);
+//			lista.add(p);
+//		}
+//		return lista;
+//	}
 	//Combo de Precios
 	@RequestMapping(value = "/verPrecios", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody

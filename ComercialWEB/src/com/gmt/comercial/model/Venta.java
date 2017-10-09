@@ -50,7 +50,11 @@ public class Venta {
 
     private Integer idCuponDescuento;
 
-    public Venta(Integer idVenta, Integer idCliente, Date fechaVenta, BigDecimal subTotal, BigDecimal IGV, BigDecimal descuento, BigDecimal total, BigDecimal montoEntrega, BigDecimal totalVenta, Integer nroCuotas, String tipoRecojo, String usuarioModifico, Date fechaModifico, String usuarioAnulo, Date fechaAnulo, String numOperaBancaria, Date fechaOperaBancaria, String codTrxTarjeta, Date fechTrxTarjeta, String estado, String codUbigeoCosto, Integer idFomaPago, Integer idCuponDescuento) {
+    private String direccionEntrega;
+
+    private Integer idEstadoVenta;
+
+    public Venta(Integer idVenta, Integer idCliente, Date fechaVenta, BigDecimal subTotal, BigDecimal IGV, BigDecimal descuento, BigDecimal total, BigDecimal montoEntrega, BigDecimal totalVenta, Integer nroCuotas, String tipoRecojo, String usuarioModifico, Date fechaModifico, String usuarioAnulo, Date fechaAnulo, String numOperaBancaria, Date fechaOperaBancaria, String codTrxTarjeta, Date fechTrxTarjeta, String estado, String codUbigeoCosto, Integer idFomaPago, Integer idCuponDescuento, String direccionEntrega, Integer idEstadoVenta) {
         this.idVenta = idVenta;
         this.idCliente = idCliente;
         this.fechaVenta = fechaVenta;
@@ -74,6 +78,8 @@ public class Venta {
         this.codUbigeoCosto = codUbigeoCosto;
         this.idFomaPago = idFomaPago;
         this.idCuponDescuento = idCuponDescuento;
+        this.direccionEntrega = direccionEntrega;
+        this.idEstadoVenta = idEstadoVenta;
     }
 
     public Venta() {
@@ -264,6 +270,22 @@ public class Venta {
         this.idCuponDescuento = idCuponDescuento;
     }
 
+    public String getDireccionEntrega() {
+        return direccionEntrega;
+    }
+
+    public void setDireccionEntrega(String direccionEntrega) {
+        this.direccionEntrega = direccionEntrega == null ? null : direccionEntrega.trim();
+    }
+
+    public Integer getIdEstadoVenta() {
+        return idEstadoVenta;
+    }
+
+    public void setIdEstadoVenta(Integer idEstadoVenta) {
+        this.idEstadoVenta = idEstadoVenta;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -293,6 +315,8 @@ public class Venta {
         sb.append(", codUbigeoCosto=").append(codUbigeoCosto);
         sb.append(", idFomaPago=").append(idFomaPago);
         sb.append(", idCuponDescuento=").append(idCuponDescuento);
+        sb.append(", direccionEntrega=").append(direccionEntrega);
+        sb.append(", idEstadoVenta=").append(idEstadoVenta);
         sb.append("]");
         return sb.toString();
     }
