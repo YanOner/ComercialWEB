@@ -4,7 +4,7 @@ import java.util.Map;
 
 public interface StoreProcedureMapper {
 
-	void registrarCabecera(Map<String, Object> mapa);
-	void registrarDetalle(Map<String, Object> mapa);
+	Map<String, Object> registrarCabecera(Map<String, Object> mapa);
+	Map<String, Object> registrarDetalle(Map<String, Object> mapa);
 	
 }

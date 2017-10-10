@@ -14,7 +14,6 @@ import com.gmt.comercial.dao.CostoubigeoMapper;
 import com.gmt.comercial.dao.StoreProcedureMapper;
 import com.gmt.comercial.dao.VentaMapper;
 import com.gmt.comercial.model.Costoubigeo;
-import com.gmt.comercial.model.Venta;
 
 @Controller
 public class PedidoControler {
@@ -30,7 +29,7 @@ public class PedidoControler {
 	
 	@ResponseBody
 	@RequestMapping("/registrarPedido")
-	public Venta registrarPedido(
+	public int registrarPedido(
 				int ParmIdCliente,                                                  
 				double ParmTotal,                                            
 				int ParmNroCuotas,                                                  
@@ -42,10 +41,15 @@ public class PedidoControler {
 				String ParmDireccionEntrega,                                                  
 				int ParmIdBanco, 
 				String ParmNroCuenta,
-				int ParmIdProducto,                                                  
-				int ParmIdColorProducto,
-				int ParmNroTalla,                                                  
-				int ParmCantidad                                                  
+				String ParmTipoDocumento,
+				String ParmRuc,
+				String ParmRazonSocial,
+				String ParmIdTipoUsuario,
+				String tramaPedido
+//				int ParmIdProducto,                                                  
+//				int ParmIdColorProducto,
+//				int ParmNroTalla,                                                  
+//				int ParmCantidad                                                  
 			){
 		try {
 			Map<String, Object> parametros = new HashMap<>();
@@ -62,21 +66,37 @@ public class PedidoControler {
 			parametros.put("ParmIdFomaPago", ParmIdFomaPago);
 			parametros.put("ParmDireccionEntrega", ParmDireccionEntrega);
 			parametros.put("ParmIdBanco", ParmIdBanco);
-			parametros.put("ParmNroCuenta", ParmNroCuenta);                                               
+			parametros.put("ParmNroCuenta", ParmNroCuenta);
+			parametros.put("ParmTipoDocumento", ParmTipoDocumento);  
+			parametros.put("ParmRuc", ParmRuc);  
+			parametros.put("ParmRazonSocial", ParmRazonSocial);                                               
 			parametros.put("TipoMantenimiento", "I");
-			storeProcedureMapper.registrarCabecera(parametros);
-			parametros.put("ParmIdVenta", 0);//                                                  
-			parametros.put("ParmIdProducto", ParmIdProducto);                                                  
-			parametros.put("ParmIdColorProducto", ParmIdColorProducto); 
-			parametros.put("ParmNroTalla", ParmNroTalla);                                                  
-			parametros.put("ParmCantidad", ParmCantidad);                                                 
-//			parametros.put("ParmPrecioUnitario", Parmpr);//
-//			storeProcedureMapper.registrarDetalle(parametros);
-			return null;
+			Map<String, Object> resultado = storeProcedureMapper.registrarCabecera(parametros);
+			System.out.println("resultado: "+resultado);
+			//DETALLE
+			System.out.println("tramaPedido: "+tramaPedido);
+			String[] arrayProductos = tramaPedido.split(";");
+			for (int i = 0; i < arrayProductos.length; i++) {
+				String producto = arrayProductos[i];
+//				if(producto.length() == 0){
+//					break;
+//				}
+				String[] datos = producto.split(",");
+//				parametros.put("ParmIdVenta", 0);//                                                  
+				parametros.put("ParmIdProducto", datos[0]);                                                  
+				parametros.put("ParmIdColorProducto", datos[1]); 
+				parametros.put("ParmNroTalla", datos[2]);                                                  
+				parametros.put("ParmCantidad", datos[3]);                                                 
+				parametros.put("ParmIdTipoUsuario", ParmIdTipoUsuario);//
+				Map<String, Object> resultadoDetalle = storeProcedureMapper.registrarDetalle(parametros);
+				System.out.println("resultadoDetalle: "+resultadoDetalle);
+			}
+			
+			return (Integer)resultado.get("Resultado");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return 0;
 	}
 	
 	@ResponseBody

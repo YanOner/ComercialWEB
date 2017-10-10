@@ -38,7 +38,7 @@
 	    IdFomaPago, IdCuponDescuento, DireccionEntrega, IdEstadoVenta
   	</sql>
   	
-  	<select id="registrarCabecera" parameterType="map" statementType="CALLABLE">
+  	<select id="registrarCabecera" resultType="hashmap" parameterType="map" statementType="CALLABLE">
     { call SP_Pedidos (
     		#{ParmIdVenta, 			mode=IN, jdbcType=INTEGER},                                                 
 			#{ParmIdCliente, 		mode=IN, jdbcType=INTEGER},                                                
@@ -51,19 +51,21 @@
 			#{ParmIdFomaPago, 		 mode=IN, jdbcType=INTEGER},
 			#{ParmDireccionEntrega,  mode=IN, jdbcType=VARCHAR},
 			#{ParmIdBanco, 			 mode=IN, jdbcType=INTEGER},
-			#{ParmNroCuenta,		 mode=IN, jdbcType=VARCHAR},                                                
+			#{ParmNroCuenta,		 mode=IN, jdbcType=VARCHAR},
+			#{ParmTipoDocumento,	 mode=IN, jdbcType=VARCHAR},    
+			#{ParmRuc,	 			 mode=IN, jdbcType=VARCHAR},    
+			#{ParmRazonSocial,		 mode=IN, jdbcType=VARCHAR},                                                
 			#{TipoMantenimiento,	 mode=IN, jdbcType=VARCHAR}
     	) } 
   </select>
   
-  <select id="registrarDetalle" parameterType="map" statementType="CALLABLE">
+  <select id="registrarDetalle" resultType="hashmap" parameterType="map" statementType="CALLABLE">
     { call SP_PedidosDetalle (
-    		#{ParmIdVenta, 			 mode=IN, jdbcType=INTEGER},                                                  
 			#{ParmIdProducto, 		 mode=IN, jdbcType=INTEGER},                                                 
 			#{ParmIdColorProducto, 	 mode=IN, jdbcType=INTEGER},
 			#{ParmNroTalla, 		 mode=IN, jdbcType=INTEGER},                                                 
 			#{ParmCantidad, 		 mode=IN, jdbcType=INTEGER},                                                
-			#{ParmPrecioUnitario, 	 mode=IN, jdbcType=DECIMAL} 
+			#{ParmIdTipoUsuario, 	 mode=IN, jdbcType=INTEGER} 
     	) } 
   </select>
   	
