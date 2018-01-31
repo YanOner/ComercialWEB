@@ -10,9 +10,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.gmt.comercial.dao.BancosMapper;
 import com.gmt.comercial.dao.CostoubigeoMapper;
 import com.gmt.comercial.dao.StoreProcedureMapper;
 import com.gmt.comercial.dao.VentaMapper;
+import com.gmt.comercial.model.Bancos;
+import com.gmt.comercial.model.BancosExample;
 import com.gmt.comercial.model.Costoubigeo;
 
 @Controller
@@ -23,6 +26,9 @@ public class PedidoControler {
 	
 	@Autowired
 	VentaMapper ventaMapper;
+	
+	@Autowired
+	BancosMapper bancosMapper; 
 	
 	@Autowired
 	StoreProcedureMapper storeProcedureMapper;
@@ -126,6 +132,17 @@ public class PedidoControler {
 	public List<Costoubigeo> distritos(String codUbigeoCosto){
 		try {
 			return costoubigeoMapper.selectDistrito(codUbigeoCosto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ArrayList<>();
+	}
+	
+	@ResponseBody
+	@RequestMapping("/bancos")
+	public List<Bancos> bancos(String codUbigeoCosto){
+		try {
+			return bancosMapper.selectByExample(new BancosExample());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
