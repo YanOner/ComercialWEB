@@ -1,9 +1,12 @@
 package com.gmt.comercial.dao;
 
+import java.util.HashMap;
+import java.util.List;
+
+import org.apache.ibatis.session.RowBounds;
+
 import com.gmt.comercial.model.Usuario;
 import com.gmt.comercial.model.UsuarioExample;
-import java.util.List;
-import org.apache.ibatis.session.RowBounds;
 
 public interface UsuarioMapper {
     int deleteByPrimaryKey(String codUsuario);
@@ -16,7 +19,7 @@ public interface UsuarioMapper {
 
     List<Usuario> selectByExample(UsuarioExample example);
 
-    Usuario selectByPrimaryKey(String codUsuario);
+    Usuario selectByPrimaryKey(HashMap mapa);
 
     int updateByPrimaryKeySelective(Usuario record);
 

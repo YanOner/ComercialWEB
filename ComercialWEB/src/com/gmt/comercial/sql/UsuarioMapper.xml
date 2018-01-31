@@ -42,7 +42,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    CodUsuario, IdCliente, Password, FechaCreacion, CorreoElectronico, Estado, IdTipoUsuario
+    CodUsuario, IdCliente, CAST(FROM_BASE64(Password) AS CHAR(100) CHARACTER SET utf8) AS Password, FechaCreacion, CorreoElectronico, Estado, IdTipoUsuario
   </sql>
   <select id="selectByExample" parameterType="com.gmt.comercial.model.UsuarioExample" resultMap="BaseResultMap">
     select
@@ -59,11 +59,12 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="hashmap" resultMap="BaseResultMap">
     select 'false' as QUERYID,
     <include refid="Base_Column_List" />
     from usuario
     where CodUsuario = #{codUsuario,jdbcType=CHAR}
+    		and Password = TO_BASE64(#{password,jdbcType=VARCHAR})
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from usuario

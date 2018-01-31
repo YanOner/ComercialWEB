@@ -1,6 +1,7 @@
 package com.gmt.comercial.controller;
 
 import java.util.Date;
+import java.util.HashMap;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -29,13 +30,23 @@ public class LoginControler {
 	@ResponseBody
 	@RequestMapping("/login")
 	public Usuario login(String codUsuario, String password){
-		Usuario u = usuarioMapper.selectByPrimaryKey(codUsuario);
-		if(password.equals(u.getPassword())){
-			return u;
-		}
-		return null;
+		HashMap mapa = new HashMap();
+		mapa.put("codUsuario", codUsuario);
+		mapa.put("password", password);
+		Usuario u = usuarioMapper.selectByPrimaryKey(mapa);
+//		if(password.equals(u.getPassword())){
+//			return u;
+//		}
+		return u;
 	}
 
+	@ResponseBody
+	@RequestMapping("/cliente")
+	public Cliente cliente(Integer idCliente){
+		Cliente cli = clienteMapper.selectByPrimaryKey(idCliente);
+		return cli;
+	}
+	
 	@ResponseBody
 	@RequestMapping("/registrarUsuario")
 	public int registrarUsuario(
