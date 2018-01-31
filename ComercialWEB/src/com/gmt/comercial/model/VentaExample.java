@@ -1582,6 +1582,266 @@ public class VentaExample {
             addCriterion("IdCuponDescuento not between", value1, value2, "idCuponDescuento");
             return (Criteria) this;
         }
+
+        public Criteria andDireccionEntregaIsNull() {
+            addCriterion("DireccionEntrega is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDireccionEntregaIsNotNull() {
+            addCriterion("DireccionEntrega is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDireccionEntregaEqualTo(String value) {
+            addCriterion("DireccionEntrega =", value, "direccionEntrega");
+            return (Criteria) this;
+        }
+
+        public Criteria andDireccionEntregaNotEqualTo(String value) {
+            addCriterion("DireccionEntrega <>", value, "direccionEntrega");
+            return (Criteria) this;
+        }
+
+        public Criteria andDireccionEntregaGreaterThan(String value) {
+            addCriterion("DireccionEntrega >", value, "direccionEntrega");
+            return (Criteria) this;
+        }
+
+        public Criteria andDireccionEntregaGreaterThanOrEqualTo(String value) {
+            addCriterion("DireccionEntrega >=", value, "direccionEntrega");
+            return (Criteria) this;
+        }
+
+        public Criteria andDireccionEntregaLessThan(String value) {
+            addCriterion("DireccionEntrega <", value, "direccionEntrega");
+            return (Criteria) this;
+        }
+
+        public Criteria andDireccionEntregaLessThanOrEqualTo(String value) {
+            addCriterion("DireccionEntrega <=", value, "direccionEntrega");
+            return (Criteria) this;
+        }
+
+        public Criteria andDireccionEntregaLike(String value) {
+            addCriterion("DireccionEntrega like", value, "direccionEntrega");
+            return (Criteria) this;
+        }
+
+        public Criteria andDireccionEntregaNotLike(String value) {
+            addCriterion("DireccionEntrega not like", value, "direccionEntrega");
+            return (Criteria) this;
+        }
+
+        public Criteria andDireccionEntregaIn(List<String> values) {
+            addCriterion("DireccionEntrega in", values, "direccionEntrega");
+            return (Criteria) this;
+        }
+
+        public Criteria andDireccionEntregaNotIn(List<String> values) {
+            addCriterion("DireccionEntrega not in", values, "direccionEntrega");
+            return (Criteria) this;
+        }
+
+        public Criteria andDireccionEntregaBetween(String value1, String value2) {
+            addCriterion("DireccionEntrega between", value1, value2, "direccionEntrega");
+            return (Criteria) this;
+        }
+
+        public Criteria andDireccionEntregaNotBetween(String value1, String value2) {
+            addCriterion("DireccionEntrega not between", value1, value2, "direccionEntrega");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdEstadoVentaIsNull() {
+            addCriterion("IdEstadoVenta is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdEstadoVentaIsNotNull() {
+            addCriterion("IdEstadoVenta is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdEstadoVentaEqualTo(Integer value) {
+            addCriterion("IdEstadoVenta =", value, "idEstadoVenta");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdEstadoVentaNotEqualTo(Integer value) {
+            addCriterion("IdEstadoVenta <>", value, "idEstadoVenta");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdEstadoVentaGreaterThan(Integer value) {
+            addCriterion("IdEstadoVenta >", value, "idEstadoVenta");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdEstadoVentaGreaterThanOrEqualTo(Integer value) {
+            addCriterion("IdEstadoVenta >=", value, "idEstadoVenta");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdEstadoVentaLessThan(Integer value) {
+            addCriterion("IdEstadoVenta <", value, "idEstadoVenta");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdEstadoVentaLessThanOrEqualTo(Integer value) {
+            addCriterion("IdEstadoVenta <=", value, "idEstadoVenta");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdEstadoVentaIn(List<Integer> values) {
+            addCriterion("IdEstadoVenta in", values, "idEstadoVenta");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdEstadoVentaNotIn(List<Integer> values) {
+            addCriterion("IdEstadoVenta not in", values, "idEstadoVenta");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdEstadoVentaBetween(Integer value1, Integer value2) {
+            addCriterion("IdEstadoVenta between", value1, value2, "idEstadoVenta");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdEstadoVentaNotBetween(Integer value1, Integer value2) {
+            addCriterion("IdEstadoVenta not between", value1, value2, "idEstadoVenta");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdBancosIsNull() {
+            addCriterion("IdBancos is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdBancosIsNotNull() {
+            addCriterion("IdBancos is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdBancosEqualTo(Integer value) {
+            addCriterion("IdBancos =", value, "idBancos");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdBancosNotEqualTo(Integer value) {
+            addCriterion("IdBancos <>", value, "idBancos");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdBancosGreaterThan(Integer value) {
+            addCriterion("IdBancos >", value, "idBancos");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdBancosGreaterThanOrEqualTo(Integer value) {
+            addCriterion("IdBancos >=", value, "idBancos");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdBancosLessThan(Integer value) {
+            addCriterion("IdBancos <", value, "idBancos");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdBancosLessThanOrEqualTo(Integer value) {
+            addCriterion("IdBancos <=", value, "idBancos");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdBancosIn(List<Integer> values) {
+            addCriterion("IdBancos in", values, "idBancos");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdBancosNotIn(List<Integer> values) {
+            addCriterion("IdBancos not in", values, "idBancos");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdBancosBetween(Integer value1, Integer value2) {
+            addCriterion("IdBancos between", value1, value2, "idBancos");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdBancosNotBetween(Integer value1, Integer value2) {
+            addCriterion("IdBancos not between", value1, value2, "idBancos");
+            return (Criteria) this;
+        }
+
+        public Criteria andNroCuentaIsNull() {
+            addCriterion("NroCuenta is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNroCuentaIsNotNull() {
+            addCriterion("NroCuenta is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNroCuentaEqualTo(String value) {
+            addCriterion("NroCuenta =", value, "nroCuenta");
+            return (Criteria) this;
+        }
+
+        public Criteria andNroCuentaNotEqualTo(String value) {
+            addCriterion("NroCuenta <>", value, "nroCuenta");
+            return (Criteria) this;
+        }
+
+        public Criteria andNroCuentaGreaterThan(String value) {
+            addCriterion("NroCuenta >", value, "nroCuenta");
+            return (Criteria) this;
+        }
+
+        public Criteria andNroCuentaGreaterThanOrEqualTo(String value) {
+            addCriterion("NroCuenta >=", value, "nroCuenta");
+            return (Criteria) this;
+        }
+
+        public Criteria andNroCuentaLessThan(String value) {
+            addCriterion("NroCuenta <", value, "nroCuenta");
+            return (Criteria) this;
+        }
+
+        public Criteria andNroCuentaLessThanOrEqualTo(String value) {
+            addCriterion("NroCuenta <=", value, "nroCuenta");
+            return (Criteria) this;
+        }
+
+        public Criteria andNroCuentaLike(String value) {
+            addCriterion("NroCuenta like", value, "nroCuenta");
+            return (Criteria) this;
+        }
+
+        public Criteria andNroCuentaNotLike(String value) {
+            addCriterion("NroCuenta not like", value, "nroCuenta");
+            return (Criteria) this;
+        }
+
+        public Criteria andNroCuentaIn(List<String> values) {
+            addCriterion("NroCuenta in", values, "nroCuenta");
+            return (Criteria) this;
+        }
+
+        public Criteria andNroCuentaNotIn(List<String> values) {
+            addCriterion("NroCuenta not in", values, "nroCuenta");
+            return (Criteria) this;
+        }
+
+        public Criteria andNroCuentaBetween(String value1, String value2) {
+            addCriterion("NroCuenta between", value1, value2, "nroCuenta");
+            return (Criteria) this;
+        }
+
+        public Criteria andNroCuentaNotBetween(String value1, String value2) {
+            addCriterion("NroCuenta not between", value1, value2, "nroCuenta");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

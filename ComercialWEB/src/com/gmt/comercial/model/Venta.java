@@ -54,7 +54,11 @@ public class Venta {
 
     private Integer idEstadoVenta;
 
-    public Venta(Integer idVenta, Integer idCliente, Date fechaVenta, BigDecimal subTotal, BigDecimal IGV, BigDecimal descuento, BigDecimal total, BigDecimal montoEntrega, BigDecimal totalVenta, Integer nroCuotas, String tipoRecojo, String usuarioModifico, Date fechaModifico, String usuarioAnulo, Date fechaAnulo, String numOperaBancaria, Date fechaOperaBancaria, String codTrxTarjeta, Date fechTrxTarjeta, String estado, String codUbigeoCosto, Integer idFomaPago, Integer idCuponDescuento, String direccionEntrega, Integer idEstadoVenta) {
+    private Integer idBancos;
+
+    private String nroCuenta;
+
+    public Venta(Integer idVenta, Integer idCliente, Date fechaVenta, BigDecimal subTotal, BigDecimal IGV, BigDecimal descuento, BigDecimal total, BigDecimal montoEntrega, BigDecimal totalVenta, Integer nroCuotas, String tipoRecojo, String usuarioModifico, Date fechaModifico, String usuarioAnulo, Date fechaAnulo, String numOperaBancaria, Date fechaOperaBancaria, String codTrxTarjeta, Date fechTrxTarjeta, String estado, String codUbigeoCosto, Integer idFomaPago, Integer idCuponDescuento, String direccionEntrega, Integer idEstadoVenta, Integer idBancos, String nroCuenta) {
         this.idVenta = idVenta;
         this.idCliente = idCliente;
         this.fechaVenta = fechaVenta;
@@ -80,6 +84,8 @@ public class Venta {
         this.idCuponDescuento = idCuponDescuento;
         this.direccionEntrega = direccionEntrega;
         this.idEstadoVenta = idEstadoVenta;
+        this.idBancos = idBancos;
+        this.nroCuenta = nroCuenta;
     }
 
     public Venta() {
@@ -286,6 +292,22 @@ public class Venta {
         this.idEstadoVenta = idEstadoVenta;
     }
 
+    public Integer getIdBancos() {
+        return idBancos;
+    }
+
+    public void setIdBancos(Integer idBancos) {
+        this.idBancos = idBancos;
+    }
+
+    public String getNroCuenta() {
+        return nroCuenta;
+    }
+
+    public void setNroCuenta(String nroCuenta) {
+        this.nroCuenta = nroCuenta == null ? null : nroCuenta.trim();
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -317,6 +339,8 @@ public class Venta {
         sb.append(", idCuponDescuento=").append(idCuponDescuento);
         sb.append(", direccionEntrega=").append(direccionEntrega);
         sb.append(", idEstadoVenta=").append(idEstadoVenta);
+        sb.append(", idBancos=").append(idBancos);
+        sb.append(", nroCuenta=").append(nroCuenta);
         sb.append("]");
         return sb.toString();
     }

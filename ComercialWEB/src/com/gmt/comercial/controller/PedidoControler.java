@@ -17,6 +17,9 @@ import com.gmt.comercial.dao.VentaMapper;
 import com.gmt.comercial.model.Bancos;
 import com.gmt.comercial.model.BancosExample;
 import com.gmt.comercial.model.Costoubigeo;
+import com.gmt.comercial.model.Venta;
+import com.gmt.comercial.model.VentaExample;
+import com.gmt.comercial.model.VentaExample.Criteria;
 
 @Controller
 public class PedidoControler {
@@ -29,7 +32,7 @@ public class PedidoControler {
 	
 	@Autowired
 	BancosMapper bancosMapper; 
-	
+
 	@Autowired
 	StoreProcedureMapper storeProcedureMapper;
 	
@@ -143,6 +146,20 @@ public class PedidoControler {
 	public List<Bancos> bancos(String codUbigeoCosto){
 		try {
 			return bancosMapper.selectByExample(new BancosExample());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ArrayList<>();
+	}
+	
+	@ResponseBody
+	@RequestMapping("/pedidosXestado")
+	public List<Venta> pedidosPendientes(Integer idCliente, Integer idEstadoVenta){
+		try {
+			VentaExample example = new VentaExample();
+			Criteria criteria = example.createCriteria();
+			criteria.andIdClienteEqualTo(idCliente).andIdEstadoVentaEqualTo(idEstadoVenta);
+			return ventaMapper.selectByExample(example);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

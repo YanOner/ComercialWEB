@@ -6,8 +6,6 @@ import java.util.List;
 import org.apache.ibatis.session.RowBounds;
 
 public interface VentaMapper {
-    int deleteByPrimaryKey(Integer idVenta);
-
     int insert(Venta record);
 
     int insertSelective(Venta record);
@@ -15,10 +13,4 @@ public interface VentaMapper {
     List<Venta> selectByExampleWithRowbounds(VentaExample example, RowBounds rowBounds);
 
     List<Venta> selectByExample(VentaExample example);
-
-    Venta selectByPrimaryKey(Integer idVenta);
-
-    int updateByPrimaryKeySelective(Venta record);
-
-    int updateByPrimaryKey(Venta record);
 }
