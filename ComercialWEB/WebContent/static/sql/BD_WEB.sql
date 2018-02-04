@@ -1040,13 +1040,17 @@ set DescTemporada = upper(DescTemporada);
 
 if trim(DescProducto) <> '' or trim(DescTipoProd) <> '' or trim(DEscTalla) > 0 or trim(DescColor) <> '' or 
 	trim(DescTemporada) <> '' or PrecioIni > 0 or PrecioFin > 0 then
-    set QueryPrincipal  = Concat(QueryPrincipal,' where ');
+    set QueryPrincipal  = Concat(QueryPrincipal,' where ptc.StockVenta > 0 and ptc.Estado = 1 ');
+    set NroFiltros = NroFiltros + 1;
     set FlagFiltro = true;
 End IF;    
 
 If FlagFiltro then
 -- Filtro Nombre Producto
 	 if trim(DescProducto) <> '' then
+		If NroFiltros > 0 then
+			set QueryPrincipal = concat(QueryPrincipal,' and '); 
+        End If; 
 		set StrFiltros = concat(' upper(p.Descripcion) Like ''%',DescProducto,'%''');
 		set QueryPrincipal  = Concat(QueryPrincipal,StrFiltros);
 		set NroFiltros = NroFiltros + 1;
@@ -1119,6 +1123,10 @@ If FlagFiltro then
         
 		         
 	End IF;
+Else
+
+	set QueryPrincipal  = Concat(QueryPrincipal,' where ptc.StockVenta > 0 and ptc.Estado = 1 ');
+
 End If;
 
    -- select NroFiltros,QueryPrincipal;
@@ -1597,4 +1605,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-01-31  0:10:42
+-- Dump completed on 2018-02-04 12:40:53
