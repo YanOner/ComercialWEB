@@ -13,6 +13,8 @@
       <arg column="RUC" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="Celular" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="FechaCreacion" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="LineaCreditoActual" javaType="java.lang.Double" jdbcType="DOUBLE" />
+      <arg column="SaldoLineaCredito" javaType="java.lang.Double" jdbcType="DOUBLE" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -46,7 +48,7 @@
   </sql>
   <sql id="Base_Column_List">
     IdCliente, Nombres, ApellidoPaterno, ApellidoMaterno, FechaNacimiento, Estado, NroDocumentoIdentidad, 
-    RUC, Celular, FechaCreacion
+    RUC, Celular, FechaCreacion, LineaCreditoActual, SaldoLineaCredito
   </sql>
   <select id="selectByExample" parameterType="com.gmt.comercial.model.ClienteExample" resultMap="BaseResultMap">
     select
@@ -77,11 +79,13 @@
     insert into cliente (IdCliente, Nombres, ApellidoPaterno, 
       ApellidoMaterno, FechaNacimiento, Estado, 
       NroDocumentoIdentidad, RUC, Celular, 
-      FechaCreacion)
+      FechaCreacion, LineaCreditoActual, SaldoLineaCredito
+      )
     values (#{idCliente,jdbcType=INTEGER}, #{nombres,jdbcType=VARCHAR}, #{apellidoPaterno,jdbcType=VARCHAR}, 
       #{apellidoMaterno,jdbcType=VARCHAR}, #{fechaNacimiento,jdbcType=DATE}, #{estado,jdbcType=CHAR}, 
       #{nroDocumentoIdentidad,jdbcType=VARCHAR}, #{RUC,jdbcType=VARCHAR}, #{celular,jdbcType=VARCHAR}, 
-      #{fechaCreacion,jdbcType=DATE})
+      #{fechaCreacion,jdbcType=DATE}, #{lineaCreditoActual,jdbcType=DOUBLE}, #{saldoLineaCredito,jdbcType=DOUBLE}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.gmt.comercial.model.Cliente">
     insert into cliente
@@ -116,6 +120,12 @@
       <if test="fechaCreacion != null">
         FechaCreacion,
       </if>
+      <if test="lineaCreditoActual != null">
+        LineaCreditoActual,
+      </if>
+      <if test="saldoLineaCredito != null">
+        SaldoLineaCredito,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="idCliente != null">
@@ -147,6 +157,12 @@
       </if>
       <if test="fechaCreacion != null">
         #{fechaCreacion,jdbcType=DATE},
+      </if>
+      <if test="lineaCreditoActual != null">
+        #{lineaCreditoActual,jdbcType=DOUBLE},
+      </if>
+      <if test="saldoLineaCredito != null">
+        #{saldoLineaCredito,jdbcType=DOUBLE},
       </if>
     </trim>
   </insert>
@@ -180,6 +196,12 @@
       <if test="fechaCreacion != null">
         FechaCreacion = #{fechaCreacion,jdbcType=DATE},
       </if>
+      <if test="lineaCreditoActual != null">
+        LineaCreditoActual = #{lineaCreditoActual,jdbcType=DOUBLE},
+      </if>
+      <if test="saldoLineaCredito != null">
+        SaldoLineaCredito = #{saldoLineaCredito,jdbcType=DOUBLE},
+      </if>
     </set>
     where IdCliente = #{idCliente,jdbcType=INTEGER}
   </update>
@@ -193,7 +215,9 @@
       NroDocumentoIdentidad = #{nroDocumentoIdentidad,jdbcType=VARCHAR},
       RUC = #{RUC,jdbcType=VARCHAR},
       Celular = #{celular,jdbcType=VARCHAR},
-      FechaCreacion = #{fechaCreacion,jdbcType=DATE}
+      FechaCreacion = #{fechaCreacion,jdbcType=DATE},
+      LineaCreditoActual = #{lineaCreditoActual,jdbcType=DOUBLE},
+      SaldoLineaCredito = #{saldoLineaCredito,jdbcType=DOUBLE}
     where IdCliente = #{idCliente,jdbcType=INTEGER}
   </update>
   <select id="selectByExampleWithRowbounds" parameterType="com.gmt.comercial.model.ClienteExample" resultMap="BaseResultMap">
