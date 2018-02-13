@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `ginobigionibd` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `ginobigionibd`;
--- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
 --
 -- Host: localhost    Database: ginobigionibd
 -- ------------------------------------------------------
--- Server version	5.7.19-log
+-- Server version	5.7.14-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -367,6 +367,31 @@ INSERT INTO `documentopago` VALUES ('0','00001','00000001','63582147','Maria Cal
 UNLOCK TABLES;
 
 --
+-- Table structure for table `estadosolicitud`
+--
+
+DROP TABLE IF EXISTS `estadosolicitud`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `estadosolicitud` (
+  `idestadosolicitud` int(11) NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(45) NOT NULL,
+  `estado` char(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`idestadosolicitud`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `estadosolicitud`
+--
+
+LOCK TABLES `estadosolicitud` WRITE;
+/*!40000 ALTER TABLE `estadosolicitud` DISABLE KEYS */;
+INSERT INTO `estadosolicitud` VALUES (1,'PENDIENTE','1'),(2,'RECHAZADO','1'),(3,'APROBADO','1');
+/*!40000 ALTER TABLE `estadosolicitud` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `estadoventa`
 --
 
@@ -680,38 +705,46 @@ INSERT INTO `productotallacolor` VALUES (1,5,38,6,5,0,'1'),(1,5,39,0,4,0,'1'),(1
 UNLOCK TABLES;
 
 --
--- Table structure for table `solicitudrevendedor`
+-- Table structure for table `solicitud`
 --
 
-DROP TABLE IF EXISTS `solicitudrevendedor`;
+DROP TABLE IF EXISTS `solicitud`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `solicitudrevendedor` (
-  `IdSolicitud` int(11) NOT NULL,
+CREATE TABLE `solicitud` (
+  `IdSolicitud` int(11) NOT NULL AUTO_INCREMENT,
   `IdCliente` int(11) NOT NULL,
   `CodUsuario` char(15) NOT NULL,
+  `idtiposolicitud` int(11) NOT NULL,
+  `idestadosolicitud` int(11) NOT NULL,
   `FechaSolicitud` date DEFAULT NULL,
   `Comentario` varchar(250) DEFAULT NULL,
   `MontoCompraPromedio` decimal(15,2) DEFAULT NULL,
+  `MontoIncrementoCredito` decimal(15,2) DEFAULT NULL,
   `UsuarioGeneroSolicitud` char(15) DEFAULT NULL,
   `FechaRespuesta` date DEFAULT NULL,
   `UsuarioRespuesta` char(15) DEFAULT NULL,
-  `Estado` char(1) DEFAULT NULL,
+  `Estado` char(1) DEFAULT '1',
   `LineaCredito` decimal(15,2) DEFAULT NULL,
-  `LineaCreditoAnterior` decimal(15,2) DEFAULT '0.00',
+  `LineaCreditoAnterior` decimal(15,2) DEFAULT NULL,
   PRIMARY KEY (`IdSolicitud`,`IdCliente`,`CodUsuario`),
-  KEY `fk_SolicitudRevendedor_Usuario1` (`CodUsuario`),
-  CONSTRAINT `fk_SolicitudRevendedor_Usuario1` FOREIGN KEY (`CodUsuario`) REFERENCES `usuario` (`CodUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `fk_Solicitud_Usuario` (`CodUsuario`),
+  KEY `fk_idtiposolicitud_idx` (`idtiposolicitud`),
+  KEY `fk_idestadosolicitud_idx` (`idestadosolicitud`),
+  CONSTRAINT `fk_Solicitud_Usuario` FOREIGN KEY (`CodUsuario`) REFERENCES `usuario` (`CodUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_idestadosolicitud_es` FOREIGN KEY (`idestadosolicitud`) REFERENCES `estadosolicitud` (`idestadosolicitud`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_idtiposolicitud_ts` FOREIGN KEY (`idtiposolicitud`) REFERENCES `tiposolicitud` (`idtiposolicitud`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `solicitudrevendedor`
+-- Dumping data for table `solicitud`
 --
 
-LOCK TABLES `solicitudrevendedor` WRITE;
-/*!40000 ALTER TABLE `solicitudrevendedor` DISABLE KEYS */;
-/*!40000 ALTER TABLE `solicitudrevendedor` ENABLE KEYS */;
+LOCK TABLES `solicitud` WRITE;
+/*!40000 ALTER TABLE `solicitud` DISABLE KEYS */;
+INSERT INTO `solicitud` VALUES (1,1,'Usuario6',1,1,'2018-02-13',NULL,NULL,111.00,'Usuario6',NULL,NULL,'1',NULL,NULL),(2,6,'Usuario6',1,1,'2018-02-13',NULL,NULL,1234.00,'Usuario6',NULL,NULL,'1',NULL,NULL),(3,6,'Usuario6',1,1,'2018-02-13',NULL,NULL,NULL,'Usuario6',NULL,NULL,'1',NULL,NULL);
+/*!40000 ALTER TABLE `solicitud` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -786,6 +819,31 @@ LOCK TABLES `tipoproducto` WRITE;
 /*!40000 ALTER TABLE `tipoproducto` DISABLE KEYS */;
 INSERT INTO `tipoproducto` VALUES (1,'Zapatos','1'),(2,'Botas','1'),(3,'Balerinas','1'),(4,'Sandalias','1'),(5,'Botines','1'),(6,'Casual','1');
 /*!40000 ALTER TABLE `tipoproducto` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tiposolicitud`
+--
+
+DROP TABLE IF EXISTS `tiposolicitud`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tiposolicitud` (
+  `idtiposolicitud` int(11) NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(255) NOT NULL,
+  `estado` char(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`idtiposolicitud`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tiposolicitud`
+--
+
+LOCK TABLES `tiposolicitud` WRITE;
+/*!40000 ALTER TABLE `tiposolicitud` DISABLE KEYS */;
+INSERT INTO `tiposolicitud` VALUES (1,'SOLICITUD PARA AUMENTO DE LÍNEA DE CRÉDITO','1'),(2,'SOLICITUD PARA CLIENTE REVENDEDOR','1');
+/*!40000 ALTER TABLE `tiposolicitud` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1605,4 +1663,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-12  0:09:25
+-- Dump completed on 2018-02-13 18:58:31
