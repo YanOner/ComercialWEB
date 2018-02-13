@@ -6,14 +6,14 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-public class SolicitudrevendedorExample {
+public class SolicitudExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public SolicitudrevendedorExample() {
+    public SolicitudExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -323,6 +323,126 @@ public class SolicitudrevendedorExample {
             return (Criteria) this;
         }
 
+        public Criteria andIdtiposolicitudIsNull() {
+            addCriterion("idtiposolicitud is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdtiposolicitudIsNotNull() {
+            addCriterion("idtiposolicitud is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdtiposolicitudEqualTo(Integer value) {
+            addCriterion("idtiposolicitud =", value, "idtiposolicitud");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdtiposolicitudNotEqualTo(Integer value) {
+            addCriterion("idtiposolicitud <>", value, "idtiposolicitud");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdtiposolicitudGreaterThan(Integer value) {
+            addCriterion("idtiposolicitud >", value, "idtiposolicitud");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdtiposolicitudGreaterThanOrEqualTo(Integer value) {
+            addCriterion("idtiposolicitud >=", value, "idtiposolicitud");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdtiposolicitudLessThan(Integer value) {
+            addCriterion("idtiposolicitud <", value, "idtiposolicitud");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdtiposolicitudLessThanOrEqualTo(Integer value) {
+            addCriterion("idtiposolicitud <=", value, "idtiposolicitud");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdtiposolicitudIn(List<Integer> values) {
+            addCriterion("idtiposolicitud in", values, "idtiposolicitud");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdtiposolicitudNotIn(List<Integer> values) {
+            addCriterion("idtiposolicitud not in", values, "idtiposolicitud");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdtiposolicitudBetween(Integer value1, Integer value2) {
+            addCriterion("idtiposolicitud between", value1, value2, "idtiposolicitud");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdtiposolicitudNotBetween(Integer value1, Integer value2) {
+            addCriterion("idtiposolicitud not between", value1, value2, "idtiposolicitud");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdestadosolicitudIsNull() {
+            addCriterion("idestadosolicitud is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdestadosolicitudIsNotNull() {
+            addCriterion("idestadosolicitud is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdestadosolicitudEqualTo(Integer value) {
+            addCriterion("idestadosolicitud =", value, "idestadosolicitud");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdestadosolicitudNotEqualTo(Integer value) {
+            addCriterion("idestadosolicitud <>", value, "idestadosolicitud");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdestadosolicitudGreaterThan(Integer value) {
+            addCriterion("idestadosolicitud >", value, "idestadosolicitud");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdestadosolicitudGreaterThanOrEqualTo(Integer value) {
+            addCriterion("idestadosolicitud >=", value, "idestadosolicitud");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdestadosolicitudLessThan(Integer value) {
+            addCriterion("idestadosolicitud <", value, "idestadosolicitud");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdestadosolicitudLessThanOrEqualTo(Integer value) {
+            addCriterion("idestadosolicitud <=", value, "idestadosolicitud");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdestadosolicitudIn(List<Integer> values) {
+            addCriterion("idestadosolicitud in", values, "idestadosolicitud");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdestadosolicitudNotIn(List<Integer> values) {
+            addCriterion("idestadosolicitud not in", values, "idestadosolicitud");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdestadosolicitudBetween(Integer value1, Integer value2) {
+            addCriterion("idestadosolicitud between", value1, value2, "idestadosolicitud");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdestadosolicitudNotBetween(Integer value1, Integer value2) {
+            addCriterion("idestadosolicitud not between", value1, value2, "idestadosolicitud");
+            return (Criteria) this;
+        }
+
         public Criteria andFechaSolicitudIsNull() {
             addCriterion("FechaSolicitud is null");
             return (Criteria) this;
@@ -510,6 +630,66 @@ public class SolicitudrevendedorExample {
 
         public Criteria andMontoCompraPromedioNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("MontoCompraPromedio not between", value1, value2, "montoCompraPromedio");
+            return (Criteria) this;
+        }
+
+        public Criteria andMontoIncrementoCreditoIsNull() {
+            addCriterion("MontoIncrementoCredito is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMontoIncrementoCreditoIsNotNull() {
+            addCriterion("MontoIncrementoCredito is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMontoIncrementoCreditoEqualTo(BigDecimal value) {
+            addCriterion("MontoIncrementoCredito =", value, "montoIncrementoCredito");
+            return (Criteria) this;
+        }
+
+        public Criteria andMontoIncrementoCreditoNotEqualTo(BigDecimal value) {
+            addCriterion("MontoIncrementoCredito <>", value, "montoIncrementoCredito");
+            return (Criteria) this;
+        }
+
+        public Criteria andMontoIncrementoCreditoGreaterThan(BigDecimal value) {
+            addCriterion("MontoIncrementoCredito >", value, "montoIncrementoCredito");
+            return (Criteria) this;
+        }
+
+        public Criteria andMontoIncrementoCreditoGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("MontoIncrementoCredito >=", value, "montoIncrementoCredito");
+            return (Criteria) this;
+        }
+
+        public Criteria andMontoIncrementoCreditoLessThan(BigDecimal value) {
+            addCriterion("MontoIncrementoCredito <", value, "montoIncrementoCredito");
+            return (Criteria) this;
+        }
+
+        public Criteria andMontoIncrementoCreditoLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("MontoIncrementoCredito <=", value, "montoIncrementoCredito");
+            return (Criteria) this;
+        }
+
+        public Criteria andMontoIncrementoCreditoIn(List<BigDecimal> values) {
+            addCriterion("MontoIncrementoCredito in", values, "montoIncrementoCredito");
+            return (Criteria) this;
+        }
+
+        public Criteria andMontoIncrementoCreditoNotIn(List<BigDecimal> values) {
+            addCriterion("MontoIncrementoCredito not in", values, "montoIncrementoCredito");
+            return (Criteria) this;
+        }
+
+        public Criteria andMontoIncrementoCreditoBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("MontoIncrementoCredito between", value1, value2, "montoIncrementoCredito");
+            return (Criteria) this;
+        }
+
+        public Criteria andMontoIncrementoCreditoNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("MontoIncrementoCredito not between", value1, value2, "montoIncrementoCredito");
             return (Criteria) this;
         }
 

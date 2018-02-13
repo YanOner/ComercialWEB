@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.gmt.comercial.dao.SolicitudrevendedorMapper">
-  <resultMap id="BaseResultMap" type="com.gmt.comercial.model.Solicitudrevendedor">
+<mapper namespace="com.gmt.comercial.dao.SolicitudMapper">
+  <resultMap id="BaseResultMap" type="com.gmt.comercial.model.Solicitud">
     <constructor>
       <idArg column="IdSolicitud" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <idArg column="IdCliente" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <idArg column="CodUsuario" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="idtiposolicitud" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="idestadosolicitud" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="FechaSolicitud" javaType="java.util.Date" jdbcType="DATE" />
       <arg column="Comentario" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="MontoCompraPromedio" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="MontoIncrementoCredito" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
       <arg column="UsuarioGeneroSolicitud" javaType="java.lang.String" jdbcType="CHAR" />
       <arg column="FechaRespuesta" javaType="java.util.Date" jdbcType="DATE" />
       <arg column="UsuarioRespuesta" javaType="java.lang.String" jdbcType="CHAR" />
@@ -47,17 +50,18 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    IdSolicitud, IdCliente, CodUsuario, FechaSolicitud, Comentario, MontoCompraPromedio, 
-    UsuarioGeneroSolicitud, FechaRespuesta, UsuarioRespuesta, Estado, LineaCredito, LineaCreditoAnterior
+    IdSolicitud, IdCliente, CodUsuario, idtiposolicitud, idestadosolicitud, FechaSolicitud, 
+    Comentario, MontoCompraPromedio, MontoIncrementoCredito, UsuarioGeneroSolicitud, 
+    FechaRespuesta, UsuarioRespuesta, Estado, LineaCredito, LineaCreditoAnterior
   </sql>
-  <select id="selectByExample" parameterType="com.gmt.comercial.model.SolicitudrevendedorExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.gmt.comercial.model.SolicitudExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     'false' as QUERYID,
     <include refid="Base_Column_List" />
-    from solicitudrevendedor
+    from solicitud
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -68,31 +72,33 @@
   <select id="selectByPrimaryKey" parameterType="map" resultMap="BaseResultMap">
     select 'false' as QUERYID,
     <include refid="Base_Column_List" />
-    from solicitudrevendedor
+    from solicitud
     where IdSolicitud = #{idSolicitud,jdbcType=INTEGER}
       and IdCliente = #{idCliente,jdbcType=INTEGER}
       and CodUsuario = #{codUsuario,jdbcType=CHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="map">
-    delete from solicitudrevendedor
+    delete from solicitud
     where IdSolicitud = #{idSolicitud,jdbcType=INTEGER}
       and IdCliente = #{idCliente,jdbcType=INTEGER}
       and CodUsuario = #{codUsuario,jdbcType=CHAR}
   </delete>
-  <insert id="insert" parameterType="com.gmt.comercial.model.Solicitudrevendedor">
-    insert into solicitudrevendedor (IdSolicitud, IdCliente, CodUsuario, 
-      FechaSolicitud, Comentario, MontoCompraPromedio, 
+  <insert id="insert" parameterType="com.gmt.comercial.model.Solicitud">
+    insert into solicitud (IdSolicitud, IdCliente, CodUsuario, 
+      idtiposolicitud, idestadosolicitud, FechaSolicitud, 
+      Comentario, MontoCompraPromedio, MontoIncrementoCredito, 
       UsuarioGeneroSolicitud, FechaRespuesta, UsuarioRespuesta, 
       Estado, LineaCredito, LineaCreditoAnterior
       )
     values (#{idSolicitud,jdbcType=INTEGER}, #{idCliente,jdbcType=INTEGER}, #{codUsuario,jdbcType=CHAR}, 
-      #{fechaSolicitud,jdbcType=DATE}, #{comentario,jdbcType=VARCHAR}, #{montoCompraPromedio,jdbcType=DECIMAL}, 
+      #{idtiposolicitud,jdbcType=INTEGER}, #{idestadosolicitud,jdbcType=INTEGER}, #{fechaSolicitud,jdbcType=DATE}, 
+      #{comentario,jdbcType=VARCHAR}, #{montoCompraPromedio,jdbcType=DECIMAL}, #{montoIncrementoCredito,jdbcType=DECIMAL}, 
       #{usuarioGeneroSolicitud,jdbcType=CHAR}, #{fechaRespuesta,jdbcType=DATE}, #{usuarioRespuesta,jdbcType=CHAR}, 
       #{estado,jdbcType=CHAR}, #{lineaCredito,jdbcType=DECIMAL}, #{lineaCreditoAnterior,jdbcType=DECIMAL}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.gmt.comercial.model.Solicitudrevendedor">
-    insert into solicitudrevendedor
+  <insert id="insertSelective" parameterType="com.gmt.comercial.model.Solicitud">
+    insert into solicitud
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="idSolicitud != null">
         IdSolicitud,
@@ -103,6 +109,12 @@
       <if test="codUsuario != null">
         CodUsuario,
       </if>
+      <if test="idtiposolicitud != null">
+        idtiposolicitud,
+      </if>
+      <if test="idestadosolicitud != null">
+        idestadosolicitud,
+      </if>
       <if test="fechaSolicitud != null">
         FechaSolicitud,
       </if>
@@ -111,6 +123,9 @@
       </if>
       <if test="montoCompraPromedio != null">
         MontoCompraPromedio,
+      </if>
+      <if test="montoIncrementoCredito != null">
+        MontoIncrementoCredito,
       </if>
       <if test="usuarioGeneroSolicitud != null">
         UsuarioGeneroSolicitud,
@@ -141,6 +156,12 @@
       <if test="codUsuario != null">
         #{codUsuario,jdbcType=CHAR},
       </if>
+      <if test="idtiposolicitud != null">
+        #{idtiposolicitud,jdbcType=INTEGER},
+      </if>
+      <if test="idestadosolicitud != null">
+        #{idestadosolicitud,jdbcType=INTEGER},
+      </if>
       <if test="fechaSolicitud != null">
         #{fechaSolicitud,jdbcType=DATE},
       </if>
@@ -149,6 +170,9 @@
       </if>
       <if test="montoCompraPromedio != null">
         #{montoCompraPromedio,jdbcType=DECIMAL},
+      </if>
+      <if test="montoIncrementoCredito != null">
+        #{montoIncrementoCredito,jdbcType=DECIMAL},
       </if>
       <if test="usuarioGeneroSolicitud != null">
         #{usuarioGeneroSolicitud,jdbcType=CHAR},
@@ -170,9 +194,15 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.gmt.comercial.model.Solicitudrevendedor">
-    update solicitudrevendedor
+  <update id="updateByPrimaryKeySelective" parameterType="com.gmt.comercial.model.Solicitud">
+    update solicitud
     <set>
+      <if test="idtiposolicitud != null">
+        idtiposolicitud = #{idtiposolicitud,jdbcType=INTEGER},
+      </if>
+      <if test="idestadosolicitud != null">
+        idestadosolicitud = #{idestadosolicitud,jdbcType=INTEGER},
+      </if>
       <if test="fechaSolicitud != null">
         FechaSolicitud = #{fechaSolicitud,jdbcType=DATE},
       </if>
@@ -181,6 +211,9 @@
       </if>
       <if test="montoCompraPromedio != null">
         MontoCompraPromedio = #{montoCompraPromedio,jdbcType=DECIMAL},
+      </if>
+      <if test="montoIncrementoCredito != null">
+        MontoIncrementoCredito = #{montoIncrementoCredito,jdbcType=DECIMAL},
       </if>
       <if test="usuarioGeneroSolicitud != null">
         UsuarioGeneroSolicitud = #{usuarioGeneroSolicitud,jdbcType=CHAR},
@@ -205,11 +238,14 @@
       and IdCliente = #{idCliente,jdbcType=INTEGER}
       and CodUsuario = #{codUsuario,jdbcType=CHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.gmt.comercial.model.Solicitudrevendedor">
-    update solicitudrevendedor
-    set FechaSolicitud = #{fechaSolicitud,jdbcType=DATE},
+  <update id="updateByPrimaryKey" parameterType="com.gmt.comercial.model.Solicitud">
+    update solicitud
+    set idtiposolicitud = #{idtiposolicitud,jdbcType=INTEGER},
+      idestadosolicitud = #{idestadosolicitud,jdbcType=INTEGER},
+      FechaSolicitud = #{fechaSolicitud,jdbcType=DATE},
       Comentario = #{comentario,jdbcType=VARCHAR},
       MontoCompraPromedio = #{montoCompraPromedio,jdbcType=DECIMAL},
+      MontoIncrementoCredito = #{montoIncrementoCredito,jdbcType=DECIMAL},
       UsuarioGeneroSolicitud = #{usuarioGeneroSolicitud,jdbcType=CHAR},
       FechaRespuesta = #{fechaRespuesta,jdbcType=DATE},
       UsuarioRespuesta = #{usuarioRespuesta,jdbcType=CHAR},
@@ -220,14 +256,14 @@
       and IdCliente = #{idCliente,jdbcType=INTEGER}
       and CodUsuario = #{codUsuario,jdbcType=CHAR}
   </update>
-  <select id="selectByExampleWithRowbounds" parameterType="com.gmt.comercial.model.SolicitudrevendedorExample" resultMap="BaseResultMap">
+  <select id="selectByExampleWithRowbounds" parameterType="com.gmt.comercial.model.SolicitudExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     'false' as QUERYID,
     <include refid="Base_Column_List" />
-    from solicitudrevendedor
+    from solicitud
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
