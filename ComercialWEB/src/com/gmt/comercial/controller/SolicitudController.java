@@ -49,14 +49,14 @@ public class SolicitudController {
 	@RequestMapping("/listaSolicitudes")
 	public List<Solicitud> listaSolicitudes(
 				Integer idCliente,
-				String 	codUsuario,
-				Integer idEstadoSolicitud
+				String 	codUsuario
 			){
 		List<Solicitud> lista = new ArrayList<>();
 		try {
 			SolicitudExample example = new SolicitudExample();
+			example.setOrderByClause("1 desc");
 			Criteria criteria = example.createCriteria();
-			criteria.andIdClienteEqualTo(idCliente).andCodUsuarioEqualTo(codUsuario).andIdestadosolicitudEqualTo(idEstadoSolicitud);
+			criteria.andIdClienteEqualTo(idCliente).andCodUsuarioEqualTo(codUsuario).andEstadoEqualTo("1");
 			return solicitudMapper.selectByExample(example);
 		} catch (Exception e) {
 			e.printStackTrace();
