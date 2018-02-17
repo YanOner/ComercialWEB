@@ -3,6 +3,8 @@ package com.gmt.comercial.controller;
 import java.util.Date;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +31,7 @@ public class LoginControler {
 	
 	@ResponseBody
 	@RequestMapping("/login")
-	public Usuario login(String codUsuario, String password){
+	public Usuario login(HttpServletRequest request, String codUsuario, String password){
 		HashMap mapa = new HashMap();
 		mapa.put("codUsuario", codUsuario);
 		mapa.put("password", password);
@@ -37,6 +39,9 @@ public class LoginControler {
 //		if(password.equals(u.getPassword())){
 //			return u;
 //		}
+		if(u != null) {
+			request.getSession().setAttribute("usuarioSESION", u);
+		}
 		return u;
 	}
 

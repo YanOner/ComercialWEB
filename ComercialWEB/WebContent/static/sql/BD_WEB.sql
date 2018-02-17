@@ -135,7 +135,7 @@ DROP TABLE IF EXISTS `costoubigeo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `costoubigeo` (
-  `CodUbigeoCosto` char(9) NOT NULL,
+  `CodUbigeoCosto` varchar(9) NOT NULL,
   `Distrito` varchar(100) DEFAULT NULL,
   `Provincia` varchar(100) DEFAULT NULL,
   `Departamento` varchar(100) DEFAULT NULL,
@@ -179,61 +179,6 @@ LOCK TABLES `courrier` WRITE;
 /*!40000 ALTER TABLE `courrier` DISABLE KEYS */;
 INSERT INTO `courrier` VALUES (1,'Olva Courrier','Av. Paseo de la Republica 8045 - Cercado Lima',''),(2,'Cruz del Norte','Av. 28 de Julio 752 - La Victoria',NULL),(3,'Soyuz','Av. 28 de Julio 978 - La Victoria',NULL),(4,'Movil Tours','Av. Paseo de la Republica 7099 - Cercado de Lima',NULL);
 /*!40000 ALTER TABLE `courrier` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `ctaxbancos`
---
-
-DROP TABLE IF EXISTS `ctaxbancos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `ctaxbancos` (
-  `idBancos` int(11) NOT NULL,
-  `NroCuenta` char(16) NOT NULL,
-  `Descripcion` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`idBancos`,`NroCuenta`),
-  CONSTRAINT `fk_CtaxBanco_Bancos1` FOREIGN KEY (`idBancos`) REFERENCES `bancos` (`IdBancos`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `ctaxbancos`
---
-
-LOCK TABLES `ctaxbancos` WRITE;
-/*!40000 ALTER TABLE `ctaxbancos` DISABLE KEYS */;
-INSERT INTO `ctaxbancos` VALUES (1,'450-326516','Ahorro Soles'),(1,'740-155452','Cta. Corriente'),(2,'954-621654','Ahorro Soles'),(3,'32651-54515','Ahorro Soles'),(4,'9513-412694','Ahorro Soles'),(5,'970-451238946','Ahorro Soles');
-/*!40000 ALTER TABLE `ctaxbancos` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `cupondescuento`
---
-
-DROP TABLE IF EXISTS `cupondescuento`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `cupondescuento` (
-  `IdCuponDescuento` int(11) NOT NULL,
-  `CodigoCupon` char(8) DEFAULT NULL,
-  `FechaValInicio` date DEFAULT NULL,
-  `FechaValFin` date DEFAULT NULL,
-  `PorcDescuento` decimal(5,2) DEFAULT NULL,
-  `MontoDescuento` decimal(15,2) DEFAULT NULL,
-  `Observacion` varchar(150) DEFAULT NULL,
-  PRIMARY KEY (`IdCuponDescuento`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `cupondescuento`
---
-
-LOCK TABLES `cupondescuento` WRITE;
-/*!40000 ALTER TABLE `cupondescuento` DISABLE KEYS */;
-INSERT INTO `cupondescuento` VALUES (1,'15DCTO',NULL,NULL,15.00,0.00,'Dia de la Madre'),(2,'10DAD',NULL,NULL,10.00,0.00,'Dia del Padre'),(3,'80AKF',NULL,NULL,0.00,80.00,'Descuento Promocional'),(4,'050PRI',NULL,NULL,0.00,50.00,'Primavera Descuento');
-/*!40000 ALTER TABLE `cupondescuento` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -339,9 +284,10 @@ DROP TABLE IF EXISTS `documentopago`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `documentopago` (
-  `TipoDocumento` char(1) NOT NULL,
-  `NroSerie` char(5) NOT NULL,
-  `CodDocumento` char(8) NOT NULL,
+  `iddocumentopago` int(11) NOT NULL AUTO_INCREMENT,
+  `TipoDocumento` int(11) DEFAULT NULL,
+  `NroSerie` char(5) DEFAULT NULL,
+  `CodDocumento` char(8) DEFAULT NULL,
   `NroRuc` char(11) DEFAULT NULL,
   `RazonSocial` varchar(200) DEFAULT NULL,
   `FechaPago` date DEFAULT NULL,
@@ -350,10 +296,12 @@ CREATE TABLE `documentopago` (
   `UsuarioModifico` char(15) DEFAULT NULL,
   `FechaModificacion` date DEFAULT NULL,
   `Venta_idVenta` int(11) NOT NULL,
-  PRIMARY KEY (`TipoDocumento`,`NroSerie`,`CodDocumento`),
+  PRIMARY KEY (`iddocumentopago`),
   KEY `fk_DocumentoPago_Venta1` (`Venta_idVenta`),
-  CONSTRAINT `fk_DocumentoPago_Venta1` FOREIGN KEY (`Venta_idVenta`) REFERENCES `venta` (`IdVenta`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `fk_docpago_tipodoc_idx` (`TipoDocumento`),
+  CONSTRAINT `fk_DocumentoPago_Venta1` FOREIGN KEY (`Venta_idVenta`) REFERENCES `venta` (`IdVenta`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_docpago_tipodoc` FOREIGN KEY (`TipoDocumento`) REFERENCES `tipodocumento` (`idtipodocumento`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -362,7 +310,7 @@ CREATE TABLE `documentopago` (
 
 LOCK TABLES `documentopago` WRITE;
 /*!40000 ALTER TABLE `documentopago` DISABLE KEYS */;
-INSERT INTO `documentopago` VALUES ('0','00001','00000001','63582147','Maria Calara Ruiz',NULL,'System','2017-10-09','',NULL,3),('0','00001','00000002','63582147','Maria Calara Ruiz',NULL,'System','2017-10-09','',NULL,4),('0','00001','00000003','63582147','Maria Calara Ruiz',NULL,'System','2017-10-09','',NULL,5),('0','00001','00000004','63582147','Maria Calara Ruiz',NULL,'System','2017-10-09','',NULL,6),('0','00001','00000005','63582147','Maria Calara Ruiz',NULL,'System','2017-10-09','',NULL,7),('0','00001','00000006','63582147','Maria Calara Ruiz',NULL,'System','2017-10-09','',NULL,8),('0','00001','00000007','63582147','Maria Calara Ruiz',NULL,'System','2017-10-09','',NULL,9),('0','00001','00000008','63582147','Maria Calara Ruiz',NULL,'System','2017-10-09','',NULL,10),('0','00001','00000009','63582147','Maria Calara Ruiz',NULL,'System','2017-10-09','',NULL,11),('0','00001','00000010','63582147','Maria Calara Ruiz',NULL,'System','2017-10-09','',NULL,12),('0','00001','00000011','63582147','Maria Calara Ruiz','2017-10-09','System','2017-10-09','',NULL,13),('0','00001','00000012','63582147','Maria Calara Ruiz','2017-10-09','System','2017-10-09','',NULL,14),('0','00001','00000013','63582147','Maria Calara Ruiz',NULL,'System','2017-10-09','',NULL,15),('0','00001','00000014','63582147','Maria Calara Ruiz',NULL,'System','2017-10-09','',NULL,16),('0','00001','00000015','63582147','Maria Calara Ruiz',NULL,'System','2017-10-09','',NULL,17),('0','00001','00000016','63582147','Maria Calara Ruiz',NULL,'System','2017-10-09','',NULL,18),('0','00001','00000017','63582147','Maria Calara Ruiz',NULL,'System','2017-10-09','',NULL,20),('0','00001','00000018','63582147','Maria Calara Ruiz',NULL,'System','2017-10-09','',NULL,22),('0','00001','00000019','63582147','Maria Calara Ruiz',NULL,'System','2018-01-11','',NULL,23),('0','00001','00000020','63582147','Maria Calara Ruiz',NULL,'System','2018-01-11','',NULL,24),('0','00001','00000021','63582147','Maria Calara Ruiz',NULL,'System','2018-01-11','',NULL,25),('0','00001','00000022','63582147','Maria Calara Ruiz',NULL,'System','2018-01-29','',NULL,26),('0','00001','00000023','63582147','Maria Calara Ruiz',NULL,'System','2018-01-29','',NULL,27),('0','00001','00000024','63582147','Maria Calara Ruiz',NULL,'System','2018-02-10','',NULL,30),('0','00001','00000025','63582147','Maria Calara Ruiz',NULL,'System','2018-02-10','',NULL,33),('0','00001','00000026','63582147','Maria Calara Ruiz',NULL,'System','2018-02-10','',NULL,34),('0','00001','00000027','63582147','Maria Calara Ruiz',NULL,'System','2018-02-10','',NULL,35),('0','00001','00000028','63582147','Maria Calara Ruiz',NULL,'System','2018-02-10','',NULL,36),('1','00001','00000001','','','2017-10-09','System','2017-10-09','',NULL,19),('1','00001','00000002','','',NULL,'System','2017-10-09','',NULL,21),('1','00001','00000003','12345678901','123',NULL,'System','2018-01-30','',NULL,28),('1','00001','00000004','20104521384','Empresa Peruana de Calzados ',NULL,'System','2018-02-10','',NULL,29),('1','00001','00000005','11111111222','Razon x',NULL,'System','2018-02-10','',NULL,31),('1','00001','00000006','99999999999','razon x',NULL,'System','2018-02-10','',NULL,32);
+INSERT INTO `documentopago` VALUES (1,0,'00001','00000001','63582147','Maria Calara Ruiz',NULL,'System','2017-10-09','',NULL,3),(2,0,'00001','00000002','63582147','Maria Calara Ruiz',NULL,'System','2017-10-09','',NULL,4),(3,0,'00001','00000003','63582147','Maria Calara Ruiz',NULL,'System','2017-10-09','',NULL,5),(4,0,'00001','00000004','63582147','Maria Calara Ruiz',NULL,'System','2017-10-09','',NULL,6),(5,0,'00001','00000005','63582147','Maria Calara Ruiz',NULL,'System','2017-10-09','',NULL,7),(6,0,'00001','00000006','63582147','Maria Calara Ruiz',NULL,'System','2017-10-09','',NULL,8),(7,0,'00001','00000007','63582147','Maria Calara Ruiz',NULL,'System','2017-10-09','',NULL,9),(8,0,'00001','00000008','63582147','Maria Calara Ruiz',NULL,'System','2017-10-09','',NULL,10),(9,0,'00001','00000009','63582147','Maria Calara Ruiz',NULL,'System','2017-10-09','',NULL,11),(10,0,'00001','00000010','63582147','Maria Calara Ruiz',NULL,'System','2017-10-09','',NULL,12),(11,0,'00001','00000011','63582147','Maria Calara Ruiz','2017-10-09','System','2017-10-09','',NULL,13),(12,0,'00001','00000012','63582147','Maria Calara Ruiz','2017-10-09','System','2017-10-09','',NULL,14),(13,0,'00001','00000013','63582147','Maria Calara Ruiz',NULL,'System','2017-10-09','',NULL,15),(14,0,'00001','00000014','63582147','Maria Calara Ruiz',NULL,'System','2017-10-09','',NULL,16),(15,0,'00001','00000015','63582147','Maria Calara Ruiz',NULL,'System','2017-10-09','',NULL,17),(16,0,'00001','00000016','63582147','Maria Calara Ruiz',NULL,'System','2017-10-09','',NULL,18),(17,0,'00001','00000017','63582147','Maria Calara Ruiz',NULL,'System','2017-10-09','',NULL,20),(18,0,'00001','00000018','63582147','Maria Calara Ruiz',NULL,'System','2017-10-09','',NULL,22),(19,0,'00001','00000019','63582147','Maria Calara Ruiz',NULL,'System','2018-01-11','',NULL,23),(20,0,'00001','00000020','63582147','Maria Calara Ruiz',NULL,'System','2018-01-11','',NULL,24),(21,0,'00001','00000021','63582147','Maria Calara Ruiz',NULL,'System','2018-01-11','',NULL,25),(22,0,'00001','00000022','63582147','Maria Calara Ruiz',NULL,'System','2018-01-29','',NULL,26),(23,0,'00001','00000023','63582147','Maria Calara Ruiz',NULL,'System','2018-01-29','',NULL,27),(24,0,'00001','00000024','63582147','Maria Calara Ruiz',NULL,'System','2018-02-10','',NULL,30),(25,0,'00001','00000025','63582147','Maria Calara Ruiz',NULL,'System','2018-02-10','',NULL,33),(26,0,'00001','00000026','63582147','Maria Calara Ruiz',NULL,'System','2018-02-10','',NULL,34),(27,0,'00001','00000027','63582147','Maria Calara Ruiz',NULL,'System','2018-02-10','',NULL,35),(28,0,'00001','00000028','63582147','Maria Calara Ruiz',NULL,'System','2018-02-10','',NULL,36),(29,1,'00001','00000001','','','2017-10-09','System','2017-10-09','',NULL,19),(30,1,'00001','00000002','','',NULL,'System','2017-10-09','',NULL,21),(31,1,'00001','00000003','12345678901','123',NULL,'System','2018-01-30','',NULL,28),(32,1,'00001','00000004','20104521384','Empresa Peruana de Calzados ',NULL,'System','2018-02-10','',NULL,29),(33,1,'00001','00000005','11111111222','Razon x',NULL,'System','2018-02-10','',NULL,31),(34,1,'00001','00000006','99999999999','razon x',NULL,'System','2018-02-10','',NULL,32);
 /*!40000 ALTER TABLE `documentopago` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -416,13 +364,13 @@ INSERT INTO `estadoventa` VALUES (1,'Pendiente Pago'),(2,'Por Confirmar'),(3,'Pa
 UNLOCK TABLES;
 
 --
--- Table structure for table `fomapago`
+-- Table structure for table `formapago`
 --
 
-DROP TABLE IF EXISTS `fomapago`;
+DROP TABLE IF EXISTS `formapago`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `fomapago` (
+CREATE TABLE `formapago` (
   `IdFomaPago` int(11) NOT NULL,
   `Descripcion` varchar(100) DEFAULT NULL,
   `Estado` char(1) DEFAULT NULL,
@@ -431,13 +379,13 @@ CREATE TABLE `fomapago` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `fomapago`
+-- Dumping data for table `formapago`
 --
 
-LOCK TABLES `fomapago` WRITE;
-/*!40000 ALTER TABLE `fomapago` DISABLE KEYS */;
-INSERT INTO `fomapago` VALUES (1,'Contado','1'),(2,'Consignacion','1'),(3,'Tarjeta','1'),(4,'Transferencia Bancaria','1');
-/*!40000 ALTER TABLE `fomapago` ENABLE KEYS */;
+LOCK TABLES `formapago` WRITE;
+/*!40000 ALTER TABLE `formapago` DISABLE KEYS */;
+INSERT INTO `formapago` VALUES (1,'Contado','1'),(2,'Consignacion','1'),(3,'Tarjeta','1'),(4,'Transferencia Bancaria','1');
+/*!40000 ALTER TABLE `formapago` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -743,7 +691,7 @@ CREATE TABLE `solicitud` (
 
 LOCK TABLES `solicitud` WRITE;
 /*!40000 ALTER TABLE `solicitud` DISABLE KEYS */;
-INSERT INTO `solicitud` VALUES (1,1,'Usuario6',1,1,'2018-02-13',NULL,NULL,111.00,'Usuario6',NULL,NULL,'1',NULL,NULL),(2,6,'Usuario6',1,1,'2018-02-13',NULL,NULL,1234.00,'Usuario6',NULL,NULL,'1',NULL,NULL),(3,6,'Usuario6',1,1,'2018-02-13',NULL,NULL,NULL,'Usuario6',NULL,NULL,'1',NULL,NULL);
+INSERT INTO `solicitud` VALUES (1,1,'Usuario6',1,1,'2018-02-13',NULL,NULL,111.00,'Usuario6',NULL,NULL,'1',NULL,NULL),(2,6,'Usuario6',1,1,'2018-02-13',NULL,NULL,1234.00,'Usuario6',NULL,NULL,'1',NULL,NULL),(3,6,'Usuario6',1,1,'2018-02-13',NULL,NULL,222.00,'Usuario6',NULL,NULL,'1',NULL,NULL);
 /*!40000 ALTER TABLE `solicitud` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -794,6 +742,31 @@ LOCK TABLES `temporada` WRITE;
 /*!40000 ALTER TABLE `temporada` DISABLE KEYS */;
 INSERT INTO `temporada` VALUES (1,'Primavera-Verano','1'),(2,'Verano-Otoño','1'),(3,'Otoño-Invierno','1'),(4,'Invierno-Primavera','1');
 /*!40000 ALTER TABLE `temporada` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tipodocumento`
+--
+
+DROP TABLE IF EXISTS `tipodocumento`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tipodocumento` (
+  `idtipodocumento` int(11) NOT NULL,
+  `descripcion` varchar(45) NOT NULL,
+  `estado` char(1) DEFAULT '1',
+  PRIMARY KEY (`idtipodocumento`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tipodocumento`
+--
+
+LOCK TABLES `tipodocumento` WRITE;
+/*!40000 ALTER TABLE `tipodocumento` DISABLE KEYS */;
+INSERT INTO `tipodocumento` VALUES (0,'Boleta','1'),(1,'Factura','1');
+/*!40000 ALTER TABLE `tipodocumento` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -957,7 +930,7 @@ CREATE TABLE `venta` (
   `CodTrxTarjeta` varchar(15) DEFAULT NULL,
   `FechTrxTarjeta` date DEFAULT NULL,
   `Estado` char(1) DEFAULT NULL,
-  `CodUbigeoCosto` char(9) DEFAULT NULL,
+  `CodUbigeoCosto` varchar(9) DEFAULT NULL,
   `IdFomaPago` int(11) NOT NULL,
   `IdCuponDescuento` int(11) DEFAULT NULL,
   `DireccionEntrega` varchar(150) DEFAULT NULL,
@@ -970,9 +943,12 @@ CREATE TABLE `venta` (
   KEY `fk_Venta_CuponDescuento1` (`IdCuponDescuento`),
   KEY `fk_Venta_Cliente1` (`IdCliente`),
   KEY `fk_Venta_EstadoVenta1_idx` (`IdEstadoVenta`),
+  KEY `fk_venta_banco1_idx` (`IdBancos`),
   CONSTRAINT `fk_Venta_Cliente1` FOREIGN KEY (`IdCliente`) REFERENCES `cliente` (`IdCliente`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Venta_EstadoVenta1` FOREIGN KEY (`IdEstadoVenta`) REFERENCES `estadoventa` (`IdEstadoVenta`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Venta_FomaPago1` FOREIGN KEY (`IdFomaPago`) REFERENCES `fomapago` (`IdFomaPago`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_Venta_FomaPago1` FOREIGN KEY (`IdFomaPago`) REFERENCES `formapago` (`IdFomaPago`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_venta_banco1` FOREIGN KEY (`IdBancos`) REFERENCES `bancos` (`IdBancos`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_venta_costoubigeo1` FOREIGN KEY (`CodUbigeoCosto`) REFERENCES `costoubigeo` (`CodUbigeoCosto`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1663,4 +1639,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-13 18:58:31
+-- Dump completed on 2018-02-16 22:16:26

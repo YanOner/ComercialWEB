@@ -5,6 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +21,7 @@ import com.gmt.comercial.dao.VentaMapper;
 import com.gmt.comercial.model.Bancos;
 import com.gmt.comercial.model.BancosExample;
 import com.gmt.comercial.model.Costoubigeo;
+import com.gmt.comercial.model.Usuario;
 import com.gmt.comercial.model.Venta;
 import com.gmt.comercial.model.VentaExample;
 import com.gmt.comercial.model.VentaExample.Criteria;
@@ -24,6 +29,8 @@ import com.gmt.comercial.model.VentaExample.Criteria;
 @Controller
 public class PedidoControler {
 
+	private static final Log log = LogFactory.getLog(PedidoControler.class);
+	
 	@Autowired
 	CostoubigeoMapper costoubigeoMapper;
 	
@@ -39,6 +46,7 @@ public class PedidoControler {
 	@ResponseBody
 	@RequestMapping("/registrarPedido")
 	public int registrarPedido(
+				HttpServletRequest request,
 				int ParmIdCliente,                                                  
 				double ParmTotal,                                            
 				int ParmNroCuotas,                                                  
@@ -61,6 +69,10 @@ public class PedidoControler {
 //				int ParmCantidad                                                  
 			){
 		try {
+			Usuario u = (Usuario) request.getSession().getAttribute("usuarioSESION");
+			if(u == null) {
+				throw new Exception("SESION EXPIRADA");
+			}
 			Map<String, Object> parametros = new HashMap<>();
 			parametros.put("ParmIdVenta", 0);//                                                 
 			parametros.put("ParmIdCliente", ParmIdCliente);                                                
@@ -81,9 +93,9 @@ public class PedidoControler {
 			parametros.put("ParmRazonSocial", ParmRazonSocial);                                               
 			parametros.put("TipoMantenimiento", "I");
 			Map<String, Object> resultado = storeProcedureMapper.registrarCabecera(parametros);
-			System.out.println("resultado: "+resultado);
+			log.info("resultado: "+resultado);
 			//DETALLE
-			System.out.println("tramaPedido: "+tramaPedido);
+			log.info("tramaPedido: "+tramaPedido);
 			String[] arrayProductos = tramaPedido.split(";");
 			for (int i = 0; i < arrayProductos.length; i++) {
 				String producto = arrayProductos[i];
@@ -98,12 +110,12 @@ public class PedidoControler {
 				parametros.put("ParmCantidad", datos[3]);                                                 
 				parametros.put("ParmIdTipoUsuario", ParmIdTipoUsuario);//
 				Map<String, Object> resultadoDetalle = storeProcedureMapper.registrarDetalle(parametros);
-				System.out.println("resultadoDetalle: "+resultadoDetalle);
+				log.info("resultadoDetalle: "+resultadoDetalle);
 			}
 			
 			return (Integer)resultado.get("Resultado");
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e);
 		}
 		return 0;
 	}
@@ -114,7 +126,7 @@ public class PedidoControler {
 		try {
 			return costoubigeoMapper.selectDepartamento();
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e);
 		}
 		return new ArrayList<>();
 	}
@@ -125,7 +137,7 @@ public class PedidoControler {
 		try {
 			return costoubigeoMapper.selectProvincia(codUbigeoCosto);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e);
 		}
 		return new ArrayList<>();
 	}
@@ -136,7 +148,7 @@ public class PedidoControler {
 		try {
 			return costoubigeoMapper.selectDistrito(codUbigeoCosto);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e);
 		}
 		return new ArrayList<>();
 	}
@@ -147,7 +159,7 @@ public class PedidoControler {
 		try {
 			return bancosMapper.selectByExample(new BancosExample());
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e);
 		}
 		return new ArrayList<>();
 	}
@@ -161,7 +173,7 @@ public class PedidoControler {
 			criteria.andIdClienteEqualTo(idCliente).andIdEstadoVentaEqualTo(idEstadoVenta);
 			return ventaMapper.selectByExample(example);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e);
 		}
 		return new ArrayList<>();
 	}
