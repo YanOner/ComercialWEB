@@ -3,6 +3,9 @@
   <display-name>ComercialWEB</display-name>
   <session-config>
     <session-timeout>300</session-timeout>
+    <cookie-config>
+    	<max-age>18000</max-age> <!-- 43200 seconds = 12 hours -->
+    </cookie-config>
   </session-config>
   <welcome-file-list>
     <welcome-file>/WEB-INF/views/index.jsp</welcome-file>

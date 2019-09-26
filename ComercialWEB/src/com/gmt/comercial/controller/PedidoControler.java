@@ -70,9 +70,9 @@ public class PedidoControler {
 			){
 		try {
 			Usuario u = (Usuario) request.getSession().getAttribute("usuarioSESION");
-			if(u == null) {
-				throw new Exception("SESION EXPIRADA");
-			}
+//			if(u == null) {
+//				throw new Exception("SESION EXPIRADA");
+//			}
 			Map<String, Object> parametros = new HashMap<>();
 			parametros.put("ParmIdVenta", 0);//                                                 
 			parametros.put("ParmIdCliente", ParmIdCliente);                                                

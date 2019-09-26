@@ -38,9 +38,9 @@ public class SolicitudController {
 			) {
 		try {
 			Usuario u = (Usuario) request.getSession().getAttribute("usuarioSESION");
-			if(u == null) {
-				throw new Exception("SESION EXPIRADA");
-			}
+//			if(u == null) {
+//				throw new Exception("SESION EXPIRADA");
+//			}
 			Solicitud s = new Solicitud();
 			s.setIdCliente(idCliente);
 			s.setCodUsuario(codUsuario);
@@ -67,9 +67,9 @@ public class SolicitudController {
 		List<Solicitud> lista = new ArrayList<>();
 		try {
 			Usuario u = (Usuario) request.getSession().getAttribute("usuarioSESION");
-			if(u == null) {
-				throw new Exception("SESION EXPIRADA");
-			}
+//			if(u == null) {
+//				throw new Exception("SESION EXPIRADA");
+//			}
 			SolicitudExample example = new SolicitudExample();
 			example.setOrderByClause("1 desc");
 			Criteria criteria = example.createCriteria();
